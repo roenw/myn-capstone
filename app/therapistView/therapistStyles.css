@@ -1,0 +1,40 @@
+.text-raleway {
+  font-family: 'Raleway';
+}
+
+.navbar-collapse.collapse {
+    visibility: visible !important;
+}
+
+.navbar-collapse.collapse:not(.show) {
+    display: none;
+}
+
+.navbar-collapse.collapse.show {
+    display: block;
+}
+
+.pretty-scroll {
+  display: flex;
+  overflow-x: scroll;
+  gap: 1rem;
+  padding: 1rem;
+  scroll-behavior: smooth;
+}
+
+.pretty-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.pretty-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pretty-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.pretty-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
