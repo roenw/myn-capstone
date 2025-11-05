@@ -39,3 +39,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignore Visual Studio + VSCode + build caches
+.vs/
+.vscode/
+*.vsidx
+*.user
+*.suo
+*.db
+*.cache
+node_modules/
+dist/
+build/
+.env
