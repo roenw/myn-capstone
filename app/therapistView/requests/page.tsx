@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "../therapistStyles.css";
-import { Modal } from 'bootstrap';
 
 interface Request {
     id: number;
@@ -13,61 +12,30 @@ interface Request {
     preferredDays: string[];
     preferredTime: string;
     experience: string;
+    status: "pending" | "accepted" | "declined";
 }
 
 export default function RequestsPage() {
-    const [requests, setRequests] = useState<Request[]>([
-        {
-            id: 1,
-            name: "Lily Shwartz",
-            email: "lily.shwartz@email.com",
-            phone: "(555) 123-4567",
-            requestDate: "10/12/2025",
-            message:
-                "Hi! I'm interested in starting yoga therapy for anxiety and stress management. I've tried yoga before but would love guidance from a professional.",
-            preferredDays: ["Monday", "Wednesday"],
-            preferredTime: "Evening (5-7pm)",
-            experience: "Beginner",
-        },
-        {
-            id: 2,
-            name: "Marcus Thompson",
-            email: "m.thompson@email.com",
-            phone: "(555) 234-5678",
-            requestDate: "10/13/2025",
-            message:
-                "Looking for yoga therapy to help with lower back pain. My doctor recommended it as part of my recovery plan.",
-            preferredDays: ["Tuesday", "Thursday"],
-            preferredTime: "Morning (9-11am)",
-            experience: "Intermediate",
-        },
-        {
-            id: 3,
-            name: "Sarah Chen",
-            email: "sarah.chen@email.com",
-            phone: "(555) 345-6789",
-            requestDate: "10/14/2025",
-            message:
-                "I'm dealing with postpartum depression and heard yoga therapy could help. Would love to connect and discuss options.",
-            preferredDays: ["Friday"],
-            preferredTime: "Afternoon (2-4pm)",
-            experience: "Beginner",
-        },
-        {
-            id: 4,
-            name: "David Rodriguez",
-            email: "d.rodriguez@email.com",
-            phone: "(555) 456-7890",
-            requestDate: "10/14/2025",
-            message:
-                "Interested in yoga therapy for PTSD management. I'm a veteran looking for holistic approaches to healing.",
-            preferredDays: ["Monday", "Friday"],
-            preferredTime: "Morning (10am-12pm)",
-            experience: "No experience",
-        },
-    ]);
-
+    const [requests, setRequests] = useState<Request[]>([]);
+    const [loading, setLoading] = useState(true);
     const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
+
+    useEffect(() => {
+        async function loadRequests() {
+            try {
+                const res = await fetch("/api/therapist-view/patient-requests");
+                if (!res.ok) throw new Error("Failed to fetch requests");
+                const data = await res.json();
+                setRequests(data);
+            } catch(error) {
+                console.error("Error loading requests:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadRequests();
+    }, []);
 
     const handleAccept = (id: number) => {
         setRequests(requests.filter(req => req.id !== id));
@@ -259,8 +227,9 @@ export default function RequestsPage() {
             </footer>
 
             {/* Modal */}
-            {selectedRequest && (
-                <div className="modal fade text-raleway" id="requestModal" tabIndex={-1}>
+
+            <div className="modal fade text-raleway" id="requestModal" tabIndex={-1}>
+                {selectedRequest ? (
                     <div className="modal-dialog modal-dialog-centered modal-lg">
                         <div className="modal-content border-0 shadow">
                             <div className="modal-header border-0 pb-0">
@@ -346,8 +315,15 @@ export default function RequestsPage() {
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                ) : (
+                    <div className="modal-dialog modal-dialog-centered modal-lg">
+                        <div className="modal-content p-5 text-center text-muted">
+                            Loading
+                        </div>
+                    </div>
+                )}
+            </div>
+
         </>
     )
 }
