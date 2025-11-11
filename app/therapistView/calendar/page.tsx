@@ -1,47 +1,41 @@
+'use client';
 import "../therapistStyles.css";
+import { Navbar, Container, Nav } from 'react-bootstrap';
 
 export default function Calendar() {
     return (
         <>
-            <nav className="navbar navbar-expand-lg py-4 text-raleway" style={{ backgroundColor: "#ffffffff" }} data-bs-theme="light">
-                <div className="container-fluid mx-5">
-                    <a className="navbar-brand" href="/therapistView">Yoga Network</a>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div className="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                        <ul className="navbar-nav mb-lg-0 mt-1">
-                            <li className="nav-item">
-                                <a className="nav-link" href="/therapistView/patients">Patients</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link" href="/therapistView/requests">Requests</a>
-                            </li>
-                            <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="/therapistView/calendar">Calendar</a>
-                            </li>
-
-                        </ul>
-
-                        <a className="nav-link ms-auto" href="#">
+            <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
+                <Container fluid className="mx-5">
+                    <Navbar.Brand href="/therapistView">Yoga Network</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="navbarSupportedContent" />
+                    <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
+                        <Nav className="mb-lg-0 mt-1">
+                            <Nav.Link href="/therapistView/patients">Patients</Nav.Link>
+                            <Nav.Link href="/therapistView/requests">Requests</Nav.Link>
+                            <Nav.Link href="/therapistView/calendar" className="me-5">Calendar</Nav.Link>
+                        </Nav>
+                        <Nav.Link href="#" className="">
                             <i className="bi bi-person-circle fs-3"></i>
-                        </a>
-                    </div>
-                </div>
-            </nav>
+                        </Nav.Link>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
 
             <main>
                 <div className="text-raleway py-5">
                     Maybe use react big calendar.
                 </div>
             </main>
-            
-            <footer className="py-5 text-raleway mt-f" style={{ backgroundColor: "#ffffffff" }}>
-                <div className="container text-dark text-center">
+
+            <footer
+                className="py-5 text-raleway mt-f"
+                style={{ backgroundColor: "#ffffffff" }}
+            >
+                <Container className="text-dark text-center">
                     <p className="display-5 mb-3">Yoga Network</p>
                     <small className="text-dark-50">&copy; contact info</small>
-                </div>
+                </Container>
             </footer>
         </>
     )
