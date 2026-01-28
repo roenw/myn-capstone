@@ -40,12 +40,12 @@ export default function RequestsPage() {
 
     const handleAccept = (id: number) => {
         setRequests(requests.filter(req => req.id !== id));
-        setSelectedRequest(null); // ✅ closes the modal
+        setSelectedRequest(null); // closes the modal
     };
 
     const handleDecline = (id: number) => {
         setRequests(requests.filter(req => req.id !== id));
-        setSelectedRequest(null); // ✅ closes the modal
+        setSelectedRequest(null); // closes the modal
     };
 
     return (
@@ -66,7 +66,8 @@ export default function RequestsPage() {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <Container fluid className="text-raleway py-5" style={{ maxWidth:"70vw", minHeight: "100vh", background: "linear-gradient(to bottom, #94f1f1ff, #5fc3fdff)" }}>
+            <Container fluid className="text-raleway py-5" style={{ 
+                maxWidth:"100vw", minHeight: "100vh", background: 'linear-gradient(to bottom, #ecf2f3, #b2c0fd)'}}>
                 <div className="text-center mb-4">
                     <h1 className="display-4 fw-semibold mb-2">New Patient Requests</h1>
                     <p className="fs-5 text-muted">
@@ -74,7 +75,7 @@ export default function RequestsPage() {
                     </p>
                 </div>
 
-                <Row className="g-4" style={{paddingLeft: "6rem", paddingRight: "6rem"}}>
+                <Row className="g-4" style={{maxWidth: "1400px", margin: "0 auto", padding: "0 1rem"}}>
                     {requests.map(request => (
                         <Col md={6} lg={4} key={request.id}>
                             <Card

@@ -1,5 +1,6 @@
 'use client';
 import Image from "next/image";
+import { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, Row, Col, Card, Button } from 'react-bootstrap';
 import "./therapistStyles.css";
 
@@ -9,7 +10,7 @@ export default function TherapistView() {
       {/* Navbar */}
       <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
         <Container fluid className="mx-5">
-          <Navbar.Brand href="/therapistView">Yoga Network</Navbar.Brand>
+          <Navbar.Brand href="/therapistView">My Yoga Network</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarSupportedContent" />
           <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
             <Nav className="mb-lg-0 mt-1">
@@ -28,120 +29,32 @@ export default function TherapistView() {
         className="py-5 mx-auto"
         style={{
           minHeight: '100vh',
-          maxWidth: "70vw",
-          background: 'linear-gradient(to bottom, #94f1f1ff, #5fc3fdff)',
+          maxWidth: "100vw",
+          background: 'linear-gradient(to bottom, #ecf2f3, #b2c0fd)',
         }}
       >
         {/* Top Section */}
         <Container style={{ backgroundColor: 'transparent' }}>
-          <Row className="align-items-start">
+          <Row className="align-items-start align-items-stretch">
             {/* Left side - WelcomeCard */}
-            <Col md={7} className="d-flex justify-content-center align-items-center">
-              <WelcomeCard therapistName="name" />
+            <Col md={4} className="d-flex alighn-items-center">
+              <WelcomeCard therapistName="Alice" />
             </Col>
 
             {/* Right side - Meetings and Requests */}
-            <Col md={5} className="d-flex flex-column gap-3">
+            <Col md={4} className="d-flex flex-column align-items-center gap-3">
               {/* Upcoming Meetings */}
-              <div className="text-center text-raleway fs-5">
-                <div
-                  className="rounded-top-3 py-2"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 1)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  Upcoming Meetings
-                </div>
-                <div
-                  className="border-top py-2"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  George Yousefson @ Monday, 5:30pm
-                </div>
-                <div
-                  className="border-top rounded-bottom-3 py-2"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  Alicia Shells @ Wednesday, 4:00pm
-                </div>
-              </div>
-
+              <UpcomingMeetings />
+            </Col>
+            <Col md={4} className="d-flex flex-column gap-3">
               {/* New Requests */}
-              <div className="text-center text-raleway fs-5">
-                <div
-                  className="rounded-top-3 py-2"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 1)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  New Requests
-                </div>
-                <div
-                  className="border-top py-2 px-4 d-flex justify-content-between align-items-center"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  <span>Lily Shwartz</span>
-                  <Button variant="light" size="sm" data-bs-toggle="modal" data-bs-target="#requestModal">
-                    View
-                  </Button>
-                </div>
-              </div>
+              <PatientRequests />
             </Col>
           </Row>
         </Container>
 
         {/* Patients Section */}
-        <Container
-          className="rounded-5 my-5 py-3 mx-5 mx-auto"
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 1)',
-            backdropFilter: 'blur(10px)',
-          }}
-        >
-          <div className="text-raleway display-4 my-3">Your Current Patients:</div>
-
-          <div className="pretty-scroll d-flex gap-4">
-            {[
-              { name: 'George Yousefson', img: '/exDude1.jpg', date: '11/24/25' },
-              { name: 'Alicia Shells', img: '/exDude2.jpg', date: '12/24/25' },
-              { name: 'Jennifer Bells', img: '/exDude3.jpg', date: '12/24/25' },
-            ].map((p) => (
-              <Card
-                key={p.name}
-                className="text-raleway"
-                style={{ width: '18rem', flexShrink: 0 }}
-              >
-                <Image
-                  src={p.img}
-                  alt="profileimg"
-                  width={288}
-                  height={280}
-                  className="card-img-top"
-                  style={{
-                    objectFit: 'cover',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
-                  }}
-                />
-                <Card.Body>
-                  <Card.Title>{p.name}</Card.Title>
-                  <Card.Text>Current Yoga Plan</Card.Text>
-                  <Card.Text>Next Meeting Date: {p.date}</Card.Text>
-                </Card.Body>
-              </Card>
-            ))}
-          </div>
-        </Container>
+        <CurrentPatients />
       </main>
 
       <div className="modal fade " id="requestModal" tabIndex={-1} aria-labelledby="requestModalLabel" aria-hidden="true">
@@ -177,33 +90,256 @@ interface WelcomeCard {
 
 export function WelcomeCard({ therapistName }: WelcomeCard) {
   return (
-    <div className="text-raleway rounded-5 p-5 my-3" style={{
+    <div className="text-wrap text-raleway rounded-5 p-5 my-3" style={{
       width: "100%",
       minHeight: "300px",
       backgroundColor: "rgba(255, 255, 255, 1)",
       backdropFilter: "blur(10px)",
       display: "flex",
-      alignItems: "center",
+      flexDirection: "column",
+      //alignItems: "center",
       justifyContent: "center"
     }}>
-      <h1 className="display-5 fw-semibold">
-        Welcome back {therapistName}!
+      <h1 className="fw-semibold mb-0" style={{fontSize: 'clamp(1.5rem, 3vw, 3rem)'}}>
+        Welcome <br />
+        To Your 
+      </h1>
+      <h1 className="fw-semibold gradient-text mt-0 mb-0 text-wrap" style={{fontSize: 'clamp(1.5rem, 3vw, 3rem)'}}>Yoga Network</h1>
+      <h1 className="display-5 fw-semibold mt-0">
+        {therapistName}
       </h1>
     </div>
   );
 }
 
 interface NextMeetings {
+  id: number;
   patientName: string;
-  meetingDate: string;
+  meetingTime: string;
 }
 
-export function NextMeeting({ patient }: { patient: NextMeetings }) {
+export function UpcomingMeetings() {
+  const [meetings, setMeetings] = useState<NextMeetings[]>([
+    { id: 1, patientName: "George Yousefson", meetingTime: "4:00 pm" },
+    { id: 2, patientName: "Alicia Shells", meetingTime: "6:30 pm" },
+  ]);
   return (
-    <div className="border-top py-2" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)", backdropFilter: "blur(10px)" }}>
-      {patient.patientName} : {patient.meetingDate}
+    <div className="text-raleway rounded-5 p-4 my-3 border-top h-100" style={{ 
+      width: "100%",
+      minHeight: "300px",
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      backdropFilter: "blur(10px)",
+      display: "flex",
+      flexDirection: "column",
+      //alignItems: "center",
+      }}>
+        <div className="fs-4 text-center" style={{
+          borderColor: 'rgb(45, 8, 59)',
+          borderBottom: "2px solid black",
+          marginBottom: "15px",
+          padding: "5px"
+        }}>Upcoming Meetings</div>
+        {meetings.map((meeting) => (
+          <div
+          key={meeting.id}
+          className="d-flex justify-content-between mb-2 align-items-center gap-2 px-3 py-2 rounded-3"
+                  style={{
+                    backgroundColor: 'rgba(228, 211, 255, 0.3)',
+                    border: '1px solid rgba(29, 2, 92, 0.1)'
+                  }}
+          >
+          <span className="fw-semibold">{meeting.meetingTime}</span>
+          <span className="fw-normal">{meeting.patientName}</span>
+          </div>
+
+        ))}
     </div>
   );
+}
+
+interface PatientRequests {
+  id: number;
+  name: string;
+}
+export function PatientRequests() {
+  const [requests, setRequests] =useState<PatientRequests[]>([]);
+
+  useEffect(() => {
+    // Fetch requests from API
+    async function fetchRequests() {
+      try {
+                const res = await fetch("/api/therapist-view/patient-requests");
+                if (!res.ok) throw new Error("Failed to fetch requests");
+                const data = await res.json();
+                setRequests(data);
+            } catch (error) {
+                console.error("Error loading requests:", error);
+            }
+    }
+    fetchRequests();
+  }, []);
+
+  return (
+    <div className="text-raleway rounded-5 p-4 my-3 border-top h-100" style={{ 
+      width: "100%",
+      minHeight: "300px",
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      backdropFilter: "blur(10px)",
+      display: "flex",
+      flexDirection: "column",
+      //alignItems: "center",
+      }}>
+        <div className="fs-4 text-center" style={{
+          borderColor: 'rgb(45, 8, 59)',
+          borderBottom: "2px solid black",
+          marginBottom: "15px",
+          padding: "5px"
+        }}>New Patient Messages</div>
+        {requests.map((request) => (
+          <div
+            key={request.id}
+            className="fw-normal px-2 mb-2 d-flex justify-content-between" style={{
+              backgroundColor: "rgb(226, 226, 226, .1)",
+              borderBottom: "1px solid rgb(29, 2, 92, 0)",
+            }}
+          >
+            <span className="fw-semibold mt-2" style={{color:"#000000"}}>{request.name}</span>
+            <Button variant="outline-primary"data-bs-toggle="modal" data-bs-target="#requestModal" style={{cursor: "pointer"}}>View Message</Button>
+          </div>
+        ))}
+      </div>
+  )
+}
+
+interface Patients {
+  id: number;
+  name: string;
+  img: string;
+  nextMeetingDate: string;
+  CurrentYogaPlan: string;
+}
+export function CurrentPatients() {
+  const [patients, setPatients] = useState<Patients[]>([
+    { id: 1, name: 'George Yousefson', img: '/exDude1.jpg', nextMeetingDate: '11/24/25', CurrentYogaPlan: 'Plan A' },
+    { id: 2, name: 'Alicia Shells', img: '/exDude2.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan B' },
+    { id: 3, name: 'Jennifer Bells', img: '/exDude3.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan C' },
+  ]);
+    return (
+    <Container
+      className="rounded-5 my-5 py-4 px-5 mx-5 mx-auto"
+      style={{
+        backgroundColor: 'rgba(255, 255, 255, 1)',
+        backdropFilter: 'blur(10px)',
+      }}
+    >
+      <div 
+        className="text-raleway fw-semibold display-4 my-3 pb-3" 
+        style={{
+          borderBottom: "2px solid",
+          borderColor: 'rgb(231, 231, 231)',
+        }}
+      >
+        Your Current Patients
+      </div>
+
+      <div className="pretty-scroll d-flex gap-4 py-3">
+        {patients.map((patient) => (
+          <Card
+            key={patient.id}
+            className="text-raleway border-0 shadow"
+            style={{ 
+              width: '18rem', 
+              flexShrink: 0,
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow = '0 12px 30px rgba(29, 2, 92, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            }}
+          >
+            <div style={{ position: 'relative', overflow: 'hidden' }}>
+              <Image
+                src={patient.img}
+                alt={patient.name}
+                width={288}
+                height={280}
+                className="card-img-top"
+                style={{
+                  objectFit: 'cover',
+                  transition: 'transform 0.3s ease',
+                }}
+              />
+              {/* Overlay gradient on hover */}
+              
+            </div>
+
+            <Card.Body className="p-4">
+              <Card.Title 
+                className="fw-semibold mb-3"
+                style={{ 
+                  color: 'rgb(29, 2, 92)',
+                  fontSize: '1.25rem'
+                }}
+              >
+                {patient.name}
+              </Card.Title>
+
+              <div className="d-flex flex-column gap-2">
+                <div 
+                  className="d-flex align-items-center gap-2 px-3 py-2 rounded-3"
+                  style={{
+                    backgroundColor: 'rgba(228, 211, 255, 0.3)',
+                    border: '1px solid rgba(29, 2, 92, 0.1)'
+                  }}
+                >
+                  <i 
+                    className="bi bi-clipboard-heart-fill" 
+                    style={{ color: 'rgb(29, 2, 92)' }}
+                  ></i>
+                  <span className="small fw-medium">{patient.CurrentYogaPlan}</span>
+                </div>
+
+                <div 
+                  className="d-flex align-items-center gap-2 px-3 py-2 rounded-3"
+                  style={{
+                    backgroundColor: 'rgba(228, 211, 255, 0.3)',
+                    border: '1px solid rgba(29, 2, 92, 0.1)'
+                  }}
+                >
+                  <i 
+                    className="bi bi-calendar3" 
+                    style={{ color: 'rgb(29, 2, 92)' }}
+                  ></i>
+                  <span className="small fw-medium">{patient.nextMeetingDate}</span>
+                </div>
+              </div>
+
+              <div className="mt-3 pt-3 border-top">
+                <a 
+                  href="#"
+                  className="text-decoration-none d-flex align-items-center justify-content-center gap-2 fw-semibold"
+                  style={{ 
+                    color: 'rgb(29, 2, 92)',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  View Profile
+                  <i className="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
+    </Container>
+  );
+
 }
 
 // Still working on this
