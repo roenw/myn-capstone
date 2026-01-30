@@ -1,6 +1,6 @@
-"use client";
+﻿"use client";
 
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Card } from "react-bootstrap";
 import { ClientFormData } from "./page";
 
 interface Step3Props {
@@ -10,194 +10,232 @@ interface Step3Props {
 }
 
 export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
-    // helper to update simple key/value fields
     const updateValue = (key: string, value: string) =>
         setFormData({ ...formData, [key]: value });
 
-    // helper for checkboxes
     const toggleArrayValue = (key: string, value: string) => {
         const current = (formData[key] as string[]) || [];
-        if (current.includes(value)) {
-            setFormData({
-                ...formData,
-                [key]: current.filter((v: string) => v !== value),
-            });
-        } else {
-            setFormData({ ...formData, [key]: [...current, value] });
-        }
+        setFormData({
+            ...formData,
+            [key]: current.includes(value)
+                ? current.filter((v: string) => v !== value)
+                : [...current, value],
+        });
     };
 
     return (
-        <Container
-            className="d-flex flex-column align-items-center justify-content-start py-5"
-            style={{ textAlign: "center", minHeight: "100vh" }}
+        <div
+            className="d-flex justify-content-center align-items-center min-vh-100"
+            style={{
+                background: "linear-gradient(to bottom right, #8ee7f1, #6bc9f5)",
+                fontFamily: "'Poppins', sans-serif",
+                overflowY: "auto",
+                padding: "2rem 0",
+            }}
         >
-            {/* Title */}
-            <h5 className="fw-semibold mb-3">
-                Client's Health & Medical Information
-            </h5>
+            <Card
+                className="shadow-lg p-4"
+                style={{
+                    width: "100%",
+                    maxWidth: 900,
+                    borderRadius: "20px",
+                    backgroundColor: "white",
+                    border: "none",
+                }}
+            >
+                <h4 className="fw-bold text-center mb-3" style={{ color: "#0a0a0a" }}>
+                    Client’s Health & Medical Information
+                </h4>
 
-            {/* Disclaimer */}
-            <p className="text-danger small mb-5" style={{ maxWidth: "600px" }}>
-                Disclaimer: This information is confidential and helps us match you with
-                an instructor experienced in your needs. It is not a substitute for
-                medical advice.
-            </p>
+                <p
+                    className="text-danger small text-center mb-5"
+                    style={{ maxWidth: "600px", margin: "0 auto" }}
+                >
+                    Disclaimer: This information is confidential and helps us match you with
+                    an instructor experienced in your needs. It is not a substitute for
+                    medical advice.
+                </p>
 
-            <Form noValidate style={{ maxWidth: "900px", width: "100%" }}>
-                {/* Question 1 */}
-                <Form.Group className="mb-4">
-                    <Form.Label className="fw-normal">
-                        Are you currently under the care of a healthcare provider?
-                    </Form.Label>
-                    <div className="d-inline-flex align-items-center gap-4 ms-3">
-                        {["Yes", "No"].map((option) => (
-                            <div key={option}>
-                                <span>{option}</span>{" "}
-                                <Form.Check
-                                    type="radio"
-                                    name="provider"
-                                    inline
-                                    checked={formData.provider === option}
-                                    onChange={() => updateValue("provider", option)}
-                                    style={{ transform: "scale(1.2)" }}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </Form.Group>
-
-                {/* Question 2 */}
-                <Form.Group className="mb-4">
-                    <Form.Label className="fw-normal">
-                        Do you have any diagnosed medical conditions?{" "}
-                        <span className="text-muted" style={{ fontStyle: "italic" }}>
-                            (Choose from the given boxes; if others, please specify)
-                        </span>
-                    </Form.Label>
-
-                    <div
-                        className="d-flex flex-wrap justify-content-center gap-4 mt-3"
-                        style={{ lineHeight: "2rem" }}
-                    >
-                        {[
-                            "Chronic Pain",
-                            "Arthritis",
-                            "Depression or Anxiety",
-                            "Autoimmune Disorders",
-                            "Neurological Conditions",
-                            "Cardiovascular Conditions",
-                            "Respiratory Conditions",
-                            "Musculoskeletal Injuries",
-                            "Cancer (current or remission)",
-                            "Pregnancy or Postnatal",
-                            "PTSD",
-                        ].map((label) => (
-                            <div key={label} className="d-flex align-items-center gap-1">
-                                <Form.Check
-                                    type="checkbox"
-                                    checked={(formData.conditions || []).includes(label)}
-                                    onChange={() => toggleArrayValue("conditions", label)}
-                                />
-                                <span>{label}</span>
-                            </div>
-                        ))}
-
-                        <div className="d-flex align-items-center gap-2 mt-2">
-                            <span>Others:</span>
-                            <Form.Control
-                                size="sm"
-                                type="text"
-                                style={{
-                                    border: "1px solid black",
-                                    borderRadius: "6px",
-                                    width: "220px",
-                                }}
-                                value={formData.otherCondition || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, otherCondition: e.target.value })
-                                }
-                            />
+                <Form noValidate className="px-3 text-start">
+                    {/* Question 1 */}
+                    <Form.Group className="mb-5">
+                        <Form.Label className="fw-semibold">
+                            Are you currently under the care of a healthcare provider?
+                        </Form.Label>
+                        <div className="d-flex flex-wrap gap-3 mt-3">
+                            {["Yes", "No"].map((option) => (
+                                <Button
+                                    key={option}
+                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
+                                    style={{
+                                        border: "none",
+                                        backgroundColor:
+                                            formData.provider === option ? "#6bc9f5" : "#f7f7f7",
+                                        color: formData.provider === option ? "white" : "#333",
+                                        minWidth: "100px",
+                                    }}
+                                    onClick={() => updateValue("provider", option)}
+                                >
+                                    {option}
+                                </Button>
+                            ))}
                         </div>
-                    </div>
-                </Form.Group>
+                    </Form.Group>
 
-                {/* Question 3 */}
-                <Form.Group className="mb-4">
-                    <Form.Label className="fw-normal">
-                        Do you have any current symptoms or physical limitations?{" "}
-                        <span className="text-muted" style={{ fontStyle: "italic" }}>
-                            (e.g., difficulty standing, joint pain, fatigue, dizziness, etc.)
-                        </span>
-                    </Form.Label>
-                    <div className="d-inline-flex align-items-center gap-4 ms-3">
-                        {["Yes", "No"].map((option) => (
-                            <div key={option}>
-                                <span>{option}</span>{" "}
-                                <Form.Check
-                                    type="radio"
-                                    name="symptoms"
-                                    inline
-                                    checked={formData.symptoms === option}
-                                    onChange={() => updateValue("symptoms", option)}
-                                    style={{ transform: "scale(1.2)" }}
+                    {/* Question 2 */}
+                    <Form.Group className="mb-5">
+                        <Form.Label className="fw-semibold">
+                            Do you have any diagnosed medical conditions?{" "}
+                            <span className="text-muted fst-italic">
+                                (Choose from the given boxes; if others, please specify)
+                            </span>
+                        </Form.Label>
+
+                        <div className="d-flex flex-wrap gap-3 mt-3">
+                            {[
+                                "Chronic Pain",
+                                "Arthritis",
+                                "Depression or Anxiety",
+                                "Autoimmune Disorders",
+                                "Neurological Conditions",
+                                "Cardiovascular Conditions",
+                                "Respiratory Conditions",
+                                "Musculoskeletal Injuries",
+                                "Cancer (current or remission)",
+                                "Pregnancy or Postnatal",
+                                "PTSD",
+                            ].map((label) => (
+                                <Button
+                                    key={label}
+                                    className="rounded-pill px-3 py-2 fw-semibold shadow-sm"
+                                    style={{
+                                        border: "none",
+                                        minWidth: "200px",
+                                        backgroundColor: (formData.conditions || []).includes(label)
+                                            ? "#6bc9f5"
+                                            : "#f7f7f7",
+                                        color: (formData.conditions || []).includes(label)
+                                            ? "white"
+                                            : "#333",
+                                    }}
+                                    onClick={() => toggleArrayValue("conditions", label)}
+                                >
+                                    {label}
+                                </Button>
+                            ))}
+
+                            <div className="d-flex align-items-center gap-2 mt-3">
+                                <span className="fw-semibold">Other:</span>
+                                <Form.Control
+                                    size="sm"
+                                    type="text"
+                                    placeholder="Specify condition"
+                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
+                                    style={{ backgroundColor: "#f7f7f7", width: "220px" }}
+                                    value={formData.otherCondition || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, otherCondition: e.target.value })
+                                    }
                                 />
                             </div>
-                        ))}
-                    </div>
-                </Form.Group>
+                        </div>
+                    </Form.Group>
 
-                {/* Question 4 */}
-                <Form.Group className="mb-4">
-                    <Form.Label className="fw-normal">
-                        Are there any movements or positions you've been told to avoid?
-                    </Form.Label>
-                    <div className="d-inline-flex align-items-center gap-4 ms-3">
-                        {["Yes", "No"].map((option) => (
-                            <div key={option}>
-                                <span>{option}</span>{" "}
-                                <Form.Check
-                                    type="radio"
-                                    name="avoid"
-                                    inline
-                                    checked={formData.avoid === option}
-                                    onChange={() => updateValue("avoid", option)}
-                                    style={{ transform: "scale(1.2)" }}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </Form.Group>
+                    {/* Question 3 */}
+                    <Form.Group className="mb-5">
+                        <Form.Label className="fw-semibold">
+                            Do you have any current symptoms or physical limitations?{" "}
+                            <span className="text-muted fst-italic">
+                                (e.g., difficulty standing, joint pain, fatigue, dizziness, etc.)
+                            </span>
+                        </Form.Label>
+                        <div className="d-flex flex-wrap gap-3 mt-3">
+                            {["Yes", "No"].map((option) => (
+                                <Button
+                                    key={option}
+                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
+                                    style={{
+                                        border: "none",
+                                        backgroundColor:
+                                            formData.symptoms === option ? "#6bc9f5" : "#f7f7f7",
+                                        color: formData.symptoms === option ? "white" : "#333",
+                                        minWidth: "100px",
+                                    }}
+                                    onClick={() => updateValue("symptoms", option)}
+                                >
+                                    {option}
+                                </Button>
+                            ))}
+                        </div>
+                    </Form.Group>
 
-                {/* Question 5 */}
-                <Form.Group className="mb-5">
-                    <Form.Label className="fw-normal">
-                        Are you currently insured?
-                    </Form.Label>
-                    <div className="d-inline-flex align-items-center gap-4 ms-3">
-                        {["Yes", "No"].map((option) => (
-                            <div key={option}>
-                                <span>{option}</span>{" "}
-                                <Form.Check
-                                    type="radio"
-                                    name="insured"
-                                    inline
-                                    checked={formData.insured === option}
-                                    onChange={() => updateValue("insured", option)}
-                                    style={{ transform: "scale(1.2)" }}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                </Form.Group>
+                    {/* Question 4 */}
+                    <Form.Group className="mb-5">
+                        <Form.Label className="fw-semibold">
+                            Are there any movements or positions you’ve been told to avoid?
+                        </Form.Label>
+                        <div className="d-flex flex-wrap gap-3 mt-3">
+                            {["Yes", "No"].map((option) => (
+                                <Button
+                                    key={option}
+                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
+                                    style={{
+                                        border: "none",
+                                        backgroundColor:
+                                            formData.avoid === option ? "#6bc9f5" : "#f7f7f7",
+                                        color: formData.avoid === option ? "white" : "#333",
+                                        minWidth: "100px",
+                                    }}
+                                    onClick={() => updateValue("avoid", option)}
+                                >
+                                    {option}
+                                </Button>
+                            ))}
+                        </div>
+                    </Form.Group>
 
-                {/* Navigation */}
-                <div className="mt-4">
-                    <Button variant="secondary" size="sm" onClick={nextStep}>
-                        Next
-                    </Button>
-                </div>
-            </Form>
-        </Container>
+                    {/* Question 5 */}
+                    <Form.Group className="mb-5">
+                        <Form.Label className="fw-semibold">
+                            Are you currently insured?
+                        </Form.Label>
+                        <div className="d-flex flex-wrap gap-3 mt-3">
+                            {["Yes", "No"].map((option) => (
+                                <Button
+                                    key={option}
+                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
+                                    style={{
+                                        border: "none",
+                                        backgroundColor:
+                                            formData.insured === option ? "#6bc9f5" : "#f7f7f7",
+                                        color: formData.insured === option ? "white" : "#333",
+                                        minWidth: "100px",
+                                    }}
+                                    onClick={() => updateValue("insured", option)}
+                                >
+                                    {option}
+                                </Button>
+                            ))}
+                        </div>
+                    </Form.Group>
+
+                    {/* Navigation */}
+                    <div className="d-flex justify-content-end mt-4">
+                        <Button
+                            type="button"
+                            className="rounded-pill fw-semibold"
+                            style={{
+                                backgroundColor: "#6bc9f5",
+                                border: "none",
+                                padding: "10px 32px",
+                            }}
+                            onClick={nextStep}
+                        >
+                            Next →
+                        </Button>
+                    </div>
+                </Form>
+            </Card>
+        </div>
     );
 }

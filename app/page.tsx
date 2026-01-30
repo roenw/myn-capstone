@@ -16,30 +16,66 @@ export default function HomePage() {
     return (
         <>
             {/* Navbar */}
-            <Navbar expand="lg" bg="light" className="py-3 border-bottom">
+            <Navbar
+                expand="lg"
+                className="py-3"
+                style={{
+                    background: "linear-gradient(to right, #8ee7f1, #6bc9f5)",
+                }}
+            >
                 <Container>
-                    <Navbar.Brand href="#" className="fw-bold d-flex align-items-center">
-                        <span className="me-2 fs-4">🧘</span> Yoga Therapy
+                    <Navbar.Brand
+                        href="#"
+                        className="fw-bold d-flex align-items-center"
+                        style={{
+                            fontFamily: "'Poppins', sans-serif",
+                            color: "#0a0a0a",
+                            fontSize: "1.4rem",
+                        }}
+                    >
+                        <span className="me-2 fs-4">🧘‍♀️</span> Yoga Therapy
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-                        <Nav className="me-3">
-                            <Nav.Link href="#">About</Nav.Link>
-                            <Nav.Link href="#">Services</Nav.Link>
-                            <Nav.Link href="#">Contact</Nav.Link>
+                    <Navbar.Collapse
+                        id="basic-navbar-nav"
+                        className="justify-content-end align-items-center"
+                    >
+                        <Nav className="me-4 fw-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
+                            <Nav.Link href="#" className="text-dark me-2">
+                                About
+                            </Nav.Link>
+                            <Nav.Link href="#" className="text-dark me-2">
+                                Services
+                            </Nav.Link>
+                            <Nav.Link href="#" className="text-dark">
+                                Contact
+                            </Nav.Link>
                         </Nav>
+
                         <div className="d-flex gap-2">
                             <Button
-                                variant="outline-secondary"
+                                type="button"
+                                className="rounded-pill fw-semibold px-4"
+                                style={{
+                                    backgroundColor: "white",
+                                    border: "2px solid #6bc9f5",
+                                    color: "#0a0a0a",
+                                }}
                                 onClick={() => router.push("/signup")}
                             >
-                                Sign up
+                                Sign Up
                             </Button>
                             <Button
-                                variant="secondary"
+                                type="button"
+                                className="rounded-pill fw-semibold px-4"
+                                style={{
+                                    backgroundColor: "#6bc9f5",
+                                    border: "none",
+                                    color: "white",
+                                }}
                                 onClick={() => router.push("/login")}
                             >
-                                Log in
+                                Log In
                             </Button>
                         </div>
                     </Navbar.Collapse>
@@ -47,55 +83,67 @@ export default function HomePage() {
             </Navbar>
 
             {/* Hero Section */}
-            <section className="bg-light position-relative py-5">
-                <Container className="d-flex flex-column flex-md-row align-items-center justify-content-between">
-                    <div className="text-center text-md-start mb-5 mb-md-0">
-                        <h1 className="fw-bold display-5">YOGA THERAPY</h1>
-                        <p className="lead mt-3 mb-4">
-                            Your journey to balance continues...
-                        </p>
-                        <Button variant="secondary" size="lg">
-                            Learn More
-                        </Button>
-                    </div>
+            <section
+                className="d-flex flex-column justify-content-center align-items-center text-center"
+                style={{
+                    background: "linear-gradient(to bottom right, #f8f9fa, #e3f6fb)",
+                    minHeight: "85vh",
+                    fontFamily: "'Poppins', sans-serif",
+                }}
+            >
+                <h1
+                    className="fw-bold display-5 mb-3"
+                    style={{
+                        color: "#0a0a0a",
+                        letterSpacing: "1px",
+                    }}
+                >
+                    Welcome to <span style={{ color: "#6bc9f5" }}>Yoga Therapy</span>
+                </h1>
 
-                    {/* Placeholder for Image / Visuals 
-                    <div className="position-relative">
-                        <div
-                            className="bg-secondary opacity-25 position-absolute"
-                            style={{
-                                width: "400px",
-                                height: "350px",
-                                top: "50px",
-                                left: "-100px",
-                            }}
-                        ></div>
-                        <div
-                            className="bg-dark opacity-50"
-                            style={{ width: "300px", height: "400px" }}
-                        ></div>
-                    </div>
-                    */}
-                </Container>
+                <p className="lead mb-4" style={{ maxWidth: "600px", color: "#333" }}>
+                    Find balance, clarity, and strength through guided wellness practices.
+                    Join our network of clients, instructors, and physicians working together
+                    for holistic well-being.
+                </p>
+
+                <Button
+                    type="button"
+                    className="rounded-pill fw-semibold px-5 py-2"
+                    style={{
+                        backgroundColor: "#6bc9f5",
+                        border: "none",
+                        fontSize: "1.1rem",
+                    }}
+                    onClick={() => router.push("/signup")}
+                >
+                    Get Started →
+                </Button>
             </section>
 
             {/* Footer */}
-            <footer className="bg-light border-top py-4 mt-5">
-                <Container className="d-flex justify-content-end gap-4">
-                    <a href="#" style={{ color: "black" }}>
-                        <FaInstagram size={24} />
+            <footer
+                className="py-4"
+                style={{
+                    backgroundColor: "white",
+                    borderTop: "2px solid #dbe9ee",
+                }}
+            >
+                <Container className="d-flex justify-content-center gap-4">
+                    <a href="#" style={{ color: "#0a0a0a" }}>
+                        <FaInstagram size={22} />
                     </a>
-                    <a href="#" style={{ color: "black" }}>
-                        <FaFacebook size={24} />
+                    <a href="#" style={{ color: "#0a0a0a" }}>
+                        <FaFacebook size={22} />
                     </a>
-                    <a href="#" style={{ color: "black" }}>
-                        <FaXTwitter size={24} />
+                    <a href="#" style={{ color: "#0a0a0a" }}>
+                        <FaXTwitter size={22} />
                     </a>
-                    <a href="#" style={{ color: "black" }}>
-                        <FaLinkedin size={24} />
+                    <a href="#" style={{ color: "#0a0a0a" }}>
+                        <FaLinkedin size={22} />
                     </a>
-                    <a href="#" style={{ color: "black" }}>
-                        <FaYoutube size={24} />
+                    <a href="#" style={{ color: "#0a0a0a" }}>
+                        <FaYoutube size={22} />
                     </a>
                 </Container>
             </footer>
