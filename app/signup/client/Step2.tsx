@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Container } from "react-bootstrap";
 import React from "react";
 
 type ClientFormData = {
@@ -29,193 +29,242 @@ export default function Step2({ nextStep, formData, setFormData }: Step2Props) {
         });
     };
 
-    const updateValue = (key: string, value: string) => {
+    const updateValue = (key: string, value: string) =>
         setFormData({ ...formData, [key]: value });
-    };
 
     return (
         <div
-            className="d-flex justify-content-center align-items-center min-vh-100"
-            style={{
-                background: "linear-gradient(to bottom right, #8ee7f1, #6bc9f5)",
-                fontFamily: "'Poppins', sans-serif",
-                overflowY: "auto",
-                padding: "2rem 0",
-            }}
+            className="d-flex align-items-center justify-content-center min-vh-100"
+            style={{ backgroundColor: "#020617" }} // slate-950
         >
-            <Card
-                className="shadow-lg p-4"
-                style={{
-                    width: "100%",
-                    maxWidth: 800,
-                    borderRadius: "20px",
-                    backgroundColor: "white",
-                    border: "none",
-                }}
-            >
-                <h4 className="fw-bold text-center mb-4" style={{ color: "#0a0a0a" }}>
-                    Wellness and Lifestyle
-                </h4>
+            <Container style={{ maxWidth: 900 }}>
+                <Card
+                    className="border-0 shadow-lg"
+                    style={{
+                        backgroundColor: "rgba(15, 23, 42, 0.7)", // slate-900/70
+                        borderRadius: "1rem",
+                        border: "1px solid #1e293b",
+                    }}
+                >
+                    <Card.Body className="p-4">
+                        {/* Header */}
+                        <div className="text-center mb-4">
+                            <h4 className="fw-semibold text-light mb-1">
+                                Wellness & Lifestyle
+                            </h4>
+                            <p className="text-secondary small mb-1">
+                                Step 2 of 6
+                            </p>
+                            <p
+                                className="text-secondary small"
+                                style={{ maxWidth: 560, margin: "0 auto" }}
+                            >
+                                This helps us understand your goals and preferences so we can
+                                tailor your experience.
+                            </p>
+                        </div>
 
-                <Form noValidate className="px-2">
-                    {/* --- Interest in Yoga Therapy --- */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold">
-                            Why are you interested in yoga therapy?{" "}
-                            <span className="text-muted">(Select all that apply)</span>
-                        </Form.Label>
+                        <Form noValidate className="d-grid gap-4">
 
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {[
-                                "Stress relief",
-                                "Pain Management",
-                                "Improving flexibility or strength",
-                                "Better Sleep",
-                                "Mental Health Support",
-                                "Recovery or Rehabilitation",
-                                "Spiritual growth or mindfulness",
-                            ].map((label) => (
+                            {/* SECTION 1 */}
+                            <Section title="Your goals">
+                                <p className="text-secondary small mb-3">
+                                    What’s motivating you to explore yoga therapy?
+                                </p>
+
+                                <div className="d-flex flex-wrap gap-2">
+                                    {[
+                                        "Stress relief",
+                                        "Pain Management",
+                                        "Improving flexibility or strength",
+                                        "Better Sleep",
+                                        "Mental Health Support",
+                                        "Recovery or Rehabilitation",
+                                        "Spiritual growth or mindfulness",
+                                    ].map((label) => {
+                                        const active = (formData.interests || []).includes(label);
+                                        return (
+                                            <Pill
+                                                key={label}
+                                                active={active}
+                                                onClick={() => toggleArrayValue("interests", label)}
+                                            >
+                                                {label}
+                                            </Pill>
+                                        );
+                                    })}
+                                </div>
+
+                                <Form.Control
+                                    size="sm"
+                                    placeholder="Other reason (optional)"
+                                    value={formData.otherInterest || ""}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            otherInterest: e.target.value,
+                                        })
+                                    }
+                                    className="border-0 mt-3"
+                                    style={{ ...inputStyle, maxWidth: 260 }}
+                                />
+                            </Section>
+
+                            {/* SECTION 2 */}
+                            <Section title="Yoga experience">
+                                <p className="text-secondary small mb-3">
+                                    Have you practiced yoga before?
+                                </p>
+
+                                <div className="d-flex gap-3">
+                                    {["Yes", "No"].map((option) => (
+                                        <Pill
+                                            key={option}
+                                            active={formData.yogaBefore === option}
+                                            onClick={() =>
+                                                updateValue("yogaBefore", option)
+                                            }
+                                        >
+                                            {option}
+                                        </Pill>
+                                    ))}
+                                </div>
+                            </Section>
+
+                            {/* SECTION 3 */}
+                            <Section title="Practice frequency">
+                                <p className="text-secondary small mb-3">
+                                    How often would you ideally like to practice?
+                                </p>
+
+                                <div className="d-flex flex-wrap gap-2">
+                                    {[
+                                        "Once a week",
+                                        "2–3 times/week",
+                                        "Daily",
+                                        "Occasionally",
+                                    ].map((label) => (
+                                        <Pill
+                                            key={label}
+                                            active={formData.practiceFrequency === label}
+                                            onClick={() =>
+                                                updateValue("practiceFrequency", label)
+                                            }
+                                        >
+                                            {label}
+                                        </Pill>
+                                    ))}
+                                </div>
+                            </Section>
+
+                            {/* SECTION 4 */}
+                            <Section title="Session preference">
+                                <p className="text-secondary small mb-3">
+                                    What type of sessions feel right for you?
+                                </p>
+
+                                <div className="d-flex flex-wrap gap-2">
+                                    {[
+                                        "One-on-one",
+                                        "Small group",
+                                        "Pre-recorded/self-paced",
+                                        "No preference",
+                                    ].map((label) => (
+                                        <Pill
+                                            key={label}
+                                            active={formData.sessionType === label}
+                                            onClick={() =>
+                                                updateValue("sessionType", label)
+                                            }
+                                        >
+                                            {label}
+                                        </Pill>
+                                    ))}
+                                </div>
+                            </Section>
+
+                            {/* Navigation */}
+                            <div className="d-flex justify-content-end pt-2">
                                 <Button
-                                    key={label}
-                                    className="rounded-pill px-3 py-2 fw-semibold shadow-sm"
+                                    type="button"
+                                    onClick={nextStep}
                                     style={{
+                                        backgroundColor: "#3b82f6",
                                         border: "none",
-                                        minWidth: "180px",
-                                        backgroundColor: (formData.interests || []).includes(label)
-                                            ? "#6bc9f5"
-                                            : "#f7f7f7",
-                                        color: (formData.interests || []).includes(label)
-                                            ? "white"
-                                            : "#333",
+                                        borderRadius: "9999px",
+                                        padding: "0.6rem 2rem",
+                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
                                     }}
-                                    onClick={() => toggleArrayValue("interests", label)}
                                 >
-                                    {label}
+                                    Next →
                                 </Button>
-                            ))}
-                        </div>
+                            </div>
 
-                        <div className="d-flex align-items-center gap-2 mt-4">
-                            <span className="fw-semibold">Other:</span>
-                            <Form.Control
-                                size="sm"
-                                type="text"
-                                placeholder="Enter custom reason"
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{
-                                    backgroundColor: "#f7f7f7",
-                                    width: "220px",
-                                }}
-                                value={formData.otherInterest || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, otherInterest: e.target.value })
-                                }
-                            />
-                        </div>
-                    </Form.Group>
-
-                    {/* --- Practiced Yoga Before --- */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold mb-3">
-                            Have you practiced yoga before?
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3">
-                            {["Yes", "No"].map((option) => (
-                                <Button
-                                    key={option}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor:
-                                            formData.yogaBefore === option ? "#6bc9f5" : "#f7f7f7",
-                                        color: formData.yogaBefore === option ? "white" : "#333",
-                                        minWidth: "100px",
-                                    }}
-                                    onClick={() => updateValue("yogaBefore", option)}
-                                >
-                                    {option}
-                                </Button>
-                            ))}
-                        </div>
-                    </Form.Group>
-
-                    {/* --- Frequency --- */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold mb-3">
-                            How often would you like to practice?
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3">
-                            {["Once a week", "2-3 times/week", "Daily", "Occasionally"].map(
-                                (label) => (
-                                    <Button
-                                        key={label}
-                                        className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                        style={{
-                                            border: "none",
-                                            minWidth: "160px",
-                                            backgroundColor:
-                                                formData.practiceFrequency === label
-                                                    ? "#6bc9f5"
-                                                    : "#f7f7f7",
-                                            color:
-                                                formData.practiceFrequency === label ? "white" : "#333",
-                                        }}
-                                        onClick={() => updateValue("practiceFrequency", label)}
-                                    >
-                                        {label}
-                                    </Button>
-                                )
-                            )}
-                        </div>
-                    </Form.Group>
-
-                    {/* --- Preferred Session Type --- */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold mb-3">
-                            Preferred session type
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3">
-                            {[
-                                "One-on-one",
-                                "Small group",
-                                "Pre-recorded/self-paced",
-                                "No preference",
-                            ].map((label) => (
-                                <Button
-                                    key={label}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        minWidth: "180px",
-                                        backgroundColor:
-                                            formData.sessionType === label ? "#6bc9f5" : "#f7f7f7",
-                                        color: formData.sessionType === label ? "white" : "#333",
-                                    }}
-                                    onClick={() => updateValue("sessionType", label)}
-                                >
-                                    {label}
-                                </Button>
-                            ))}
-                        </div>
-                    </Form.Group>
-
-                    {/* --- Navigation Button --- */}
-                    <div className="d-flex justify-content-end mt-4">
-                        <Button
-                            type="button"
-                            className="rounded-pill fw-semibold"
-                            style={{
-                                backgroundColor: "#6bc9f5",
-                                border: "none",
-                                padding: "10px 32px",
-                            }}
-                            onClick={nextStep}
-                        >
-                            Next →
-                        </Button>
-                    </div>
-                </Form>
-            </Card>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
     );
 }
+
+/* ---------- Shared UX helpers ---------- */
+
+function Section({
+    title,
+    children,
+}: {
+    title: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <div
+            style={{
+                backgroundColor: "rgba(2,6,23,0.85)",
+                border: "1px solid #1e293b",
+                borderRadius: "0.75rem",
+                padding: "1rem",
+            }}
+        >
+            <h6 className="text-light fw-semibold mb-2">
+                {title}
+            </h6>
+            {children}
+        </div>
+    );
+}
+
+function Pill({
+    active,
+    children,
+    onClick,
+}: {
+    active: boolean;
+    children: React.ReactNode;
+    onClick: () => void;
+}) {
+    return (
+        <Button
+            onClick={onClick}
+            style={{
+                backgroundColor: active ? "#3b82f6" : "#020617",
+                color: active ? "white" : "#cbd5f5",
+                border: active
+                    ? "1px solid #3b82f6"
+                    : "1px solid #1e293b",
+                borderRadius: "9999px",
+                padding: "0.45rem 1rem",
+                fontWeight: 500,
+            }}
+        >
+            {children}
+        </Button>
+    );
+}
+
+const inputStyle = {
+    backgroundColor: "#020617",
+    color: "#e5e7eb",
+    borderRadius: "0.6rem",
+    padding: "0.4rem 0.6rem",
+};

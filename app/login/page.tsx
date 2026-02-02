@@ -1,106 +1,115 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { Container, Card, Form, Button } from 'react-bootstrap';
+import { useRouter } from "next/navigation";
+import { Container, Card, Form, Button } from "react-bootstrap";
 
 export default function LoginPage() {
-    const [userType, setUserType] = useState('client');
     const router = useRouter();
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        switch (userType) {
-            case 'physician':
-                router.push('/physician');
-                break;
-            case 'instructor':
-                router.push('/therapistView');
-                break;
-            case 'admin':
-                router.push('/admin');
-                break;
-            default:
-                router.push('/client');
-        }
+
+        // Role-based routing should happen AFTER auth (session / backend)
+        router.push("/client"); // placeholder
     };
 
     return (
         <div
-            className="d-flex justify-content-center align-items-center vh-100"
-            style={{
-                background: 'linear-gradient(to bottom right, #8ee7f1, #6bc9f5)',
-                fontFamily: "'Poppins', sans-serif",
-            }}
+            className="d-flex align-items-center justify-content-center min-vh-100"
+            style={{ backgroundColor: "#020617" }} // slate-950
         >
-            <Card
-                className="shadow-lg p-5 text-center"
-                style={{
-                    width: '400px',
-                    borderRadius: '20px',
-                    backgroundColor: 'white',
-                    border: 'none',
-                }}
-            >
-                <h2 className="fw-bold mb-4" style={{ color: '#0a0a0a' }}>
-                    Welcome Back
-                </h2>
-                <p className="text-muted mb-4">Sign in to your account</p>
+            <Container style={{ maxWidth: "420px" }}>
+                <Card
+                    className="border-0 shadow-lg"
+                    style={{
+                        backgroundColor: "rgba(15, 23, 42, 0.7)", // slate-900/70
+                        borderRadius: "1rem",
+                        border: "1px solid #1e293b", // slate-800
+                    }}
+                >
+                    <Card.Body className="p-4">
+                        {/* Header */}
+                        <div className="text-center mb-4">
+                            <h2 className="fw-semibold text-light mb-1">
+                                Welcome Back
+                            </h2>
+                            <p className="text-secondary small mb-0">
+                                Sign in to your account
+                            </p>
+                        </div>
 
-                <Form onSubmit={handleLogin}>
-                    {/* User Type Dropdown */}
-                    <Form.Group className="mb-3 text-start">
-                        <Form.Label className="fw-semibold">User Type</Form.Label>
-                        <Form.Select
-                            value={userType}
-                            onChange={(e) => setUserType(e.target.value)}
-                            className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                            style={{ backgroundColor: '#f7f7f7' }}
-                        >
-                            <option value="client">Client</option>
-                            <option value="instructor">Instructor</option>
-                            <option value="physician">Physician</option>
-                            <option value="admin">Admin</option>
-                        </Form.Select>
-                    </Form.Group>
+                        {/* Login Form */}
+                        <Form onSubmit={handleLogin}>
+                            {/* Username */}
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Username
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    required
+                                    placeholder="Enter your username"
+                                    className="border-0"
+                                    style={{
+                                        backgroundColor: "#020617", // slate-950
+                                        color: "#e5e7eb",
+                                        borderRadius: "0.75rem",
+                                        padding: "0.6rem 0.75rem",
+                                    }}
+                                />
+                            </Form.Group>
 
-                    {/* Username Field */}
-                    <Form.Group className="mb-3 text-start">
-                        <Form.Label className="fw-semibold">Username</Form.Label>
-                        <Form.Control
-                            type="text"
-                            placeholder="Enter username"
-                            className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                            style={{ backgroundColor: '#f7f7f7' }}
-                        />
-                    </Form.Group>
+                            {/* Password */}
+                            <Form.Group className="mb-4">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Password
+                                </Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    required
+                                    placeholder="Enter your password"
+                                    className="border-0"
+                                    style={{
+                                        backgroundColor: "#020617",
+                                        color: "#e5e7eb",
+                                        borderRadius: "0.75rem",
+                                        padding: "0.6rem 0.75rem",
+                                    }}
+                                />
+                            </Form.Group>
 
-                    {/* Password Field */}
-                    <Form.Group className="mb-4 text-start">
-                        <Form.Label className="fw-semibold">Password</Form.Label>
-                        <Form.Control
-                            type="password"
-                            placeholder="Enter password"
-                            className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                            style={{ backgroundColor: '#f7f7f7' }}
-                        />
-                    </Form.Group>
+                            {/* Submit */}
+                            <Button
+                                type="submit"
+                                className="w-100 fw-medium"
+                                style={{
+                                    backgroundColor: "#3b82f6", // blue-500
+                                    border: "none",
+                                    borderRadius: "9999px",
+                                    padding: "0.6rem 0",
+                                    boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)",
+                                }}
+                            >
+                                Log In
+                            </Button>
+                        </Form>
 
-                    {/* Login Button */}
-                    <Button
-                        type="submit"
-                        className="w-100 rounded-pill fw-semibold"
-                        style={{
-                            backgroundColor: '#6bc9f5',
-                            border: 'none',
-                            padding: '10px 0',
-                            fontSize: '1rem',
-                        }}
-                    >
-                        Log In
-                    </Button>
-                </Form>
-            </Card>
+                        {/* Footer */}
+                        <div className="text-center mt-4">
+                            <small className="text-secondary">
+                                Don't have an account?{" "}
+                                <a
+                                    href="/signup"
+                                    className="text-decoration-none"
+                                    style={{ color: "#60a5fa" }}
+                                >
+                                    Sign up
+                                </a>
+                            </small>
+                        </div>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
     );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Container, Navbar, Nav, Button } from "react-bootstrap";
+import { Container, Navbar, Nav, Button, Row, Col, Card } from "react-bootstrap";
 import {
     FaInstagram,
     FaFacebook,
@@ -15,136 +15,157 @@ export default function HomePage() {
 
     return (
         <>
-            {/* Navbar */}
+            {/* ---------- NAVBAR ---------- */}
             <Navbar
                 expand="lg"
                 className="py-3"
                 style={{
-                    background: "linear-gradient(to right, #8ee7f1, #6bc9f5)",
+                    backgroundColor: "#020617", // slate-950
+                    borderBottom: "1px solid #1e293b",
                 }}
             >
                 <Container>
                     <Navbar.Brand
-                        href="#"
-                        className="fw-bold d-flex align-items-center"
+                        className="fw-semibold"
                         style={{
+                            color: "#e5e7eb",
                             fontFamily: "'Poppins', sans-serif",
-                            color: "#0a0a0a",
-                            fontSize: "1.4rem",
                         }}
                     >
-                        <span className="me-2 fs-4">🧘‍♀️</span> Yoga Therapy
+                        Yoga Network
                     </Navbar.Brand>
-                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                    <Navbar.Collapse
-                        id="basic-navbar-nav"
-                        className="justify-content-end align-items-center"
-                    >
-                        <Nav className="me-4 fw-semibold" style={{ fontFamily: "'Poppins', sans-serif" }}>
-                            <Nav.Link href="#" className="text-dark me-2">
-                                About
-                            </Nav.Link>
-                            <Nav.Link href="#" className="text-dark me-2">
-                                Services
-                            </Nav.Link>
-                            <Nav.Link href="#" className="text-dark">
-                                Contact
-                            </Nav.Link>
+
+                    <Navbar.Toggle />
+                    <Navbar.Collapse className="justify-content-end">
+                        <Nav className="me-4">
+                            <Nav.Link className="text-secondary">About</Nav.Link>
+                            <Nav.Link className="text-secondary">Services</Nav.Link>
+                            <Nav.Link className="text-secondary">Contact</Nav.Link>
                         </Nav>
 
                         <div className="d-flex gap-2">
                             <Button
-                                type="button"
-                                className="rounded-pill fw-semibold px-4"
-                                style={{
-                                    backgroundColor: "white",
-                                    border: "2px solid #6bc9f5",
-                                    color: "#0a0a0a",
-                                }}
-                                onClick={() => router.push("/signup")}
-                            >
-                                Sign Up
-                            </Button>
-                            <Button
-                                type="button"
-                                className="rounded-pill fw-semibold px-4"
-                                style={{
-                                    backgroundColor: "#6bc9f5",
-                                    border: "none",
-                                    color: "white",
-                                }}
+                                variant="outline-secondary"
+                                className="rounded-pill px-4"
                                 onClick={() => router.push("/login")}
                             >
                                 Log In
+                            </Button>
+                            <Button
+                                className="rounded-pill px-4"
+                                style={{
+                                    backgroundColor: "#3b82f6",
+                                    border: "none",
+                                }}
+                                onClick={() => router.push("/signup")}
+                            >
+                                Get Started
                             </Button>
                         </div>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
 
-            {/* Hero Section */}
+            {/* ---------- HERO ---------- */}
             <section
-                className="d-flex flex-column justify-content-center align-items-center text-center"
+                className="d-flex align-items-center"
                 style={{
-                    background: "linear-gradient(to bottom right, #f8f9fa, #e3f6fb)",
                     minHeight: "85vh",
+                    background:
+                        "radial-gradient(circle at top, #020617 40%, #020617 100%)",
                     fontFamily: "'Poppins', sans-serif",
                 }}
             >
-                <h1
-                    className="fw-bold display-5 mb-3"
-                    style={{
-                        color: "#0a0a0a",
-                        letterSpacing: "1px",
-                    }}
-                >
-                    Welcome to <span style={{ color: "#6bc9f5" }}>Yoga Therapy</span>
-                </h1>
+                <Container>
+                    <Row className="align-items-center">
+                        <Col md={6}>
+                            <h1 className="fw-bold mb-3 text-light">
+                                A calmer way to heal,
+                                <br />
+                                <span style={{ color: "#3b82f6" }}>
+                                    guided by professionals
+                                </span>
+                            </h1>
 
-                <p className="lead mb-4" style={{ maxWidth: "600px", color: "#333" }}>
-                    Find balance, clarity, and strength through guided wellness practices.
-                    Join our network of clients, instructors, and physicians working together
-                    for holistic well-being.
-                </p>
+                            <p className="text-secondary mb-4" style={{ maxWidth: 520 }}>
+                                Yoga Network connects clients, instructors, and physicians in one
+                                secure, collaborative wellness platform designed for real care.
+                            </p>
 
-                <Button
-                    type="button"
-                    className="rounded-pill fw-semibold px-5 py-2"
-                    style={{
-                        backgroundColor: "#6bc9f5",
-                        border: "none",
-                        fontSize: "1.1rem",
-                    }}
-                    onClick={() => router.push("/signup")}
-                >
-                    Get Started →
-                </Button>
+                            <div className="d-flex gap-3">
+                                <Button
+                                    className="rounded-pill px-5"
+                                    style={{
+                                        backgroundColor: "#3b82f6",
+                                        border: "none",
+                                        boxShadow: "0 0 20px rgba(59,130,246,0.35)",
+                                    }}
+                                    onClick={() => router.push("/signup")}
+                                >
+                                    Create Account →
+                                </Button>
+                                <Button
+                                    variant="outline-secondary"
+                                    className="rounded-pill px-4"
+                                    onClick={() => router.push("/login")}
+                                >
+                                    Log In
+                                </Button>
+                            </div>
+                        </Col>
+
+                        {/* Right Side Feature Card */}
+                        <Col md={6} className="mt-5 mt-md-0">
+                            <Card
+                                className="border-0 shadow-lg"
+                                style={{
+                                    backgroundColor: "rgba(15, 23, 42, 0.7)",
+                                    backdropFilter: "blur(12px)",
+                                    borderRadius: "1rem",
+                                    border: "1px solid #1e293b",
+                                }}
+                            >
+                                <Card.Body className="p-4">
+                                    <h5 className="text-light mb-3">
+                                        Why Yoga Network?
+                                    </h5>
+                                    <ul className="text-secondary small ps-3 mb-0">
+                                        <li className="mb-2">
+                                            Secure collaboration between physicians & instructors
+                                        </li>
+                                        <li className="mb-2">
+                                            Personalized therapy-focused yoga plans
+                                        </li>
+                                        <li className="mb-2">
+                                            Designed for long-term wellness, not trends
+                                        </li>
+                                    </ul>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
             </section>
 
-            {/* Footer */}
+            {/* ---------- FOOTER ---------- */}
             <footer
                 className="py-4"
                 style={{
-                    backgroundColor: "white",
-                    borderTop: "2px solid #dbe9ee",
+                    backgroundColor: "#020617",
+                    borderTop: "1px solid #1e293b",
                 }}
             >
-                <Container className="d-flex justify-content-center gap-4">
-                    <a href="#" style={{ color: "#0a0a0a" }}>
-                        <FaInstagram size={22} />
-                    </a>
-                    <a href="#" style={{ color: "#0a0a0a" }}>
-                        <FaFacebook size={22} />
-                    </a>
-                    <a href="#" style={{ color: "#0a0a0a" }}>
-                        <FaXTwitter size={22} />
-                    </a>
-                    <a href="#" style={{ color: "#0a0a0a" }}>
-                        <FaLinkedin size={22} />
-                    </a>
-                    <a href="#" style={{ color: "#0a0a0a" }}>
-                        <FaYoutube size={22} />
-                    </a>
+                <Container className="d-flex flex-column align-items-center gap-3">
+                    <div className="d-flex gap-4">
+                        <FaInstagram color="#94a3b8" />
+                        <FaFacebook color="#94a3b8" />
+                        <FaXTwitter color="#94a3b8" />
+                        <FaLinkedin color="#94a3b8" />
+                        <FaYoutube color="#94a3b8" />
+                    </div>
+                    <small className="text-secondary">
+                        © Yoga Network — All rights reserved
+                    </small>
                 </Container>
             </footer>
         </>

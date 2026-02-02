@@ -1,209 +1,170 @@
-'use client';
+"use client";
+
 import Image from "next/image";
-import { Navbar, Container, Nav, Row, Col, Card, Button } from 'react-bootstrap';
-import "./therapistStyles.css";
+import { Navbar, Container, Nav, Row, Col, Card, Button } from "react-bootstrap";
 
 export default function TherapistView() {
-  return (
-    <>
-      {/* Navbar */}
-      <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
-        <Container fluid className="mx-5">
-          <Navbar.Brand href="/therapistView">Yoga Network</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarSupportedContent" />
-          <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
-            <Nav className="mb-lg-0 mt-1">
-              <Nav.Link href="/therapistView/patients">Patients</Nav.Link>
-              <Nav.Link href="/therapistView/requests">Requests</Nav.Link>
-              <Nav.Link href="/therapistView/calendar" className="me-5">Calendar</Nav.Link>
-            </Nav>
-            <Nav.Link href="#" className="">
-              <i className="bi bi-person-circle fs-3"></i>
-            </Nav.Link>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    return (
+        <>
+            {/* Navbar */}
+            <Navbar
+                expand="lg"
+                className="border-bottom"
+                style={{
+                    backgroundColor: "#020617", // slate-950
+                    borderColor: "#1e293b",
+                }}
+            >
+                <Container fluid className="px-5">
+                    <Navbar.Brand
+                        href="/therapistView"
+                        style={{ color: "#e5e7eb", fontWeight: 600 }}
+                    >
+                        Yoga Network
+                    </Navbar.Brand>
 
-      <main
-        className="py-5 mx-auto"
-        style={{
-          minHeight: '100vh',
-          maxWidth: "70vw",
-          background: 'linear-gradient(to bottom, #94f1f1ff, #5fc3fdff)',
-        }}
-      >
-        {/* Top Section */}
-        <Container style={{ backgroundColor: 'transparent' }}>
-          <Row className="align-items-start">
-            {/* Left side - WelcomeCard */}
-            <Col md={7} className="d-flex justify-content-center align-items-center">
-              <WelcomeCard therapistName="name" />
-            </Col>
+                    <Navbar.Toggle />
 
-            {/* Right side - Meetings and Requests */}
-            <Col md={5} className="d-flex flex-column gap-3">
-              {/* Upcoming Meetings */}
-              <div className="text-center text-raleway fs-5">
-                <div
-                  className="rounded-top-3 py-2"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 1)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  Upcoming Meetings
-                </div>
-                <div
-                  className="border-top py-2"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  George Yousefson @ Monday, 5:30pm
-                </div>
-                <div
-                  className="border-top rounded-bottom-3 py-2"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  Alicia Shells @ Wednesday, 4:00pm
-                </div>
-              </div>
+                    <Navbar.Collapse className="justify-content-end">
+                        <Nav className="gap-4">
+                            {["Patients", "Requests", "Calendar"].map((item) => (
+                                <Nav.Link
+                                    key={item}
+                                    href={`/therapistView/${item.toLowerCase()}`}
+                                    style={{ color: "#cbd5f5" }}
+                                >
+                                    {item}
+                                </Nav.Link>
+                            ))}
+                        </Nav>
 
-              {/* New Requests */}
-              <div className="text-center text-raleway fs-5">
-                <div
-                  className="rounded-top-3 py-2"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 1)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  New Requests
-                </div>
-                <div
-                  className="border-top py-2 px-4 d-flex justify-content-between align-items-center"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.5)',
-                    backdropFilter: 'blur(10px)',
-                  }}
-                >
-                  <span>Lily Shwartz</span>
-                  <Button variant="light" size="sm" data-bs-toggle="modal" data-bs-target="#requestModal">
-                    View
-                  </Button>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+                        <Nav.Link className="ms-4" style={{ color: "#cbd5f5" }}>
+                            <i className="bi bi-person-circle fs-4" />
+                        </Nav.Link>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
 
-        {/* Patients Section */}
-        <Container
-          className="rounded-5 my-5 py-3 mx-5 mx-auto"
-          style={{
-            backgroundColor: 'rgba(255, 255, 255, 1)',
-            backdropFilter: 'blur(10px)',
-          }}
+            {/* Main */}
+            <main
+                className="py-5"
+                style={{ minHeight: "100vh", backgroundColor: "#020617" }}
+            >
+                <Container style={{ maxWidth: "1200px" }}>
+                    {/* Top Grid */}
+                    <Row className="g-4 mb-5">
+                        <Col md={7}>
+                            <DashboardCard>
+                                <h2 className="text-light fw-semibold mb-2">
+                                    Welcome back
+                                </h2>
+                                <p className="text-secondary mb-0">
+                                    Here's a quick overview of your schedule and patients.
+                                </p>
+                            </DashboardCard>
+                        </Col>
+
+                        <Col md={5} className="d-flex flex-column gap-4">
+                            <StatCard title="Upcoming meetings">
+                                <StatRow label="George Yousefson" value="Mon - 5:30 PM" />
+                                <StatRow label="Alicia Shells" value="Wed - 4:00 PM" />
+                            </StatCard>
+
+                            <StatCard title="New requests">
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <span className="text-light">Lily Shwartz</span>
+                                    <Button size="sm" variant="outline-primary">
+                                        View
+                                    </Button>
+                                </div>
+                            </StatCard>
+                        </Col>
+                    </Row>
+
+                    {/* Patients */}
+                    <DashboardCard>
+                        <h4 className="text-light fw-semibold mb-4">
+                            Current patients
+                        </h4>
+
+                        <div className="d-flex gap-4 overflow-auto pb-2">
+                            {[
+                                { name: "George Yousefson", img: "/exDude1.jpg", date: "11/24/25" },
+                                { name: "Alicia Shells", img: "/exDude2.jpg", date: "12/24/25" },
+                                { name: "Jennifer Bells", img: "/exDude3.jpg", date: "12/24/25" },
+                            ].map((p) => (
+                                <Card
+                                    key={p.name}
+                                    style={{
+                                        minWidth: 260,
+                                        backgroundColor: "#020617",
+                                        border: "1px solid #1e293b",
+                                    }}
+                                >
+                                    <Image
+                                        src={p.img}
+                                        alt="profile"
+                                        width={260}
+                                        height={220}
+                                        style={{ objectFit: "cover" }}
+                                    />
+                                    <Card.Body>
+                                        <Card.Title className="text-light fs-6">
+                                            {p.name}
+                                        </Card.Title>
+                                        <Card.Text className="text-secondary small">
+                                            Next session: {p.date}
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            ))}
+                        </div>
+                    </DashboardCard>
+                </Container>
+            </main>
+        </>
+    );
+}
+
+/* ---------- Reusable UI blocks ---------- */
+
+function DashboardCard({ children }: { children: React.ReactNode }) {
+    return (
+        <div
+            className="p-4"
+            style={{
+                backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
+                borderRadius: "1rem",
+                border: "1px solid #1e293b",
+            }}
         >
-          <div className="text-raleway display-4 my-3">Your Current Patients:</div>
-
-          <div className="pretty-scroll d-flex gap-4">
-            {[
-              { name: 'George Yousefson', img: '/exDude1.jpg', date: '11/24/25' },
-              { name: 'Alicia Shells', img: '/exDude2.jpg', date: '12/24/25' },
-              { name: 'Jennifer Bells', img: '/exDude3.jpg', date: '12/24/25' },
-            ].map((p) => (
-              <Card
-                key={p.name}
-                className="text-raleway"
-                style={{ width: '18rem', flexShrink: 0 }}
-              >
-                <Image
-                  src={p.img}
-                  alt="profileimg"
-                  width={288}
-                  height={280}
-                  className="card-img-top"
-                  style={{
-                    objectFit: 'cover',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.25)',
-                  }}
-                />
-                <Card.Body>
-                  <Card.Title>{p.name}</Card.Title>
-                  <Card.Text>Current Yoga Plan</Card.Text>
-                  <Card.Text>Next Meeting Date: {p.date}</Card.Text>
-                </Card.Body>
-              </Card>
-            ))}
-          </div>
-        </Container>
-      </main>
-
-      <div className="modal fade " id="requestModal" tabIndex={-1} aria-labelledby="requestModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">Lily Shwartz</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              Info about Patient
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-primary">View</button>
-            </div>
-          </div>
+            {children}
         </div>
-      </div>
-
-      <footer className="py-5 text-raleway mt-f" style={{ backgroundColor: '#ffffffff' }} >
-        <Container className="text-dark text-center">
-          <p className="display-5 mb-3">Yoga Network</p>
-          <small className="text-dark-50">&copy; contact info</small>
-        </Container>
-      </footer>
-    </>
-  );
+    );
 }
 
-interface WelcomeCard {
-  therapistName: string;
+function StatCard({
+    title,
+    children,
+}: {
+    title: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <DashboardCard>
+            <p className="text-uppercase small text-secondary mb-3">
+                {title}
+            </p>
+            <div className="d-flex flex-column gap-2">{children}</div>
+        </DashboardCard>
+    );
 }
 
-export function WelcomeCard({ therapistName }: WelcomeCard) {
-  return (
-    <div className="text-raleway rounded-5 p-5 my-3" style={{
-      width: "100%",
-      minHeight: "300px",
-      backgroundColor: "rgba(255, 255, 255, 1)",
-      backdropFilter: "blur(10px)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    }}>
-      <h1 className="display-5 fw-semibold">
-        Welcome back {therapistName}!
-      </h1>
-    </div>
-  );
+function StatRow({ label, value }: { label: string; value: string }) {
+    return (
+        <div className="d-flex justify-content-between text-light">
+            <span>{label}</span>
+            <span className="text-secondary">{value}</span>
+        </div>
+    );
 }
-
-interface NextMeetings {
-  patientName: string;
-  meetingDate: string;
-}
-
-export function NextMeeting({ patient }: { patient: NextMeetings }) {
-  return (
-    <div className="border-top py-2" style={{ backgroundColor: "rgba(255, 255, 255, 0.5)", backdropFilter: "blur(10px)" }}>
-      {patient.patientName} : {patient.meetingDate}
-    </div>
-  );
-}
-
-// Still working on this

@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Container } from "react-bootstrap";
 import { ClientFormData } from "./page";
 
 interface Step4Props {
@@ -10,127 +10,153 @@ interface Step4Props {
 }
 
 export default function Step4({ nextStep, formData, setFormData }: Step4Props) {
-    const updateValue = (key: string, value: string) => {
+    const updateValue = (key: string, value: string) =>
         setFormData({ ...formData, [key]: value });
-    };
 
     return (
         <div
-            className="d-flex justify-content-center align-items-center min-vh-100"
-            style={{
-                background: "linear-gradient(to bottom right, #8ee7f1, #6bc9f5)",
-                fontFamily: "'Poppins', sans-serif",
-                overflowY: "auto",
-                padding: "2rem 0",
-            }}
+            className="d-flex align-items-center justify-content-center min-vh-100"
+            style={{ backgroundColor: "#020617" }} // slate-950
         >
-            <Card
-                className="shadow-lg p-4"
-                style={{
-                    width: "100%",
-                    maxWidth: 750,
-                    borderRadius: "20px",
-                    backgroundColor: "white",
-                    border: "none",
-                }}
-            >
-                {/* --- Title --- */}
-                <h4 className="fw-bold text-center mb-3" style={{ color: "#0a0a0a" }}>
-                    Client’s Health & Medical Information
-                </h4>
-
-                {/* --- Disclaimer --- */}
-                <p
-                    className="text-danger small text-center mb-5"
-                    style={{ maxWidth: "600px", margin: "0 auto" }}
+            <Container style={{ maxWidth: 920 }}>
+                <Card
+                    className="border-0 shadow-lg"
+                    style={{
+                        backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
+                        borderRadius: "1rem",
+                        border: "1px solid #1e293b",
+                    }}
                 >
-                    Disclaimer: This information is confidential and helps us match you with
-                    an instructor experienced in your needs. It is not a substitute for
-                    medical advice.
-                </p>
+                    <Card.Body className="p-4">
+                        {/* Header */}
+                        <div className="text-center mb-4">
+                            <h4 className="fw-semibold text-light mb-1">
+                                A bit more detail
+                            </h4>
+                            <p className="text-secondary small mb-2">
+                                Step 4 of 6
+                            </p>
+                            <p
+                                className="small text-secondary"
+                                style={{ maxWidth: 640, margin: "0 auto" }}
+                            >
+                                These details help your instructor better understand your
+                                background and keep sessions safe and effective.
+                            </p>
+                        </div>
 
-                <Form noValidate className="px-3">
-                    {/* --- Question 1 --- */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold" style={{ color: "#0a0a0a" }}>
-                            Please specify what styles or experience level you have.
-                        </Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={3}
-                            placeholder="e.g., beginner, restorative yoga, Hatha..."
-                            className="rounded-4 mt-3 px-3 py-2 border-0 shadow-sm"
-                            style={{
-                                backgroundColor: "#f7f7f7",
-                                resize: "none",
-                            }}
-                            value={formData.yogaExperience || ""}
-                            onChange={(e) => updateValue("yogaExperience", e.target.value)}
-                        />
-                    </Form.Group>
+                        <Form noValidate className="d-grid gap-4">
 
-                    {/* --- Question 2 --- */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold" style={{ color: "#0a0a0a" }}>
-                            Please provide the information on the type of healthcare provider you
-                            are currently under care of.{" "}
-                            <span className="text-danger">
-                                (e.g., Doctor, Therapist, Physiotherapist...)
-                            </span>
-                        </Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={3}
-                            placeholder="List provider types or names"
-                            className="rounded-4 mt-3 px-3 py-2 border-0 shadow-sm"
-                            style={{
-                                backgroundColor: "#f7f7f7",
-                                resize: "none",
-                            }}
-                            value={formData.providerType || ""}
-                            onChange={(e) => updateValue("providerType", e.target.value)}
-                        />
-                    </Form.Group>
+                            {/* SECTION 1 */}
+                            <Section title="Your yoga background">
+                                <p className="text-secondary small mb-2">
+                                    Let us know your experience level or styles you’ve practiced.
+                                </p>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    placeholder="Beginner, restorative yoga, Hatha, etc."
+                                    value={formData.yogaExperience || ""}
+                                    onChange={(e) =>
+                                        updateValue("yogaExperience", e.target.value)
+                                    }
+                                    className="border-0"
+                                    style={textareaStyle}
+                                />
+                            </Section>
 
-                    {/* --- Question 3 --- */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold" style={{ color: "#0a0a0a" }}>
-                            Please specify the movements or positions which you have been told to
-                            avoid.
-                        </Form.Label>
-                        <Form.Control
-                            as="textarea"
-                            rows={3}
-                            placeholder="List movements or positions to avoid"
-                            className="rounded-4 mt-3 px-3 py-2 border-0 shadow-sm"
-                            style={{
-                                backgroundColor: "#f7f7f7",
-                                resize: "none",
-                            }}
-                            value={formData.movementsToAvoid || ""}
-                            onChange={(e) =>
-                                updateValue("movementsToAvoid", e.target.value)
-                            }
-                        />
-                    </Form.Group>
+                            {/* SECTION 2 */}
+                            <Section title="Healthcare provider details">
+                                <p className="text-secondary small mb-2">
+                                    If applicable, describe the type of healthcare provider you
+                                    are currently under the care of.
+                                </p>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    placeholder="Doctor, therapist, physiotherapist, etc."
+                                    value={formData.providerType || ""}
+                                    onChange={(e) =>
+                                        updateValue("providerType", e.target.value)
+                                    }
+                                    className="border-0"
+                                    style={textareaStyle}
+                                />
+                            </Section>
 
-                    {/* --- Navigation Button --- */}
-                    <div className="d-flex justify-content-end mt-4">
-                        <Button
-                            type="button"
-                            className="rounded-pill fw-semibold"
-                            style={{
-                                backgroundColor: "#6bc9f5",
-                                border: "none",
-                                padding: "10px 32px",
-                            }}
-                            onClick={nextStep}
-                        >
-                            Next →
-                        </Button>
-                    </div>
-                </Form>
-            </Card>
+                            {/* SECTION 3 */}
+                            <Section title="Movements to avoid">
+                                <p className="text-secondary small mb-2">
+                                    Please list any movements or positions you’ve been advised to
+                                    avoid.
+                                </p>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    placeholder="Twisting, weight-bearing on wrists, etc."
+                                    value={formData.movementsToAvoid || ""}
+                                    onChange={(e) =>
+                                        updateValue("movementsToAvoid", e.target.value)
+                                    }
+                                    className="border-0"
+                                    style={textareaStyle}
+                                />
+                            </Section>
+
+                            {/* Navigation */}
+                            <div className="d-flex justify-content-end pt-2">
+                                <Button
+                                    onClick={nextStep}
+                                    style={{
+                                        backgroundColor: "#3b82f6",
+                                        border: "none",
+                                        borderRadius: "9999px",
+                                        padding: "0.6rem 2rem",
+                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                    }}
+                                >
+                                    Continue →
+                                </Button>
+                            </div>
+
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
     );
 }
+
+/* ---------- UX helpers ---------- */
+
+function Section({
+    title,
+    children,
+}: {
+    title: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <div
+            style={{
+                backgroundColor: "rgba(2,6,23,0.85)",
+                border: "1px solid #1e293b",
+                borderRadius: "0.75rem",
+                padding: "1rem",
+            }}
+        >
+            <h6 className="text-light fw-semibold mb-2">
+                {title}
+            </h6>
+            {children}
+        </div>
+    );
+}
+
+const textareaStyle = {
+    backgroundColor: "#020617",
+    color: "#e5e7eb",
+    borderRadius: "0.6rem",
+    padding: "0.6rem",
+    resize: "none" as const,
+};

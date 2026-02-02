@@ -1,7 +1,6 @@
 ﻿"use client";
 
-import { useRouter } from "next/navigation";
-import { Card, Form, Button, Row, Col } from "react-bootstrap";
+import { Card, Form, Button, Container, Row, Col } from "react-bootstrap";
 import { InstructorFormData } from "./page";
 
 interface Step1Props {
@@ -11,241 +10,241 @@ interface Step1Props {
 }
 
 export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
-    const router = useRouter();
-
     const updateValue = (key: string, value: string) =>
         setFormData({ ...formData, [key]: value });
 
     return (
         <div
-            className="d-flex justify-content-center align-items-center min-vh-100"
-            style={{
-                background: "linear-gradient(to bottom right, #8ee7f1, #6bc9f5)",
-                fontFamily: "'Poppins', sans-serif",
-                overflowY: "auto",
-                padding: "2rem 0",
-            }}
+            className="d-flex align-items-center justify-content-center min-vh-100"
+            style={{ backgroundColor: "#020617" }} // slate-950
         >
-            <Card
-                className="shadow-lg p-4"
-                style={{
-                    width: "100%",
-                    maxWidth: 900,
-                    borderRadius: "20px",
-                    backgroundColor: "white",
-                    border: "none",
-                }}
-            >
-                <h4 className="fw-bold text-center mb-4" style={{ color: "#0a0a0a" }}>
-                    Instructor’s General Information
-                </h4>
+            <Container style={{ maxWidth: 1100 }}>
+                <Card
+                    className="border-0 shadow-lg"
+                    style={{
+                        backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
+                        borderRadius: "1rem",
+                        border: "1px solid #1e293b",
+                    }}
+                >
+                    <Card.Body className="p-4">
+                        {/* Header */}
+                        <div className="text-center mb-4">
+                            <h4 className="fw-semibold text-light mb-1">
+                                Instructor information
+                            </h4>
+                            <p className="text-secondary small mb-0">
+                                Step 1 of X
+                            </p>
+                            <p className="text-secondary small mt-1">
+                                This helps clients and care teams understand your background and expertise.
+                            </p>
+                        </div>
 
-                <Form noValidate className="px-2">
-                    <Row>
-                        {/* LEFT COLUMN */}
-                        <Col md={6}>
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">
-                                    Name <span className="text-danger">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    placeholder="Enter full name"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.name || ""}
-                                    onChange={(e) => updateValue("name", e.target.value)}
-                                />
-                            </Form.Group>
+                        <Form noValidate className="d-grid gap-4">
 
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Speciality</Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    placeholder="e.g., Yoga Therapy, Mindfulness"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.speciality || ""}
-                                    onChange={(e) => updateValue("speciality", e.target.value)}
-                                />
-                            </Form.Group>
+                            {/* SECTION 1 */}
+                            <Section title="Professional details">
+                                <Row className="g-3">
+                                    <Col md={6}>
+                                        <Input
+                                            label="Full name"
+                                            value={formData.name}
+                                            onChange={(v) => updateValue("name", v)}
+                                        />
+                                    </Col>
+                                    <Col md={6}>
+                                        <Input
+                                            label="Specialty"
+                                            value={formData.speciality}
+                                            onChange={(v) => updateValue("speciality", v)}
+                                        />
+                                    </Col>
+                                    <Col md={6}>
+                                        <Input
+                                            label="Email"
+                                            type="email"
+                                            value={formData.email}
+                                            onChange={(v) => updateValue("email", v)}
+                                        />
+                                    </Col>
+                                    <Col md={6}>
+                                        <Input
+                                            label="Location"
+                                            value={formData.location}
+                                            onChange={(v) => updateValue("location", v)}
+                                        />
+                                    </Col>
+                                    <Col md={6}>
+                                        <Input
+                                            label="Session type"
+                                            value={formData.sessionType}
+                                            onChange={(v) => updateValue("sessionType", v)}
+                                        />
+                                    </Col>
+                                    <Col md={3}>
+                                        <Input
+                                            label="Years of experience"
+                                            type="number"
+                                            value={formData.yearsExperience}
+                                            onChange={(v) => updateValue("yearsExperience", v)}
+                                        />
+                                    </Col>
+                                    <Col md={3}>
+                                        <Input
+                                            label="Pricing"
+                                            value={formData.pricing}
+                                            onChange={(v) => updateValue("pricing", v)}
+                                        />
+                                    </Col>
+                                    <Col md={12}>
+                                        <Input
+                                            label="Availability"
+                                            value={formData.availability}
+                                            onChange={(v) => updateValue("availability", v)}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Section>
 
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">
-                                    Email <span className="text-danger">*</span>
-                                </Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    type="email"
-                                    placeholder="Enter email address"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.email || ""}
-                                    onChange={(e) => updateValue("email", e.target.value)}
-                                />
-                            </Form.Group>
+                            {/* SECTION 2 */}
+                            <Section title="Credentials & documents">
+                                <Row className="g-3">
+                                    <Col md={6}>
+                                        <Input
+                                            label="Qualification"
+                                            value={formData.qualification}
+                                            onChange={(v) => updateValue("qualification", v)}
+                                        />
+                                    </Col>
+                                    <Col md={6}>
+                                        <Input
+                                            label="Certificates"
+                                            value={formData.certificates}
+                                            onChange={(v) => updateValue("certificates", v)}
+                                        />
+                                    </Col>
+                                    <Col md={12}>
+                                        <Form.Group>
+                                            <Form.Label className="text-secondary small">
+                                                Upload supporting documents
+                                            </Form.Label>
+                                            <Form.Control
+                                                type="file"
+                                                multiple
+                                                className="border-0"
+                                                style={inputStyle}
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+                            </Section>
 
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Location</Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    placeholder="City, Country, Time Zone"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.location || ""}
-                                    onChange={(e) => updateValue("location", e.target.value)}
-                                />
-                            </Form.Group>
+                            {/* SECTION 3 */}
+                            <Section title="Create your login">
+                                <Row className="g-3">
+                                    <Col md={4}>
+                                        <Input
+                                            label="Username"
+                                            value={formData.username}
+                                            onChange={(v) => updateValue("username", v)}
+                                        />
+                                    </Col>
+                                    <Col md={4}>
+                                        <Input
+                                            label="Password"
+                                            type="password"
+                                            value={formData.password}
+                                            onChange={(v) => updateValue("password", v)}
+                                        />
+                                    </Col>
+                                    <Col md={4}>
+                                        <Input
+                                            label="Confirm password"
+                                            type="password"
+                                            value={formData.confirmPassword}
+                                            onChange={(v) => updateValue("confirmPassword", v)}
+                                        />
+                                    </Col>
+                                </Row>
+                            </Section>
 
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Session Type</Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    placeholder="e.g., Online, In-person"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.sessionType || ""}
-                                    onChange={(e) => updateValue("sessionType", e.target.value)}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Years of Experience</Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    type="number"
-                                    min="0"
-                                    placeholder="e.g., 5"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.yearsExperience || ""}
-                                    onChange={(e) => updateValue("yearsExperience", e.target.value)}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Availability</Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    placeholder="Days / Hours available"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.availability || ""}
-                                    onChange={(e) => updateValue("availability", e.target.value)}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Pricing</Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    placeholder="e.g., $50/hr"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.pricing || ""}
-                                    onChange={(e) => updateValue("pricing", e.target.value)}
-                                />
-                            </Form.Group>
-                        </Col>
-
-                        {/* RIGHT COLUMN */}
-                        <Col md={6}>
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Upload Documents</Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    type="file"
-                                    multiple
-                                    className="form-control rounded-pill px-3 py-2 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7", border: "none" }}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Qualification</Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    placeholder="e.g., Certified Yoga Instructor"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.qualification || ""}
-                                    onChange={(e) => updateValue("qualification", e.target.value)}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Certificates</Form.Label>
-                                <Form.Control
-                                    size="sm"
-                                    placeholder="List any relevant certifications"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.certificates || ""}
-                                    onChange={(e) => updateValue("certificates", e.target.value)}
-                                />
-                            </Form.Group>
-
-                            <hr className="my-4" />
-
-                            <h6 className="fw-semibold text-center mb-3">Create a Login</h6>
-
-                            <Form.Group className="mb-3 text-start">
-                                <Form.Label className="fw-semibold">Username</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Enter a username"
-                                    required
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.username || ""}
-                                    onChange={(e) => updateValue("username", e.target.value)}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3 text-start">
-                                <Form.Label className="fw-semibold">Password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Enter password"
-                                    required
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.password || ""}
-                                    onChange={(e) => updateValue("password", e.target.value)}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-4 text-start">
-                                <Form.Label className="fw-semibold">Confirm Password</Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    placeholder="Re-enter password"
-                                    required
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7" }}
-                                    value={formData.confirmPassword || ""}
-                                    onChange={(e) => updateValue("confirmPassword", e.target.value)}
-                                />
-                            </Form.Group>
-
-                            <div className="d-flex justify-content-end mt-4">
+                            {/* Navigation */}
+                            <div className="d-flex justify-content-end">
                                 <Button
-                                    type="button"
-                                    className="rounded-pill fw-semibold"
-                                    style={{
-                                        backgroundColor: "#6bc9f5",
-                                        border: "none",
-                                        padding: "10px 32px",
-                                    }}
                                     onClick={nextStep}
+                                    style={{
+                                        backgroundColor: "#3b82f6",
+                                        border: "none",
+                                        borderRadius: "9999px",
+                                        padding: "0.6rem 2.5rem",
+                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                    }}
                                 >
                                     Continue →
                                 </Button>
                             </div>
-                        </Col>
-                    </Row>
-                </Form>
-            </Card>
+
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
     );
 }
+
+/* ---------- Shared components ---------- */
+
+function Section({
+    title,
+    children,
+}: {
+    title: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <div
+            style={{
+                backgroundColor: "rgba(2,6,23,0.85)",
+                border: "1px solid #1e293b",
+                borderRadius: "0.75rem",
+                padding: "1rem",
+            }}
+        >
+            <h6 className="text-light fw-semibold mb-3">{title}</h6>
+            {children}
+        </div>
+    );
+}
+
+function Input({
+    label,
+    value,
+    onChange,
+    type = "text",
+}: {
+    label: string;
+    value?: any;
+    onChange: (v: string) => void;
+    type?: string;
+}) {
+    return (
+        <Form.Group>
+            <Form.Label className="text-secondary small">{label}</Form.Label>
+            <Form.Control
+                type={type}
+                value={value || ""}
+                onChange={(e) => onChange(e.target.value)}
+                className="border-0"
+                style={inputStyle}
+            />
+        </Form.Group>
+    );
+}
+
+const inputStyle = {
+    backgroundColor: "#020617",
+    color: "#e5e7eb",
+    borderRadius: "0.6rem",
+    padding: "0.45rem 0.6rem",
+};

@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Container } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 
 export default function Step6() {
@@ -8,51 +8,66 @@ export default function Step6() {
 
     return (
         <div
-            className="d-flex justify-content-center align-items-center min-vh-100 text-center"
-            style={{
-                background: "linear-gradient(to bottom right, #8ee7f1, #6bc9f5)",
-                fontFamily: "'Poppins', sans-serif",
-            }}
+            className="d-flex align-items-center justify-content-center min-vh-100"
+            style={{ backgroundColor: "#020617" }} // slate-950
         >
-            <Card
-                className="shadow-lg p-5"
-                style={{
-                    width: "100%",
-                    maxWidth: 600,
-                    borderRadius: "20px",
-                    backgroundColor: "white",
-                    border: "none",
-                }}
-            >
-                {/* Heading */}
-                <h2 className="fw-bold mb-3" style={{ color: "#0a0a0a" }}>
-                    Congratulations!
-                </h2>
-
-                {/* Subtext */}
-                <p
-                    className="text-muted mb-5"
-                    style={{ fontSize: "1.1rem", maxWidth: "500px", margin: "0 auto" }}
-                >
-                    All your information has been successfully received.
-                    A confirmation will be sent to your email shortly.
-                </p>
-
-                {/* Go to Dashboard button */}
-                <Button
-                    type="button"
-                    className="rounded-pill fw-semibold"
+            <Container style={{ maxWidth: 640 }}>
+                <Card
+                    className="border-0 shadow-lg text-center"
                     style={{
-                        backgroundColor: "#6bc9f5",
-                        border: "none",
-                        padding: "12px 36px",
-                        fontSize: "1rem",
+                        backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
+                        borderRadius: "1rem",
+                        border: "1px solid #1e293b",
                     }}
-                    onClick={() => router.push("/")}
                 >
-                    Go to Dashboard →
-                </Button>
-            </Card>
+                    <Card.Body className="p-5">
+                        {/* Icon / Visual anchor */}
+                        <div
+                            className="mx-auto mb-4 d-flex align-items-center justify-content-center"
+                            style={{
+                                width: 64,
+                                height: 64,
+                                borderRadius: "50%",
+                                backgroundColor: "rgba(59,130,246,0.15)",
+                                color: "#3b82f6",
+                                fontSize: "1.8rem",
+                                fontWeight: 600,
+                            }}
+                        >
+                            ✓
+                        </div>
+
+                        {/* Heading */}
+                        <h3 className="fw-semibold text-light mb-2">
+                            You’re all set
+                        </h3>
+
+                        {/* Subtext */}
+                        <p
+                            className="text-secondary mb-4"
+                            style={{ maxWidth: 480, margin: "0 auto" }}
+                        >
+                            We’ve received your information successfully. A confirmation
+                            email will be sent shortly, and your account is now ready to go.
+                        </p>
+
+                        {/* CTA */}
+                        <Button
+                            onClick={() => router.push("/")}
+                            style={{
+                                backgroundColor: "#3b82f6",
+                                border: "none",
+                                borderRadius: "9999px",
+                                padding: "0.6rem 2.5rem",
+                                boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                fontWeight: 500,
+                            }}
+                        >
+                            Go to dashboard →
+                        </Button>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
     );
 }

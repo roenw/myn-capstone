@@ -1,118 +1,137 @@
 "use client";
+
 import Image from "next/image";
-import {
-    Container,
-    Nav,
-    Navbar,
-    NavDropdown,
-    Button,
-    Card,
-} from "react-bootstrap";
-import "../therapistStyles.css";
+import { Container, Nav, Navbar, Card } from "react-bootstrap";
 
 export default function Patients() {
     return (
         <>
-            <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
-                <Container fluid className="mx-5">
-                    <Navbar.Brand href="/therapistView">Yoga Network</Navbar.Brand>
-                    <Navbar.Toggle aria-controls="navbarSupportedContent" />
-                    <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
-                        <Nav className="mb-lg-0 mt-1">
-                            <Nav.Link href="/therapistView/patients" active>Patients</Nav.Link>
-                            <Nav.Link href="/therapistView/requests">Requests</Nav.Link>
-                            <Nav.Link href="/therapistView/calendar" className="me-5">
+            {/* Navbar */}
+            <Navbar
+                expand="lg"
+                className="border-bottom"
+                style={{
+                    backgroundColor: "#020617",
+                    borderColor: "#1e293b",
+                }}
+            >
+                <Container fluid className="px-5">
+                    <Navbar.Brand
+                        href="/therapistView"
+                        style={{ color: "#e5e7eb", fontWeight: 600 }}
+                    >
+                        Yoga Network
+                    </Navbar.Brand>
+
+                    <Navbar.Toggle />
+
+                    <Navbar.Collapse className="justify-content-end">
+                        <Nav className="gap-4">
+                            <Nav.Link
+                                href="/therapistView/patients"
+                                style={{ color: "#3b82f6" }}
+                            >
+                                Patients
+                            </Nav.Link>
+                            <Nav.Link
+                                href="/therapistView/requests"
+                                style={navLink}
+                            >
+                                Requests
+                            </Nav.Link>
+                            <Nav.Link
+                                href="/therapistView/calendar"
+                                style={navLink}
+                            >
                                 Calendar
                             </Nav.Link>
                         </Nav>
-                        <Nav.Link href="#" className="">
-                            <i className="bi bi-person-circle fs-3"></i>
+
+                        <Nav.Link className="ms-4" style={{ color: "#cbd5f5" }}>
+                            <i className="bi bi-person-circle fs-4" />
                         </Nav.Link>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
+
+            {/* Main */}
             <main
-                className="pt-5 mx-auto"
+                className="py-5"
                 style={{
                     minHeight: "100vh",
-                    
-                    background: "linear-gradient(to bottom, #94f1f1ff, #5fc3fdff)",
+                    backgroundColor: "#020617",
                 }}
             >
-                <Container className="text-raleway fw-semibold display-4 mb-4">
-                    Your Current Patients:
-                </Container>
+                <Container style={{ maxWidth: "1200px" }}>
+                    {/* Header */}
+                    <div className="mb-4">
+                        <h1 className="text-light fw-semibold mb-1">
+                            Your patients
+                        </h1>
+                        <p className="text-secondary">
+                            Active clients currently under your care
+                        </p>
+                    </div>
 
-                <Container>
-                    <div className="pretty-scroll d-flex gap-4 flex-row overflow-auto">
-                        <Card
-                            className="text-raleway flex-shrink-0"
-                            style={{ width: "18rem" }}
-                        >
-                            <Image
-                                src="/exDude1.jpg"
-                                alt="profileimg"
-                                width={288}
-                                height={280}
-                                className="card-img-top"
-                                style={{ objectFit: "cover" }}
-                            />
-                            <Card.Body>
-                                <Card.Title>George Yousefson</Card.Title>
-                                <Card.Text>Current Yoga Plan</Card.Text>
-                                <Card.Text>Next Meeting Date: 11/24/25</Card.Text>
-                            </Card.Body>
-                        </Card>
+                    {/* Patients row */}
+                    <div className="d-flex gap-4 overflow-auto pb-3">
+                        {[
+                            {
+                                name: "George Yousefson",
+                                img: "/exDude1.jpg",
+                                date: "11/24/25",
+                            },
+                            {
+                                name: "Alicia Shells",
+                                img: "/exDude2.jpg",
+                                date: "12/24/25",
+                            },
+                            {
+                                name: "Jennifer Bells",
+                                img: "/exDude3.jpg",
+                                date: "12/24/25",
+                            },
+                        ].map((p) => (
+                            <Card
+                                key={p.name}
+                                style={{
+                                    minWidth: 260,
+                                    backgroundColor: "rgba(15,23,42,0.75)",
+                                    border: "1px solid #1e293b",
+                                }}
+                            >
+                                <Image
+                                    src={p.img}
+                                    alt="profile"
+                                    width={260}
+                                    height={220}
+                                    style={{ objectFit: "cover" }}
+                                />
 
-                        <Card
-                            className="text-raleway flex-shrink-0"
-                            style={{ width: "18rem" }}
-                        >
-                            <Image
-                                src="/exDude2.jpg"
-                                alt="profileimg"
-                                width={288}
-                                height={280}
-                                className="card-img-top"
-                                style={{ objectFit: "cover" }}
-                            />
-                            <Card.Body>
-                                <Card.Title>Alicia Shells</Card.Title>
-                                <Card.Text>Current Yoga Plan</Card.Text>
-                                <Card.Text>Next Meeting Date: 12/24/25</Card.Text>
-                            </Card.Body>
-                        </Card>
+                                <Card.Body>
+                                    <Card.Title className="text-light fs-6 mb-1">
+                                        {p.name}
+                                    </Card.Title>
 
-                        <Card
-                            className="text-raleway flex-shrink-0"
-                            style={{ width: "18rem" }}
-                        >
-                            <Image
-                                src="/exDude3.jpg"
-                                alt="profileimg"
-                                width={288}
-                                height={280}
-                                className="card-img-top"
-                                style={{ objectFit: "cover" }}
-                            />
-                            <Card.Body>
-                                <Card.Title>Jennifer Bells</Card.Title>
-                                <Card.Text>Current Yoga Plan</Card.Text>
-                                <Card.Text>Next Meeting Date: 12/24/25</Card.Text>
-                            </Card.Body>
-                        </Card>
+                                    <Card.Text className="text-secondary small mb-1">
+                                        Current yoga plan
+                                    </Card.Text>
+
+                                    <Card.Text className="text-secondary small">
+                                        Next session: {p.date}
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        ))}
                     </div>
                 </Container>
             </main>
-            <footer
-                className="py-5 text-raleway mt-f"
-                style={{ backgroundColor: "#ffffffff" }}
-            >
-                <Container className="text-dark text-center">
-                    <p className="display-5 mb-3">Yoga Network</p>
-                    <small className="text-dark-50">&copy; contact info</small>
-                </Container>
-            </footer>
         </>
     );
 }
+
+/* ---------- styles ---------- */
+
+const navLink = {
+    color: "#cbd5f5",
+};

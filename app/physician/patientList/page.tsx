@@ -1,87 +1,118 @@
-'use client';
+"use client";
 
-import { Button } from 'react-bootstrap';
-import { useRouter } from 'next/navigation';
+import { Button, Card, Container, Navbar, Nav, ListGroup } from "react-bootstrap";
+import { useRouter } from "next/navigation";
 
-const clients = [
-    "Client A",
-    "Client B",
-    "Client C",
-    "Client D"
-];
+const clients = ["Client A", "Client B", "Client C", "Client D"];
 
 export default function PatientReferral() {
     const router = useRouter();
 
     return (
-        <div className="border border-dark min-vh-100 position-relative d-flex align-items-center justify-content-center bg-light">
-            {/* Profile icon top right */}
-            <button
-                type="button"
-                className="position-absolute top-0 end-0 mt-3 me-4 bg-secondary rounded-circle d-flex align-items-center justify-content-center fw-bold"
-                style={{ width: 40, height: 40 }}
-                onClick={() => {
-                    console.log("Profile Navigation");
+        <>
+            {/* Navbar */}
+            <Navbar
+                expand="lg"
+                className="border-bottom"
+                style={{
+                    backgroundColor: "#020617",
+                    borderColor: "#1e293b",
                 }}
             >
-                User
-            </button>
+                <Container fluid className="px-5">
+                    <Navbar.Brand style={{ color: "#e5e7eb", fontWeight: 600 }}>
+                        Yoga Network
+                    </Navbar.Brand>
 
-            <div className="d-flex position-relative w-100" style={{ maxWidth: 1200, height: 700 }}>
-                {/* Main Container */}
-                <div
-                    className="position-absolute top-10 start-50 translate-middle-x d-flex flex-column align-items-center text-center"
-                    style={{
-                        width: "100%",
-                        color: "#171716",
-                        fontWeight: "700",
-                        fontFamily: "'Playfair Display', serif",
-                        fontSize: "24px",
-                        pointerEvents: "none"
-                    }}
-                >
-                    <div>Referred Clients</div>
+                    <Navbar.Collapse className="justify-content-end">
+                        <Nav>
+                            <Nav.Link style={{ color: "#cbd5f5" }}>
+                                <i className="bi bi-person-circle fs-4" />
+                            </Nav.Link>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
 
-                    <ul style={{ listStyle: "none", padding: 0, marginTop: 50, pointerEvents: "auto" }}>
-                        {clients.map((client, index) => (
-                            <li key={index} style={{ marginBottom: 50 }}>
-                                <Button
-                                    type="button"
-                                    className="btn btn-light rounded-pill"
+            {/* Main */}
+            <main
+                className="d-flex align-items-center justify-content-center"
+                style={{
+                    minHeight: "100vh",
+                    backgroundColor: "#020617",
+                }}
+            >
+                <Container style={{ maxWidth: 720 }}>
+                    <Card
+                        className="p-4"
+                        style={{
+                            backgroundColor: "rgba(15,23,42,0.75)",
+                            border: "1px solid #1e293b",
+                            borderRadius: "1rem",
+                        }}
+                    >
+                        {/* Header */}
+                        <div className="mb-4">
+                            <h3 className="text-light fw-semibold mb-1">
+                                Referred clients
+                            </h3>
+                            <p className="text-secondary mb-0">
+                                Patients you have referred for yoga therapy
+                            </p>
+                        </div>
+
+                        {/* Client list */}
+                        <ListGroup variant="flush" className="mb-4">
+                            {clients.map((client) => (
+                                <ListGroup.Item
+                                    key={client}
+                                    className="d-flex justify-content-between align-items-center"
                                     style={{
-                                        fontSize: "1.25rem",
-                                        padding: "12px 36px",
-                                        borderWidth: 2,
-                                        borderColor: "#f0f0f0",
-                                        width: "100%",
-                                        maxWidth: "300px",
-                                        pointerEvents: "auto"
-                                    }}
-                                    onClick={() => {
-                                        router.push('/physician/patientNotes');
+                                        backgroundColor: "#020617",
+                                        borderBottom: "1px solid #1e293b",
+                                        color: "#e5e7eb",
                                     }}
                                 >
-                                    {client}
-                                </Button>
-                            </li>
-                        ))}
-                    </ul>
+                                    <span>{client}</span>
 
-                    {/* Refer New Patient Button */}
-                    <Button
-                        variant="primary"
-                        className="rounded-pill mt-3"
-                        style={{
-                            fontSize: "1.1rem",
-                            padding: "12px 36px",
-                            pointerEvents: "auto"
-                        }}
-                        onClick={() => router.push('/physician/instructorReferral')}
-                    >
-                        + Refer New Patient
-                    </Button>
-                </div>
-            </div>
-        </div>
+                                    <Button
+                                        size="sm"
+                                        style={{
+                                            backgroundColor: "#3b82f6",
+                                            border: "none",
+                                            borderRadius: "9999px",
+                                            padding: "0.35rem 1.25rem",
+                                        }}
+                                        onClick={() =>
+                                            router.push("/physician/patientNotes")
+                                        }
+                                    >
+                                        View notes
+                                    </Button>
+                                </ListGroup.Item>
+                            ))}
+                        </ListGroup>
+
+                        {/* CTA */}
+                        <div className="text-end">
+                            <Button
+                                style={{
+                                    backgroundColor: "#3b82f6",
+                                    border: "none",
+                                    borderRadius: "9999px",
+                                    padding: "0.6rem 2rem",
+                                    boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                }}
+                                onClick={() =>
+                                    router.push("/physician/instructorReferral")
+                                }
+                            >
+                                + Refer new patient
+                            </Button>
+                        </div>
+                    </Card>
+                </Container>
+            </main>
+        </>
     );
 }

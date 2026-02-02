@@ -1,21 +1,16 @@
-'use client'
+'use client';
 
 import React, { useState } from "react";
-import { Button } from 'react-bootstrap';
+import { Button, Card, Container } from "react-bootstrap";
 
-// Placeholder dates
+/* ---------- Data Model (unchanged) ---------- */
 class PatientMeeting {
-
     meetingDate: Date;
     notesViewed: boolean;
 
     constructor(meetingDate: Date, notesViewed: boolean = false) {
         this.meetingDate = meetingDate;
         this.notesViewed = notesViewed;
-    }
-
-    markNotesViewed() {
-        this.notesViewed = true;
     }
 }
 
@@ -27,109 +22,107 @@ export default function PatientNotes() {
         new PatientMeeting(new Date("2025-07-22"), false),
     ]);
 
-    interface HandleToggleNotes {
-        (index: number): void;
-    }
-
-    const handleToggleNotes: HandleToggleNotes = (index) => {
-        setMeetings((prevMeetings) => {
-            // Create a new array copy to avoid mutating state directly
-            const updated = prevMeetings.map((meeting, i) => {
-                if (i === index && !meeting.notesViewed) {
-                    // Return new PatientMeeting with notesViewed set to true
-                    return new PatientMeeting(meeting.meetingDate, true);
-                }
-                return meeting; 
-            });
-            return updated;
-        });
+    const handleToggleNotes = (index: number) => {
+        setMeetings(prev =>
+            prev.map((m, i) =>
+                i === index && !m.notesViewed
+                    ? new PatientMeeting(m.meetingDate, true)
+                    : m
+            )
+        );
     };
 
     return (
-        <div className="border border-dark min-vh-100 position-relative d-flex align-items-center justify-content-center bg-light">
-            {/* Profile icon top right */}
+        <div
+            className="d-flex align-items-center justify-content-center min-vh-100"
+            style={{
+                backgroundColor: "#020617", // slate-950
+                fontFamily: "'Poppins', sans-serif",
+            }}
+        >
+            {/* Profile Icon */}
             <button
-                type="button"
-                className="position-absolute top-0 end-0 mt-3 me-4 bg-secondary rounded-circle d-flex align-items-center justify-content-center fw-bold"
-                style={{ width: 40, height: 40 }}
-                onClick={() => {
-                    // Navigate to Profile
+                className="position-absolute top-0 end-0 mt-4 me-4 rounded-circle border-0"
+                style={{
+                    width: 42,
+                    height: 42,
+                    backgroundColor: "#020617",
+                    color: "#cbd5f5",
+                    border: "1px solid #1e293b",
                 }}
             >
-                User
+                <i className="bi bi-person" />
             </button>
 
-            <div
-                className="d-flex position-relative w-100"
-                style={{ maxWidth: 1200, height: 700}}
-            >
-                {/* Centered content */}
-                <div
-                    className="position-absolute top-10 start-50 translate-middle-x d-flex flex-column align-items-center text-center"      
+            <Container style={{ maxWidth: 720 }}>
+                <Card
+                    className="border-0 shadow-lg"
                     style={{
-                        width: "100%",
-                        color: "#171716",
-                        fontWeight: "700",
-                        fontFamily: "'Playfair Display', serif",
-                        fontSize: "24px",
-                        pointerEvents: "none"
+                        backgroundColor: "rgba(15,23,42,0.75)", // slate-900/75
+                        borderRadius: "1rem",
+                        border: "1px solid #1e293b",
                     }}
                 >
-                    <div>
-                        Patient A
-                    </div>
-                    <ul style={{ listStyle: "none", padding: 0, marginTop: 50, pointerEvents: "auto" }}>
-                        {meetings.map((meeting, index) => (
-                            <li
-                                key={index}
-                                style={{ marginBottom: 50, display: "flex", alignItems: "center", gap: "20px" }}
-                                >
-                                {/* Dates */}
-                                <Button
-                                    variant="light"
-                                    className="rounded-pill"
-                                    style={{
-                                    fontSize: "1.25rem",
-                                    padding: "12px 36px",
-                                    borderWidth: 2,
-                                    borderColor: "#f0f0f0",
-                                    pointerEvents: "none"
-                                    }}
-                                    disabled
-                                >
-                                    {meeting.meetingDate.toLocaleDateString(undefined, {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "2-digit",
-                                    })}
-                                </Button>
+                    <Card.Body className="p-5">
+                        {/* Header */}
+                        <div className="text-center mb-5">
+                            <h3 className="fw-semibold text-light mb-1">
+                                Patient A
+                            </h3>
+                            <p className="text-secondary small mb-0">
+                                Session Notes History
+                            </p>
+                        </div>
 
-                                {/* Toggle Button for Notes */}
-                                <Button
-                                    type="button"
-                                    className="rounded-pill"
-                                    style={{
-                                    fontSize: "1.25rem",
-                                    padding: "12px 36px",
-                                    minWidth: "200px",
-                                    textAlign: "center",
-                                    color: "#171716",
-                                    borderWidth: 2,
-                                    borderColor: "#f0f0f0",
-                                    backgroundColor: meeting.notesViewed ? "#a4a3a3" : "white",
-                                    cursor: meeting.notesViewed ? "default" : "pointer"
-                                    }}
-                                    onClick={() => handleToggleNotes(index)}
-                                    disabled={meeting.notesViewed}
-                                    variant={meeting.notesViewed ? "secondary" : "outline-secondary"}
+                        {/* Meetings */}
+                        <div className="d-flex flex-column gap-4">
+                            {meetings.map((meeting, index) => (
+                                <div
+                                    key={index}
+                                    className="d-flex justify-content-between align-items-center"
                                 >
-                                    {meeting.notesViewed ? "Viewed" : "View Notes"}
-                                </Button>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </div>
+                                    {/* Date */}
+                                    <span className="text-secondary fw-medium">
+                                        {meeting.meetingDate.toLocaleDateString(undefined, {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                        })}
+                                    </span>
+
+                                    {/* Action Button */}
+                                    <Button
+                                        onClick={() => handleToggleNotes(index)}
+                                        disabled={meeting.notesViewed}
+                                        style={{
+                                            borderRadius: "9999px",
+                                            padding: "0.45rem 1.5rem",
+                                            fontWeight: 500,
+                                            border: meeting.notesViewed
+                                                ? "1px solid #334155"
+                                                : "1px solid #3b82f6",
+                                            backgroundColor: meeting.notesViewed
+                                                ? "#020617"
+                                                : "#3b82f6",
+                                            color: meeting.notesViewed
+                                                ? "#64748b"
+                                                : "white",
+                                            boxShadow: meeting.notesViewed
+                                                ? "none"
+                                                : "0 0 18px rgba(59,130,246,0.35)",
+                                            cursor: meeting.notesViewed
+                                                ? "default"
+                                                : "pointer",
+                                        }}
+                                    >
+                                        {meeting.notesViewed ? "Viewed" : "View Notes"}
+                                    </Button>
+                                </div>
+                            ))}
+                        </div>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
-  );
+    );
 }

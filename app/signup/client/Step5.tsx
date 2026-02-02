@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Container } from "react-bootstrap";
 import { ClientFormData } from "./page";
 
 interface Step5Props {
@@ -25,220 +25,248 @@ export default function Step5({ nextStep, formData, setFormData }: Step5Props) {
 
     return (
         <div
-            className="d-flex justify-content-center align-items-center min-vh-100"
-            style={{
-                background: "linear-gradient(to bottom right, #8ee7f1, #6bc9f5)",
-                fontFamily: "'Poppins', sans-serif",
-                overflowY: "auto",
-                padding: "2rem 0",
-            }}
+            className="d-flex align-items-center justify-content-center min-vh-100"
+            style={{ backgroundColor: "#020617" }} // slate-950
         >
-            <Card
-                className="shadow-lg p-4"
-                style={{
-                    width: "100%",
-                    maxWidth: 850,
-                    borderRadius: "20px",
-                    backgroundColor: "white",
-                    border: "none",
-                }}
-            >
-                <h4 className="fw-bold text-center mb-4" style={{ color: "#0a0a0a" }}>
-                    Client Instructor Preferences
-                </h4>
-
-                <Form noValidate className="px-3">
-                    {/* Instructor Gender Preference */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold">
-                            Do you prefer an instructor of a specific gender?
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {["Female", "Male", "Non binary", "No preference"].map((label) => (
-                                <Button
-                                    key={label}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        minWidth: "160px",
-                                        backgroundColor: (formData.genderPref || []).includes(label)
-                                            ? "#6bc9f5"
-                                            : "#f7f7f7",
-                                        color: (formData.genderPref || []).includes(label)
-                                            ? "white"
-                                            : "#333",
-                                    }}
-                                    onClick={() => toggleArrayValue("genderPref", label)}
-                                >
-                                    {label}
-                                </Button>
-                            ))}
+            <Container style={{ maxWidth: 960 }}>
+                <Card
+                    className="border-0 shadow-lg"
+                    style={{
+                        backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
+                        borderRadius: "1rem",
+                        border: "1px solid #1e293b",
+                    }}
+                >
+                    <Card.Body className="p-4">
+                        {/* Header */}
+                        <div className="text-center mb-4">
+                            <h4 className="fw-semibold text-light mb-1">
+                                Instructor preferences
+                            </h4>
+                            <p className="text-secondary small mb-2">
+                                Step 5 of 6
+                            </p>
+                            <p
+                                className="small text-secondary"
+                                style={{ maxWidth: 640, margin: "0 auto" }}
+                            >
+                                These preferences help us match you with an instructor who fits
+                                your comfort, availability, and communication style.
+                            </p>
                         </div>
-                    </Form.Group>
 
-                    {/* Instructor Experience */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold">
-                            Would you like an instructor with experience in healthcare or
-                            clinical yoga therapy?
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {["Yes", "No"].map((option) => (
-                                <Button
-                                    key={option}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        minWidth: "100px",
-                                        backgroundColor:
-                                            formData.experiencePref === option ? "#6bc9f5" : "#f7f7f7",
-                                        color:
-                                            formData.experiencePref === option ? "white" : "#333",
-                                    }}
-                                    onClick={() => updateValue("experiencePref", option)}
-                                >
-                                    {option}
-                                </Button>
-                            ))}
-                        </div>
-                    </Form.Group>
+                        <Form noValidate className="d-grid gap-4">
 
-                    {/* Language Preferences */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold">
-                            What is your language preference?
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {["English", "French"].map((lang) => (
-                                <Button
-                                    key={lang}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        minWidth: "130px",
-                                        backgroundColor: (formData.languagePref || []).includes(lang)
-                                            ? "#6bc9f5"
-                                            : "#f7f7f7",
-                                        color: (formData.languagePref || []).includes(lang)
-                                            ? "white"
-                                            : "#333",
-                                    }}
-                                    onClick={() => toggleArrayValue("languagePref", lang)}
-                                >
-                                    {lang}
-                                </Button>
-                            ))}
+                            {/* SECTION 1 */}
+                            <Section title="Instructor gender preference">
+                                <div className="d-flex flex-wrap gap-2">
+                                    {["Female", "Male", "Non-binary", "No preference"].map((label) => (
+                                        <Pill
+                                            key={label}
+                                            active={(formData.genderPref || []).includes(label)}
+                                            onClick={() => toggleArrayValue("genderPref", label)}
+                                        >
+                                            {label}
+                                        </Pill>
+                                    ))}
+                                </div>
+                            </Section>
 
-                            {/* Other Language */}
-                            <div className="d-flex align-items-center gap-2 mt-2">
-                                <span className="fw-semibold">Other:</span>
+                            {/* SECTION 2 */}
+                            <Section title="Clinical or healthcare experience">
+                                <p className="text-secondary small mb-3">
+                                    Would you prefer an instructor with healthcare or clinical yoga experience?
+                                </p>
+                                <PillRow
+                                    value={formData.experiencePref}
+                                    onSelect={(v) => updateValue("experiencePref", v)}
+                                />
+                            </Section>
+
+                            {/* SECTION 3 */}
+                            <Section title="Language preference">
+                                <div className="d-flex flex-wrap gap-2">
+                                    {["English", "French"].map((lang) => (
+                                        <Pill
+                                            key={lang}
+                                            active={(formData.languagePref || []).includes(lang)}
+                                            onClick={() => toggleArrayValue("languagePref", lang)}
+                                        >
+                                            {lang}
+                                        </Pill>
+                                    ))}
+                                </div>
+
                                 <Form.Control
                                     size="sm"
-                                    type="text"
-                                    placeholder="Enter language"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7", width: "180px" }}
+                                    placeholder="Other language (optional)"
                                     value={formData.otherLanguage || ""}
                                     onChange={(e) =>
                                         setFormData({ ...formData, otherLanguage: e.target.value })
                                     }
+                                    className="border-0 mt-3"
+                                    style={{ ...inputStyle, maxWidth: 240 }}
                                 />
-                            </div>
-                        </div>
-                    </Form.Group>
+                            </Section>
 
-                    {/* Session Format */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold">
-                            What is your preferred session format?
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {[
-                                "Online",
-                                "In-person",
-                                "Hybrid",
-                                "Chat-based",
-                                "Audio",
-                            ].map((format) => (
-                                <Button
-                                    key={format}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        minWidth: "140px",
-                                        backgroundColor: (formData.sessionFormat || []).includes(format)
-                                            ? "#6bc9f5"
-                                            : "#f7f7f7",
-                                        color: (formData.sessionFormat || []).includes(format)
-                                            ? "white"
-                                            : "#333",
-                                    }}
-                                    onClick={() => toggleArrayValue("sessionFormat", format)}
-                                >
-                                    {format}
-                                </Button>
-                            ))}
-                        </div>
-                    </Form.Group>
+                            {/* SECTION 4 */}
+                            <Section title="Preferred session format">
+                                <div className="d-flex flex-wrap gap-2">
+                                    {["Online", "In-person", "Hybrid", "Chat-based", "Audio"].map(
+                                        (format) => (
+                                            <Pill
+                                                key={format}
+                                                active={(formData.sessionFormat || []).includes(format)}
+                                                onClick={() =>
+                                                    toggleArrayValue("sessionFormat", format)
+                                                }
+                                            >
+                                                {format}
+                                            </Pill>
+                                        )
+                                    )}
+                                </div>
+                            </Section>
 
-                    {/* Availability */}
-                    <Form.Group className="mb-5 text-start">
-                        <Form.Label className="fw-semibold">
-                            What is your availability for sessions?
-                        </Form.Label>
-                        <div
-                            className="d-flex flex-column gap-3 mt-3"
-                            style={{ maxWidth: "450px" }}
-                        >
-                            {["Days", "Time", "Time zone"].map((label) => (
-                                <div
-                                    key={label}
-                                    className="d-flex align-items-center gap-3 justify-content-between"
-                                >
-                                    <span className="fw-semibold">{label}</span>
+                            {/* SECTION 5 */}
+                            <Section title="Availability">
+                                <div className="d-grid gap-3" style={{ maxWidth: 460 }}>
                                     <Form.Control
                                         size="sm"
-                                        type="text"
-                                        placeholder={`Enter ${label.toLowerCase()}`}
-                                        className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                        style={{ backgroundColor: "#f7f7f7", flex: 1 }}
-                                        value={
-                                            label === "Days"
-                                                ? formData.availabilityDays || ""
-                                                : label === "Time"
-                                                    ? formData.availabilityTime || ""
-                                                    : formData.availabilityZone || ""
+                                        placeholder="Available days (e.g., Mon–Wed)"
+                                        value={formData.availabilityDays || ""}
+                                        onChange={(e) =>
+                                            updateValue("availabilityDays", e.target.value)
                                         }
-                                        onChange={(e) => {
-                                            if (label === "Days")
-                                                updateValue("availabilityDays", e.target.value);
-                                            else if (label === "Time")
-                                                updateValue("availabilityTime", e.target.value);
-                                            else updateValue("availabilityZone", e.target.value);
-                                        }}
+                                        className="border-0"
+                                        style={inputStyle}
+                                    />
+                                    <Form.Control
+                                        size="sm"
+                                        placeholder="Preferred time (e.g., evenings)"
+                                        value={formData.availabilityTime || ""}
+                                        onChange={(e) =>
+                                            updateValue("availabilityTime", e.target.value)
+                                        }
+                                        className="border-0"
+                                        style={inputStyle}
+                                    />
+                                    <Form.Control
+                                        size="sm"
+                                        placeholder="Time zone"
+                                        value={formData.availabilityZone || ""}
+                                        onChange={(e) =>
+                                            updateValue("availabilityZone", e.target.value)
+                                        }
+                                        className="border-0"
+                                        style={inputStyle}
                                     />
                                 </div>
-                            ))}
-                        </div>
-                    </Form.Group>
+                            </Section>
 
-                    {/* Submit Button */}
-                    <div className="d-flex justify-content-end mt-4">
-                        <Button
-                            type="button"
-                            className="rounded-pill fw-semibold"
-                            style={{
-                                backgroundColor: "#6bc9f5",
-                                border: "none",
-                                padding: "10px 32px",
-                            }}
-                            onClick={nextStep}
-                        >
-                            Submit →
-                        </Button>
-                    </div>
-                </Form>
-            </Card>
+                            {/* Navigation */}
+                            <div className="d-flex justify-content-end pt-2">
+                                <Button
+                                    onClick={nextStep}
+                                    style={{
+                                        backgroundColor: "#3b82f6",
+                                        border: "none",
+                                        borderRadius: "9999px",
+                                        padding: "0.6rem 2rem",
+                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                    }}
+                                >
+                                    Submit →
+                                </Button>
+                            </div>
+
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
     );
 }
+
+/* ---------- Reusable UX helpers ---------- */
+
+function Section({
+    title,
+    children,
+}: {
+    title: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <div
+            style={{
+                backgroundColor: "rgba(2,6,23,0.85)",
+                border: "1px solid #1e293b",
+                borderRadius: "0.75rem",
+                padding: "1rem",
+            }}
+        >
+            <h6 className="text-light fw-semibold mb-2">
+                {title}
+            </h6>
+            {children}
+        </div>
+    );
+}
+
+function PillRow({
+    value,
+    onSelect,
+}: {
+    value?: string;
+    onSelect: (v: string) => void;
+}) {
+    return (
+        <div className="d-flex gap-3">
+            {["Yes", "No"].map((opt) => (
+                <Pill
+                    key={opt}
+                    active={value === opt}
+                    onClick={() => onSelect(opt)}
+                >
+                    {opt}
+                </Pill>
+            ))}
+        </div>
+    );
+}
+
+function Pill({
+    active,
+    children,
+    onClick,
+}: {
+    active: boolean;
+    children: React.ReactNode;
+    onClick: () => void;
+}) {
+    return (
+        <Button
+            onClick={onClick}
+            style={{
+                backgroundColor: active ? "#3b82f6" : "#020617",
+                color: active ? "white" : "#cbd5f5",
+                border: active
+                    ? "1px solid #3b82f6"
+                    : "1px solid #1e293b",
+                borderRadius: "9999px",
+                padding: "0.4rem 1rem",
+                fontWeight: 500,
+            }}
+        >
+            {children}
+        </Button>
+    );
+}
+
+const inputStyle = {
+    backgroundColor: "#020617",
+    color: "#e5e7eb",
+    borderRadius: "0.6rem",
+    padding: "0.4rem 0.6rem",
+};

@@ -12,226 +12,236 @@ interface Step1Props {
 export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
     return (
         <div
-            className="d-flex justify-content-center align-items-center min-vh-100"
-            style={{
-                background: "linear-gradient(to bottom right, #8ee7f1, #6bc9f5)",
-                fontFamily: "'Poppins', sans-serif",
-                overflowY: "auto",
-                padding: "2rem 0",
-            }}
+            className="d-flex align-items-center justify-content-center min-vh-100"
+            style={{ backgroundColor: "#020617" }} // slate-950
         >
-            <Card
-                className="shadow-lg p-4"
-                style={{
-                    width: "100%",
-                    maxWidth: 520,
-                    borderRadius: "20px",
-                    backgroundColor: "white",
-                    border: "none",
-                }}
-            >
-                <Card.Body>
-                    <h4 className="fw-bold text-center mb-4" style={{ color: "#0a0a0a" }}>
-                        Client's General Information
-                    </h4>
-
-                    <Form noValidate>
-                        {/* --- General Information --- */}
-                        <Form.Group className="mb-3 text-start">
-                            <Form.Label className="fw-semibold">
-                                First Name <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter first name"
-                                required
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.firstName || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, firstName: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3 text-start">
-                            <Form.Label className="fw-semibold">
-                                Last Name <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter last name"
-                                required
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.lastName || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, lastName: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3 text-start">
-                            <Form.Label className="fw-semibold">Preferred Name / Pronouns</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Preferred name or pronouns"
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.preferredName || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, preferredName: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3 text-start">
-                            <Form.Label className="fw-semibold">
-                                Date of Birth <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                                type="date"
-                                required
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.dob || ""}
-                                onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3 text-start">
-                            <Form.Label className="fw-semibold">
-                                Contact Email <span className="text-danger">*</span>
-                            </Form.Label>
-                            <Form.Control
-                                type="email"
-                                placeholder="Enter email address"
-                                required
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.email || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, email: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3 text-start">
-                            <Form.Label className="fw-semibold">Phone</Form.Label>
-                            <Form.Control
-                                type="tel"
-                                placeholder="Enter phone number"
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.phone || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, phone: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3 text-start">
-                            <Form.Label className="fw-semibold">
-                                Location{" "}
-                                <span className="text-muted">(City, Country, Time Zone)</span>
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="City, Country, Time Zone"
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.location || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, location: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-4 text-start">
-                            <Form.Label className="fw-semibold">
-                                Where did you hear about us?
-                            </Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="e.g., Friend, Website, Ad"
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.referral || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, referral: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        {/* --- Divider --- */}
-                        <hr className="my-4" />
-
-                        {/* --- Create Login Section --- */}
-                        <h5 className="fw-bold text-center mb-4">Create a Login</h5>
-
-                        <Form.Group className="mb-3 text-start">
-                            <Form.Label className="fw-semibold">Username</Form.Label>
-                            <Form.Control
-                                type="text"
-                                placeholder="Enter a username"
-                                required
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.username || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, username: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3 text-start">
-                            <Form.Label className="fw-semibold">Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Enter password"
-                                required
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.password || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, password: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        <Form.Group className="mb-4 text-start">
-                            <Form.Label className="fw-semibold">Confirm Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                placeholder="Re-enter password"
-                                required
-                                className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                style={{ backgroundColor: "#f7f7f7" }}
-                                value={formData.confirmPassword || ""}
-                                onChange={(e) =>
-                                    setFormData({ ...formData, confirmPassword: e.target.value })
-                                }
-                            />
-                        </Form.Group>
-
-                        {/* --- Navigation --- */}
-                        <div className="d-flex justify-content-end mt-4">
-                            <Button
-                                type="button"
-                                className="rounded-pill fw-semibold"
-                                style={{
-                                    backgroundColor: "#6bc9f5",
-                                    border: "none",
-                                    padding: "10px 32px",
-                                }}
-                                onClick={nextStep}
-                            >
-                                Next →
-                            </Button>
+            <Container style={{ maxWidth: 560 }}>
+                <Card
+                    className="border-0 shadow-lg"
+                    style={{
+                        backgroundColor: "rgba(15, 23, 42, 0.7)", // slate-900/70
+                        borderRadius: "1rem",
+                        border: "1px solid #1e293b", // slate-800
+                    }}
+                >
+                    <Card.Body className="p-4">
+                        {/* Header */}
+                        <div className="text-center mb-4">
+                            <h4 className="fw-semibold text-light mb-1">
+                                Client General Information
+                            </h4>
+                            <p className="text-secondary small mb-0">
+                                Step 1 of 6
+                            </p>
                         </div>
-                    </Form>
-                </Card.Body>
-            </Card>
+
+                        <Form noValidate>
+                            {/* ---------- General Info ---------- */}
+
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    First Name *
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    required
+                                    placeholder="Enter first name"
+                                    value={formData.firstName || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, firstName: e.target.value })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Last Name *
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    required
+                                    placeholder="Enter last name"
+                                    value={formData.lastName || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, lastName: e.target.value })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Preferred Name / Pronouns
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Preferred name or pronouns"
+                                    value={formData.preferredName || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, preferredName: e.target.value })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Date of Birth *
+                                </Form.Label>
+                                <Form.Control
+                                    type="date"
+                                    required
+                                    value={formData.dob || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, dob: e.target.value })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Contact Email *
+                                </Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    required
+                                    placeholder="Enter email address"
+                                    value={formData.email || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, email: e.target.value })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Phone
+                                </Form.Label>
+                                <Form.Control
+                                    type="tel"
+                                    placeholder="Enter phone number"
+                                    value={formData.phone || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, phone: e.target.value })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-4">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Location
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="City, Country, Time Zone"
+                                    value={formData.location || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, location: e.target.value })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            <hr className="border-secondary opacity-25 my-4" />
+
+                            {/* ---------- Login Info ---------- */}
+
+                            <h6 className="text-light fw-semibold mb-3 text-center">
+                                Create Login Credentials
+                            </h6>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Username
+                                </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    required
+                                    placeholder="Choose a username"
+                                    value={formData.username || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, username: e.target.value })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-3">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Password
+                                </Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    required
+                                    placeholder="Enter password"
+                                    value={formData.password || ""}
+                                    onChange={(e) =>
+                                        setFormData({ ...formData, password: e.target.value })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            <Form.Group className="mb-4">
+                                <Form.Label className="text-uppercase small text-secondary">
+                                    Confirm Password
+                                </Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    required
+                                    placeholder="Re-enter password"
+                                    value={formData.confirmPassword || ""}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            confirmPassword: e.target.value,
+                                        })
+                                    }
+                                    className="border-0"
+                                    style={inputStyle}
+                                />
+                            </Form.Group>
+
+                            {/* ---------- Navigation ---------- */}
+                            <div className="d-flex justify-content-end">
+                                <Button
+                                    type="button"
+                                    onClick={nextStep}
+                                    style={{
+                                        backgroundColor: "#3b82f6",
+                                        border: "none",
+                                        borderRadius: "9999px",
+                                        padding: "0.6rem 2rem",
+                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                    }}
+                                >
+                                    Next →
+                                </Button>
+                            </div>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
     );
 }
+
+const inputStyle = {
+    backgroundColor: "#020617",
+    color: "#e5e7eb",
+    borderRadius: "0.75rem",
+    padding: "0.6rem 0.75rem",
+};

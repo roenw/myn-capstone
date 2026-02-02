@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { Form, Button, Card } from "react-bootstrap";
+import { Form, Button, Card, Container } from "react-bootstrap";
 import { ClientFormData } from "./page";
 
 interface Step3Props {
@@ -25,217 +25,232 @@ export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
 
     return (
         <div
-            className="d-flex justify-content-center align-items-center min-vh-100"
-            style={{
-                background: "linear-gradient(to bottom right, #8ee7f1, #6bc9f5)",
-                fontFamily: "'Poppins', sans-serif",
-                overflowY: "auto",
-                padding: "2rem 0",
-            }}
+            className="d-flex align-items-center justify-content-center min-vh-100"
+            style={{ backgroundColor: "#020617" }}
         >
-            <Card
-                className="shadow-lg p-4"
-                style={{
-                    width: "100%",
-                    maxWidth: 900,
-                    borderRadius: "20px",
-                    backgroundColor: "white",
-                    border: "none",
-                }}
-            >
-                <h4 className="fw-bold text-center mb-3" style={{ color: "#0a0a0a" }}>
-                    Client’s Health & Medical Information
-                </h4>
-
-                <p
-                    className="text-danger small text-center mb-5"
-                    style={{ maxWidth: "600px", margin: "0 auto" }}
+            <Container style={{ maxWidth: 960 }}>
+                {/* Main Card */}
+                <Card
+                    className="border-0 shadow-lg"
+                    style={{
+                        backgroundColor: "rgba(15,23,42,0.75)",
+                        borderRadius: "1rem",
+                        border: "1px solid #1e293b",
+                    }}
                 >
-                    Disclaimer: This information is confidential and helps us match you with
-                    an instructor experienced in your needs. It is not a substitute for
-                    medical advice.
-                </p>
-
-                <Form noValidate className="px-3 text-start">
-                    {/* Question 1 */}
-                    <Form.Group className="mb-5">
-                        <Form.Label className="fw-semibold">
-                            Are you currently under the care of a healthcare provider?
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {["Yes", "No"].map((option) => (
-                                <Button
-                                    key={option}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor:
-                                            formData.provider === option ? "#6bc9f5" : "#f7f7f7",
-                                        color: formData.provider === option ? "white" : "#333",
-                                        minWidth: "100px",
-                                    }}
-                                    onClick={() => updateValue("provider", option)}
-                                >
-                                    {option}
-                                </Button>
-                            ))}
+                    <Card.Body className="p-4">
+                        {/* Header */}
+                        <div className="text-center mb-4">
+                            <h4 className="fw-semibold text-light mb-1">
+                                Let’s talk about your health
+                            </h4>
+                            <p className="text-secondary small mb-2">
+                                Step 3 of 6
+                            </p>
+                            <p
+                                className="small text-warning"
+                                style={{ maxWidth: 640, margin: "0 auto" }}
+                            >
+                                This information helps us match you with an instructor who can
+                                support you safely. It’s not medical advice.
+                            </p>
                         </div>
-                    </Form.Group>
 
-                    {/* Question 2 */}
-                    <Form.Group className="mb-5">
-                        <Form.Label className="fw-semibold">
-                            Do you have any diagnosed medical conditions?{" "}
-                            <span className="text-muted fst-italic">
-                                (Choose from the given boxes; if others, please specify)
-                            </span>
-                        </Form.Label>
+                        <Form noValidate className="d-grid gap-4">
 
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {[
-                                "Chronic Pain",
-                                "Arthritis",
-                                "Depression or Anxiety",
-                                "Autoimmune Disorders",
-                                "Neurological Conditions",
-                                "Cardiovascular Conditions",
-                                "Respiratory Conditions",
-                                "Musculoskeletal Injuries",
-                                "Cancer (current or remission)",
-                                "Pregnancy or Postnatal",
-                                "PTSD",
-                            ].map((label) => (
-                                <Button
-                                    key={label}
-                                    className="rounded-pill px-3 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        minWidth: "200px",
-                                        backgroundColor: (formData.conditions || []).includes(label)
-                                            ? "#6bc9f5"
-                                            : "#f7f7f7",
-                                        color: (formData.conditions || []).includes(label)
-                                            ? "white"
-                                            : "#333",
-                                    }}
-                                    onClick={() => toggleArrayValue("conditions", label)}
-                                >
-                                    {label}
-                                </Button>
-                            ))}
+                            {/* SECTION 1 */}
+                            <Section title="Healthcare support">
+                                <p className="text-secondary small mb-3">
+                                    Are you currently under the care of a healthcare provider?
+                                </p>
+                                <PillRow
+                                    value={formData.provider}
+                                    onSelect={(v) => updateValue("provider", v)}
+                                />
+                            </Section>
 
-                            <div className="d-flex align-items-center gap-2 mt-3">
-                                <span className="fw-semibold">Other:</span>
+                            {/* SECTION 2 */}
+                            <Section title="Diagnosed conditions">
+                                <p className="text-secondary small mb-3">
+                                    Select any conditions you’ve been diagnosed with.
+                                </p>
+                                <div className="d-flex flex-wrap gap-2">
+                                    {[
+                                        "Chronic Pain",
+                                        "Arthritis",
+                                        "Depression or Anxiety",
+                                        "Autoimmune Disorders",
+                                        "Neurological Conditions",
+                                        "Cardiovascular Conditions",
+                                        "Respiratory Conditions",
+                                        "Musculoskeletal Injuries",
+                                        "Cancer (current or remission)",
+                                        "Pregnancy or Postnatal",
+                                        "PTSD",
+                                    ].map((label) => (
+                                        <Pill
+                                            key={label}
+                                            active={(formData.conditions || []).includes(label)}
+                                            onClick={() =>
+                                                toggleArrayValue("conditions", label)
+                                            }
+                                        >
+                                            {label}
+                                        </Pill>
+                                    ))}
+                                </div>
+
                                 <Form.Control
                                     size="sm"
-                                    type="text"
-                                    placeholder="Specify condition"
-                                    className="rounded-pill px-3 py-2 border-0 shadow-sm"
-                                    style={{ backgroundColor: "#f7f7f7", width: "220px" }}
+                                    placeholder="Other condition (optional)"
                                     value={formData.otherCondition || ""}
                                     onChange={(e) =>
-                                        setFormData({ ...formData, otherCondition: e.target.value })
+                                        setFormData({
+                                            ...formData,
+                                            otherCondition: e.target.value,
+                                        })
                                     }
+                                    className="border-0 mt-3"
+                                    style={{ ...inputStyle, maxWidth: 280 }}
                                 />
+                            </Section>
+
+                            {/* SECTION 3 */}
+                            <Section title="Current symptoms">
+                                <p className="text-secondary small mb-3">
+                                    Do you have any current symptoms or physical limitations?
+                                </p>
+                                <PillRow
+                                    value={formData.symptoms}
+                                    onSelect={(v) => updateValue("symptoms", v)}
+                                />
+                            </Section>
+
+                            {/* SECTION 4 */}
+                            <Section title="Movement restrictions">
+                                <p className="text-secondary small mb-3">
+                                    Have you been advised to avoid certain movements or positions?
+                                </p>
+                                <PillRow
+                                    value={formData.avoid}
+                                    onSelect={(v) => updateValue("avoid", v)}
+                                />
+                            </Section>
+
+                            {/* SECTION 5 */}
+                            <Section title="Insurance">
+                                <p className="text-secondary small mb-3">
+                                    Are you currently insured?
+                                </p>
+                                <PillRow
+                                    value={formData.insured}
+                                    onSelect={(v) => updateValue("insured", v)}
+                                />
+                            </Section>
+
+                            {/* Navigation */}
+                            <div className="d-flex justify-content-end pt-2">
+                                <Button
+                                    onClick={nextStep}
+                                    style={{
+                                        backgroundColor: "#3b82f6",
+                                        border: "none",
+                                        borderRadius: "9999px",
+                                        padding: "0.6rem 2rem",
+                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                    }}
+                                >
+                                    Continue →
+                                </Button>
                             </div>
-                        </div>
-                    </Form.Group>
 
-                    {/* Question 3 */}
-                    <Form.Group className="mb-5">
-                        <Form.Label className="fw-semibold">
-                            Do you have any current symptoms or physical limitations?{" "}
-                            <span className="text-muted fst-italic">
-                                (e.g., difficulty standing, joint pain, fatigue, dizziness, etc.)
-                            </span>
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {["Yes", "No"].map((option) => (
-                                <Button
-                                    key={option}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor:
-                                            formData.symptoms === option ? "#6bc9f5" : "#f7f7f7",
-                                        color: formData.symptoms === option ? "white" : "#333",
-                                        minWidth: "100px",
-                                    }}
-                                    onClick={() => updateValue("symptoms", option)}
-                                >
-                                    {option}
-                                </Button>
-                            ))}
-                        </div>
-                    </Form.Group>
-
-                    {/* Question 4 */}
-                    <Form.Group className="mb-5">
-                        <Form.Label className="fw-semibold">
-                            Are there any movements or positions you’ve been told to avoid?
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {["Yes", "No"].map((option) => (
-                                <Button
-                                    key={option}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor:
-                                            formData.avoid === option ? "#6bc9f5" : "#f7f7f7",
-                                        color: formData.avoid === option ? "white" : "#333",
-                                        minWidth: "100px",
-                                    }}
-                                    onClick={() => updateValue("avoid", option)}
-                                >
-                                    {option}
-                                </Button>
-                            ))}
-                        </div>
-                    </Form.Group>
-
-                    {/* Question 5 */}
-                    <Form.Group className="mb-5">
-                        <Form.Label className="fw-semibold">
-                            Are you currently insured?
-                        </Form.Label>
-                        <div className="d-flex flex-wrap gap-3 mt-3">
-                            {["Yes", "No"].map((option) => (
-                                <Button
-                                    key={option}
-                                    className="rounded-pill px-4 py-2 fw-semibold shadow-sm"
-                                    style={{
-                                        border: "none",
-                                        backgroundColor:
-                                            formData.insured === option ? "#6bc9f5" : "#f7f7f7",
-                                        color: formData.insured === option ? "white" : "#333",
-                                        minWidth: "100px",
-                                    }}
-                                    onClick={() => updateValue("insured", option)}
-                                >
-                                    {option}
-                                </Button>
-                            ))}
-                        </div>
-                    </Form.Group>
-
-                    {/* Navigation */}
-                    <div className="d-flex justify-content-end mt-4">
-                        <Button
-                            type="button"
-                            className="rounded-pill fw-semibold"
-                            style={{
-                                backgroundColor: "#6bc9f5",
-                                border: "none",
-                                padding: "10px 32px",
-                            }}
-                            onClick={nextStep}
-                        >
-                            Next →
-                        </Button>
-                    </div>
-                </Form>
-            </Card>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
         </div>
     );
 }
+
+/* ---------- Reusable UX Components ---------- */
+
+function Section({
+    title,
+    children,
+}: {
+    title: string;
+    children: React.ReactNode;
+}) {
+    return (
+        <div
+            style={{
+                backgroundColor: "rgba(2,6,23,0.8)",
+                border: "1px solid #1e293b",
+                borderRadius: "0.75rem",
+                padding: "1rem",
+            }}
+        >
+            <h6 className="text-light fw-semibold mb-2">
+                {title}
+            </h6>
+            {children}
+        </div>
+    );
+}
+
+function PillRow({
+    value,
+    onSelect,
+}: {
+    value?: string;
+    onSelect: (v: string) => void;
+}) {
+    return (
+        <div className="d-flex gap-3">
+            {["Yes", "No"].map((opt) => (
+                <Pill
+                    key={opt}
+                    active={value === opt}
+                    onClick={() => onSelect(opt)}
+                >
+                    {opt}
+                </Pill>
+            ))}
+        </div>
+    );
+}
+
+function Pill({
+    active,
+    children,
+    onClick,
+}: {
+    active: boolean;
+    children: React.ReactNode;
+    onClick: () => void;
+}) {
+    return (
+        <Button
+            onClick={onClick}
+            style={{
+                backgroundColor: active ? "#3b82f6" : "#020617",
+                color: active ? "white" : "#cbd5f5",
+                border: active
+                    ? "1px solid #3b82f6"
+                    : "1px solid #1e293b",
+                borderRadius: "9999px",
+                padding: "0.4rem 1rem",
+                fontWeight: 500,
+            }}
+        >
+            {children}
+        </Button>
+    );
+}
+
+const inputStyle = {
+    backgroundColor: "#020617",
+    color: "#e5e7eb",
+    borderRadius: "0.6rem",
+    padding: "0.4rem 0.6rem",
+};
