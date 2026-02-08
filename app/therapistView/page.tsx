@@ -30,12 +30,12 @@ export default function TherapistView() {
         style={{
           minHeight: '100vh',
           maxWidth: "100vw",
-          background: 'linear-gradient(to bottom, #ecf2f3, #b2c0fd)',
+          background: 'linear-gradient(135deg, #daedf3 0%, #90A4AE 100%)',
         }}
       >
         {/* Top Section */}
         <Container style={{ backgroundColor: 'transparent' }}>
-          <Row className="align-items-start align-items-stretch">
+          <Row className="align-items-start align-items-stretch g-4">
             {/* Left side - WelcomeCard */}
             <Col md={4} className="d-flex alighn-items-center">
               <WelcomeCard therapistName="Alice" />
@@ -54,25 +54,10 @@ export default function TherapistView() {
         </Container>
 
         {/* Patients Section */}
-        <CurrentPatients />
+        <Container className="px-1.5">
+          <CurrentPatients />
+        </Container>
       </main>
-
-      <div className="modal fade " id="requestModal" tabIndex={-1} aria-labelledby="requestModalLabel" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5" id="exampleModalLabel">Lily Shwartz</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div className="modal-body">
-              Info about Patient
-            </div>
-            <div className="modal-footer">
-              <button type="button" className="btn btn-primary">View</button>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <footer className="py-5 text-raleway mt-f" style={{ backgroundColor: '#ffffffff' }} >
         <Container className="text-dark text-center">
@@ -90,11 +75,12 @@ interface WelcomeCard {
 
 export function WelcomeCard({ therapistName }: WelcomeCard) {
   return (
-    <div className="text-wrap text-raleway rounded-5 p-5 my-3" style={{
+    <div className="text-wrap text-raleway rounded-3 p-5 my-3" style={{
       width: "100%",
       minHeight: "300px",
       backgroundColor: "rgba(255, 255, 255, 1)",
       backdropFilter: "blur(10px)",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       display: "flex",
       flexDirection: "column",
       //alignItems: "center",
@@ -124,18 +110,18 @@ export function UpcomingMeetings() {
     { id: 2, patientName: "Alicia Shells", meetingTime: "6:30 pm" },
   ]);
   return (
-    <div className="text-raleway rounded-5 p-4 my-3 border-top h-100" style={{ 
+    <div className="rounded-3 p-4 my-3 border-top h-100" style={{ 
       width: "100%",
       minHeight: "300px",
       backgroundColor: "rgba(255, 255, 255, 1)",
       backdropFilter: "blur(10px)",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       display: "flex",
       flexDirection: "column",
       //alignItems: "center",
       }}>
         <div className="fs-4 text-center" style={{
-          borderColor: 'rgb(45, 8, 59)',
-          borderBottom: "2px solid black",
+          borderBottom: "1px solid rgba(0,0,0,.3)",
           marginBottom: "15px",
           padding: "5px"
         }}>Upcoming Meetings</div>
@@ -144,7 +130,7 @@ export function UpcomingMeetings() {
           key={meeting.id}
           className="d-flex justify-content-between mb-2 align-items-center gap-2 px-3 py-2 rounded-3"
                   style={{
-                    backgroundColor: 'rgba(228, 211, 255, 0.3)',
+                    backgroundColor: 'rgba(205, 209, 219, 0.13)',
                     border: '1px solid rgba(29, 2, 92, 0.1)'
                   }}
           >
@@ -180,18 +166,18 @@ export function PatientRequests() {
   }, []);
 
   return (
-    <div className="text-raleway rounded-5 p-4 my-3 border-top h-100" style={{ 
+    <div className="rounded-3 p-4 my-3 border-top h-100" style={{ 
       width: "100%",
       minHeight: "300px",
       backgroundColor: "rgba(255, 255, 255, 1)",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       backdropFilter: "blur(10px)",
       display: "flex",
       flexDirection: "column",
       //alignItems: "center",
       }}>
         <div className="fs-4 text-center" style={{
-          borderColor: 'rgb(45, 8, 59)',
-          borderBottom: "2px solid black",
+          borderBottom: "1px solid rgba(0,0,0,.3)",
           marginBottom: "15px",
           padding: "5px"
         }}>New Patient Messages</div>
@@ -226,27 +212,32 @@ export function CurrentPatients() {
   ]);
     return (
     <Container
-      className="rounded-5 my-5 py-4 px-5 mx-5 mx-auto"
+      className="rounded-3 my-2 p-4"
       style={{
-        backgroundColor: 'rgba(255, 255, 255, 1)',
-        backdropFilter: 'blur(10px)',
+        backgroundColor: 'rgb(255, 255, 255)',
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+        
       }}
     >
       <div 
-        className="text-raleway fw-semibold display-4 my-3 pb-3" 
+        className="display-5 pb-1" 
         style={{
-          borderBottom: "2px solid",
-          borderColor: 'rgb(231, 231, 231)',
+          fontWeight: "375",
         }}
       >
         Your Current Patients
+      </div>
+      <div>
+        <p className="text-muted pb-3" style={{
+          borderBottom: "1px solid rgba(0,0,0,.3)",}}>
+            Manage your patients and view their profiles</p>
       </div>
 
       <div className="pretty-scroll d-flex gap-4 py-3">
         {patients.map((patient) => (
           <Card
             key={patient.id}
-            className="text-raleway border-0 shadow"
+            className="p-3 border-0 shadow"
             style={{ 
               width: '18rem', 
               flexShrink: 0,
@@ -263,27 +254,22 @@ export function CurrentPatients() {
               e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
             }}
           >
-            <div style={{ position: 'relative', overflow: 'hidden' }}>
-              <Image
+            
+              <Card.Img
                 src={patient.img}
                 alt={patient.name}
-                width={288}
-                height={280}
                 className="card-img-top"
                 style={{
                   objectFit: 'cover',
-                  transition: 'transform 0.3s ease',
+                  height: "250px"
                 }}
               />
-              {/* Overlay gradient on hover */}
               
-            </div>
 
             <Card.Body className="p-4">
               <Card.Title 
                 className="fw-semibold mb-3"
                 style={{ 
-                  color: 'rgb(29, 2, 92)',
                   fontSize: '1.25rem'
                 }}
               >
@@ -294,13 +280,13 @@ export function CurrentPatients() {
                 <div 
                   className="d-flex align-items-center gap-2 px-3 py-2 rounded-3"
                   style={{
-                    backgroundColor: 'rgba(228, 211, 255, 0.3)',
+                    backgroundColor: 'rgba(159, 181, 253, 0.13)',
                     border: '1px solid rgba(29, 2, 92, 0.1)'
                   }}
                 >
                   <i 
                     className="bi bi-clipboard-heart-fill" 
-                    style={{ color: 'rgb(29, 2, 92)' }}
+                    style={{ color: 'rgb(0, 0, 0)' }}
                   ></i>
                   <span className="small fw-medium">{patient.CurrentYogaPlan}</span>
                 </div>
@@ -308,13 +294,13 @@ export function CurrentPatients() {
                 <div 
                   className="d-flex align-items-center gap-2 px-3 py-2 rounded-3"
                   style={{
-                    backgroundColor: 'rgba(228, 211, 255, 0.3)',
+                    backgroundColor: 'rgba(159, 181, 253, 0.13)',
                     border: '1px solid rgba(29, 2, 92, 0.1)'
                   }}
                 >
                   <i 
                     className="bi bi-calendar3" 
-                    style={{ color: 'rgb(29, 2, 92)' }}
+                    style={{ color: 'rgb(0, 0, 0)' }}
                   ></i>
                   <span className="small fw-medium">{patient.nextMeetingDate}</span>
                 </div>
@@ -325,7 +311,7 @@ export function CurrentPatients() {
                   href="#"
                   className="text-decoration-none d-flex align-items-center justify-content-center gap-2 fw-semibold"
                   style={{ 
-                    color: 'rgb(29, 2, 92)',
+                    color: 'rgb(3, 6, 15)',
                     fontSize: '0.9rem'
                   }}
                 >

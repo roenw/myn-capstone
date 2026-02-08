@@ -66,8 +66,8 @@ export default function RequestsPage() {
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
-            <Container fluid className="text-raleway py-5" style={{ 
-                maxWidth:"100vw", minHeight: "100vh", background: 'linear-gradient(to bottom, #ecf2f3, #b2c0fd)'}}>
+            <Container fluid className="py-5" style={{ 
+                maxWidth:"100vw", minHeight: "100vh", background: 'linear-gradient(135deg, #daedf3 0%, #90A4AE 100%)'}}>
                 <div className="text-center mb-4">
                     <h1 className="display-4 fw-semibold mb-2">New Patient Requests</h1>
                     <p className="fs-5 text-muted">
