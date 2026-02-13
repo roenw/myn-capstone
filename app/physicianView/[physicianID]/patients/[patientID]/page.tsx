@@ -18,9 +18,9 @@ interface Patients {
 
 export default function physiciansPatientView() {
     const [patients, setPatients] = useState<Patients[]>([
-        { id: 1, name: 'George Yousefson', dob: '01/01/1980', symptoms: 'Back pain', conditions: 'Arthritis', img: '/exDude1.jpg', nextMeetingDate: '11/24/25', CurrentYogaPlan: 'Plan A' },
-        { id: 2, name: 'Alicia Shells', dob: '02/02/1990', symptoms: 'Neck pain', conditions: 'Migraine', img: '/exDude2.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan B' },
-        { id: 3, name: 'Jennifer Bells', dob: '03/03/1975', symptoms: 'Hip pain', conditions: 'Osteoporosis', img: '/exDude3.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan C' },
+        { id: 1, name: 'John Doe', dob: '01/01/1980', symptoms: 'Back pain', conditions: 'Arthritis', img: '/exDude1.jpg', nextMeetingDate: '11/24/25', CurrentYogaPlan: 'Plan A' },
+        { id: 2, name: 'Jane Smith', dob: '02/02/1990', symptoms: 'Neck pain', conditions: 'Migraine', img: '/exDude2.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan B' },
+        { id: 3, name: 'Alice Johnson', dob: '03/03/1975', symptoms: 'Hip pain', conditions: 'Osteoporosis', img: '/exDude3.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan C' },
     ]);
     const router = useRouter();
     const { physicianID, patientID } = useParams<{ physicianID: string, patientID: string }>();
@@ -53,23 +53,20 @@ export default function physiciansPatientView() {
                 </Container>
                 <Container className="text-railway">
                     <Row className="">
-                        <Col md={3}>
+                        <Col md={3} className="d-flex flex-column">
                             <Card className="rounded-3" style={{
                                 backgroundColor: "rgba(255,255,255,1)",
                                 boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
                             }}>
                                 <Card.Body>
-                                    <Card.Img className="rounded-1" src={patient?.img} style={{
-                                        minHeight: "250px",
-                                        objectFit: "cover",
-                                    }} />
+                                    
                                     <Card.Title className="py-2">{patient?.name}</Card.Title>
                                     <Card.Text>DOB: {patient?.dob}</Card.Text>
                                     <Card.Text>Symptoms: {patient?.symptoms}</Card.Text>
                                     <Card.Text>Conditions: {patient?.conditions}</Card.Text>
                                 </Card.Body>
                             </Card>
-                            <Card className="rounded-3 mt-3" style={{
+                            <Card className="rounded-3 mt-3 flex-grow-1" style={{
                                 backgroundColor: "rgba(255,255,255,1)",
                                 boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
                             }}>

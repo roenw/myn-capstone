@@ -28,7 +28,7 @@ export default function PhysicianView() {
             <main className="" style={{
                 minHeight: '100vh',
                 maxWidth: "100vw",
-                background: "linear-gradient(135deg, #daedf3 0%, #90A4AE 100%)",
+                background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
             }}>
                 <Container className="py-4">
                     <Row className="align-items-center">
@@ -42,7 +42,7 @@ export default function PhysicianView() {
                     <Row className="gx-3">
                         <Col className="">
                             <Card className="h-100" style={{ 
-                                background: "#3d578186",
+                                background: "rgba(73, 133, 225)",
 
                                 boxShadow: '0 4px 10px rgba(102, 126, 234, 0.3)',
                             }}>
@@ -55,7 +55,7 @@ export default function PhysicianView() {
                                     <div>
                                         <i className="bib bi-people-fill rounded-circle px-3 py-2.5 text-white" style={{
                                             fontSize: "2rem",
-                                            border: "1px solid rgba(255, 255, 255, 0.1)",
+                                            border: "2px solid rgba(255, 255, 255, .4)",
                                         }}></i>
                                     </div>
                                     </div>
@@ -64,7 +64,7 @@ export default function PhysicianView() {
                         </Col>
                         <Col className="">
                             <Card className="h-100" style={{ 
-                                background: "#2d5c887a",
+                                background: "rgba(63, 137, 206)",
 
                                 boxShadow: '0 4px 10px rgba(102, 126, 234, 0.3)',
                             }}>
@@ -77,7 +77,7 @@ export default function PhysicianView() {
                                     <div>
                                         <i className="bib bi-file-text-fill rounded-circle px-3 py-2.5 text-white" style={{
                                             fontSize: "2rem",
-                                            border: "1px solid rgba(255, 255, 255, 0.1)",
+                                            border: "2px solid rgba(255, 255, 255, .4)",
                                         }}></i>
                                     </div>
                                     </div>
@@ -86,7 +86,7 @@ export default function PhysicianView() {
                         </Col>
                         <Col className="">
                             <Card className="h-100" style={{ 
-                                background: "#1a274959",
+                                background: "rgba(78, 101, 157)",
 
                                 boxShadow: '0 4px 10px rgba(102, 126, 234, 0.3)',
                             }}>
@@ -99,7 +99,7 @@ export default function PhysicianView() {
                                     <div>
                                         <i className="bib bi-chat-square-text-fill rounded-circle px-3 py-2.5 text-white" style={{
                                             fontSize: "2rem",
-                                            border: "1px solid rgba(255, 255, 255, 0.1)",
+                                            border: "2px solid rgba(255, 255, 255, .4)",
                                         }}></i>
                                     </div>
                                     </div>
@@ -131,10 +131,21 @@ export function SearchablePatientList() {
         { id: 3, name: 'Alice Johnson', condition: 'Back Pain', lastSession: '2024-06-08', newSessionNotes: false },
         { id: 4, name: 'Bob Brown', condition: 'Sprain', lastSession: '2024-06-11', newSessionNotes: false },
     ]);
-    const [sortBy, setSortBy] = useState("name");
+    const [sortBy, setSortBy] = useState("");
     const filteredPatients = patients.filter((patient) =>
         patient.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+        )
+        .sort((a, b) => {
+            if (sortBy === "condition") {
+                return a.condition.localeCompare(b.condition);
+            } else if (sortBy === "lastSession") {
+                return b.lastSession.localeCompare(a.lastSession);
+            } else if (sortBy === "newSessionNotes") {
+                return Number(b.newSessionNotes) - Number(a.newSessionNotes);
+            }
+            return 0;
+        });
+    ;
     const router = useRouter();
     const { physicianID } = useParams<{physicianID: string}>();
 
@@ -157,8 +168,8 @@ export function SearchablePatientList() {
 </div>
                 <div className="d-flex justify-content-end gap-2">
                     <div>
-                        <button className={`btn ${sortBy === "Condition" ? "btn-primary" : "btn-outline-secondary"}`}
-                            onClick={() => setSortBy("Condition")} style={{ whiteSpace: "nowrap" }}>
+                        <button className={`btn ${sortBy === "condition" ? "btn-primary" : "btn-outline-secondary"}`}
+                            onClick={() => setSortBy("condition")} style={{ whiteSpace: "nowrap" }}>
                             Condition
                         </button>
                     </div>

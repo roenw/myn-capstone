@@ -25,29 +25,27 @@ export default function TherapistView() {
         </Container>
       </Navbar>
 
+      {/* Main section, linear gradient is providing the background*/ }
       <main
         className="py-5 mx-auto"
         style={{
           minHeight: '100vh',
           maxWidth: "100vw",
-          background: 'linear-gradient(135deg, #daedf3 0%, #90A4AE 100%)',
+          background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
         }}
       >
         {/* Top Section */}
         <Container style={{ backgroundColor: 'transparent' }}>
           <Row className="align-items-start align-items-stretch g-4">
-            {/* Left side - WelcomeCard */}
             <Col md={4} className="d-flex alighn-items-center">
               <WelcomeCard therapistName="Alice" />
             </Col>
 
-            {/* Right side - Meetings and Requests */}
             <Col md={4} className="d-flex flex-column align-items-center gap-3">
-              {/* Upcoming Meetings */}
               <UpcomingMeetings />
             </Col>
+
             <Col md={4} className="d-flex flex-column gap-3">
-              {/* New Requests */}
               <PatientRequests />
             </Col>
           </Row>
@@ -166,15 +164,12 @@ export function PatientRequests() {
   }, []);
 
   return (
-    <div className="rounded-3 p-4 my-3 border-top h-100" style={{ 
+    <div className="rounded-3 p-4 my-3 border-top h-100 d-flex flex-column" style={{ 
       width: "100%",
       minHeight: "300px",
       backgroundColor: "rgba(255, 255, 255, 1)",
       boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
       backdropFilter: "blur(10px)",
-      display: "flex",
-      flexDirection: "column",
-      //alignItems: "center",
       }}>
         <div className="fs-4 text-center" style={{
           borderBottom: "1px solid rgba(0,0,0,.3)",
@@ -254,18 +249,6 @@ export function CurrentPatients() {
               e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
             }}
           >
-            
-              <Card.Img
-                src={patient.img}
-                alt={patient.name}
-                className="card-img-top"
-                style={{
-                  objectFit: 'cover',
-                  height: "250px"
-                }}
-              />
-              
-
             <Card.Body className="p-4">
               <Card.Title 
                 className="fw-semibold mb-3"
@@ -327,5 +310,3 @@ export function CurrentPatients() {
   );
 
 }
-
-// Still working on this
