@@ -2,6 +2,7 @@
 
 import { Card, Form, Button, Container } from "react-bootstrap";
 import { PhysicianFormData } from "./page";
+import type { ChangeEvent } from "react";
 
 interface Step1Props {
     nextStep: () => void;
@@ -45,7 +46,7 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     label="Full name"
                                     required
                                     value={formData.name || ""}
-                                    onChange={(e) => updateValue("name", e.target.value)}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateValue("name", e.target.value)}
                                 />
 
                                 <Input
@@ -54,7 +55,7 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     placeholder="example@hospital.org"
                                     required
                                     value={formData.email || ""}
-                                    onChange={(e) => updateValue("email", e.target.value)}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateValue("email", e.target.value)}
                                 />
                             </Section>
 
@@ -63,21 +64,21 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                 <Input
                                     label="Medical license number or professional ID"
                                     value={formData.license || ""}
-                                    onChange={(e) => updateValue("license", e.target.value)}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateValue("license", e.target.value)}
                                 />
 
                                 <Input
                                     label="NPI (US)"
                                     placeholder="10-digit NPI"
                                     value={formData.npi || ""}
-                                    onChange={(e) => updateValue("npi", e.target.value)}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateValue("npi", e.target.value)}
                                 />
 
                                 <Input
                                     label="Organization or clinic affiliation"
                                     placeholder="e.g. Mayo Clinic"
                                     value={formData.organization || ""}
-                                    onChange={(e) => updateValue("organization", e.target.value)}
+                                    onChange={(e: ChangeEvent<HTMLInputElement>) => updateValue("organization", e.target.value)}
                                 />
                             </Section>
 
@@ -127,7 +128,11 @@ function Input({
     label,
     required,
     ...props
-}: any) {
+}: {
+    label: string;
+    required?: boolean;
+    [key: string]: any;
+}) {
     return (
         <Form.Group className="mb-3">
             <Form.Label className="small text-secondary">

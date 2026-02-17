@@ -8,6 +8,9 @@ export interface ITherapist {
   phone?: string;
   location?: string;
   
+  // Account status
+  status: 'pending' | 'approved' | 'rejected';
+  
   // Professional info
   credentials?: string;
   bio?: string;
@@ -52,6 +55,13 @@ const TherapistSchema = new Schema<ITherapist>(
     },
     phone: String,
     location: String,
+    
+    // Account status
+    status: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'pending',
+    },
     
     // Professional details
     credentials: String,

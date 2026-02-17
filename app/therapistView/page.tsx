@@ -2,13 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Navbar, Container, Nav, Row, Col, Card, Button, Spinner } from "react-bootstrap";
+import { Navbar, Container, Nav, NavDropdown, Row, Col, Card, Button, Spinner } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 
 interface TherapistData {
     firstName: string;
     lastName: string;
     email: string;
+    status?: 'pending' | 'approved' | 'rejected';
 }
 
 interface Patient {
@@ -34,7 +35,7 @@ export default function TherapistView() {
                     const profileData = await profileResponse.json();
                     setTherapistData(profileData);
                 } else {
-                    router.push('/login');
+                    window.location.href = '/auth/login';
                     return;
                 }
 
@@ -46,7 +47,7 @@ export default function TherapistView() {
                 }
             } catch (error) {
                 console.error('Error fetching data:', error);
-                router.push('/login');
+                window.location.href = '/auth/login';
             } finally {
                 setLoading(false);
             }
@@ -104,17 +105,26 @@ export default function TherapistView() {
                             ))}
                         </Nav>
 
-                        <Nav.Link 
-                            className="ms-4" 
-                            style={{ color: "#cbd5f5" }}
-                            onClick={handleLogout}
+                        <NavDropdown
+                            title={
+                                <span style={{ color: "#e5e7eb" }}>
+                                    {therapistData?.firstName} {therapistData?.lastName}
+                                </span>
+                            }
+                            id="therapist-dropdown"
+                            align="end"
+                            className="ms-4"
                         >
-                            Logout
-                        </Nav.Link>
-
-                        <Nav.Link className="ms-2" style={{ color: "#cbd5f5" }}>
-                            <i className="bi bi-person-circle fs-4" />
-                        </Nav.Link>
+                            <NavDropdown.Item onClick={() => router.push("/therapistView/profile")}>
+                                <i className="bi bi-person-circle me-2" />
+                                Profile
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={handleLogout}>
+                                <i className="bi bi-box-arrow-right me-2" />
+                                Log Out
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
@@ -125,6 +135,34 @@ export default function TherapistView() {
                 style={{ minHeight: "100vh", backgroundColor: "#020617" }}
             >
                 <Container style={{ maxWidth: "1200px" }}>
+                    {/* Account Status Warning */}
+                    {therapistData?.status === 'pending' && (
+                        <Card
+                            className="mb-4 border-0"
+                            style={{
+                                backgroundColor: "rgba(251, 191, 36, 0.1)",
+                                border: "1px solid rgba(251, 191, 36, 0.3)",
+                                borderRadius: "0.75rem",
+                            }}
+                        >
+                            <Card.Body className="p-4">
+                                <div className="d-flex align-items-start gap-3">
+                                    <i className="bi bi-hourglass-split text-warning fs-3" />
+                                    <div>
+                                        <h5 className="text-warning fw-semibold mb-2">
+                                            Account Under Review
+                                        </h5>
+                                        <p className="text-light mb-0">
+                                            Your therapist account is currently being reviewed by our admin team. 
+                                            You'll receive an email once your account has been approved and you can 
+                                            start working with clients.
+                                        </p>
+                                    </div>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    )}
+
                     {/* Top Grid */}
                     <Row className="g-4 mb-5">
                         <Col md={7}>

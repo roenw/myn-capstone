@@ -10,7 +10,7 @@ export async function GET() {
     const session = await auth0.getSession();
     
     if (!session) {
-      return NextResponse.redirect(new URL('/login', process.env.APP_BASE_URL));
+      return NextResponse.redirect(new URL('/auth/login', process.env.APP_BASE_URL));
     }
 
     const auth0Id = session.user.sub;
@@ -37,6 +37,6 @@ export async function GET() {
     return NextResponse.redirect(new URL('/signup', process.env.APP_BASE_URL));
   } catch (error) {
     console.error('Error determining route:', error);
-    return NextResponse.redirect(new URL('/login', process.env.APP_BASE_URL));
+    return NextResponse.redirect(new URL('/auth/login', process.env.APP_BASE_URL));
   }
 }

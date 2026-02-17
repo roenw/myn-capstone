@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Card, Container, Navbar, Nav, Spinner } from "react-bootstrap";
+import { Button, Card, Container, Navbar, Nav, NavDropdown, Spinner } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 
 interface PhysicianData {
@@ -9,6 +9,7 @@ interface PhysicianData {
     lastName: string;
     credentials?: string;
     email: string;
+    status?: 'pending' | 'approved' | 'rejected';
 }
 
 export default function PhysicianPage() {
@@ -25,11 +26,11 @@ export default function PhysicianPage() {
                     setPhysicianData(data);
                 } else {
                     // Not authenticated, redirect to login
-                    router.push('/login');
+                    window.location.href = '/auth/login';
                 }
             } catch (error) {
                 console.error('Error fetching physician data:', error);
-                router.push('/login');
+                window.location.href = '/auth/login';
             } finally {
                 setLoading(false);
             }
@@ -72,20 +73,25 @@ export default function PhysicianPage() {
                     </Navbar.Brand>
 
                     <Navbar.Collapse className="justify-content-end">
-                        <Nav>
-                            <Nav.Link
-                                onClick={handleLogout}
-                                style={{ color: "#cbd5f5" }}
-                            >
-                                Logout
-                            </Nav.Link>
-                            <Nav.Link
-                                onClick={() => router.push("/physician/profile")}
-                                style={{ color: "#cbd5f5" }}
-                            >
-                                <i className="bi bi-person-circle fs-4" />
-                            </Nav.Link>
-                        </Nav>
+                        <NavDropdown
+                            title={
+                                <span style={{ color: "#e5e7eb" }}>
+                                    {physicianData?.firstName} {physicianData?.lastName}
+                                </span>
+                            }
+                            id="physician-dropdown"
+                            align="end"
+                        >
+                            <NavDropdown.Item onClick={() => router.push("/physician/profile")}>
+                                <i className="bi bi-person-circle me-2" />
+                                Profile
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={handleLogout}>
+                                <i className="bi bi-box-arrow-right me-2" />
+                                Log Out
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
@@ -97,8 +103,35 @@ export default function PhysicianPage() {
                     minHeight: "100vh",
                     backgroundColor: "#020617",
                 }}
-            >
-                <Container style={{ maxWidth: 720 }}>
+            >                <Container style={{ maxWidth: 720 }}>
+                    {/* Account Status Warning */}
+                    {physicianData?.status === 'pending' && (
+                        <Card
+                            className="mb-4 border-0"
+                            style={{
+                                backgroundColor: "rgba(251, 191, 36, 0.1)",
+                                border: "1px solid rgba(251, 191, 36, 0.3)",
+                                borderRadius: "0.75rem",
+                            }}
+                        >
+                            <Card.Body className="p-4">
+                                <div className="d-flex align-items-start gap-3">
+                                    <i className="bi bi-hourglass-split text-warning fs-3" />
+                                    <div>
+                                        <h5 className="text-warning fw-semibold mb-2">
+                                            Account Under Review
+                                        </h5>
+                                        <p className="text-light mb-0">
+                                            Your physician account is currently being reviewed by our admin team. 
+                                            You'll be notified once your credentials have been verified and you can 
+                                            start referring patients.
+                                        </p>
+                                    </div>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    )}
+
                     <Card
                         className="p-5 text-center"
                         style={{

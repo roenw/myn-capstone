@@ -7,6 +7,9 @@ export interface IPhysician {
   lastName: string;
   phone?: string;
   
+  // Account status
+  status: 'pending' | 'approved' | 'rejected';
+  
   // Professional info
   credentials?: string;
   medicalLicenseNumber?: string;
@@ -40,6 +43,13 @@ const PhysicianSchema = new Schema<IPhysician>(
       required: true,
     },
     phone: String,
+    
+    // Account status
+    status: {
+      type: String,
+      enum: ['pending', 'approved', 'rejected'],
+      default: 'pending',
+    },
     
     // Professional details
     credentials: String,
