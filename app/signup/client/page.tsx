@@ -55,11 +55,15 @@ export default function ClientSignupFlow() {
     };
 
     // --- Submit final data ---
-    const handleSubmit = (): void => {
+    const handleSubmit = async (): Promise<void> => {
         console.log("Final submitted data:", formData);
-        // TODO: connect API submission here
-        localStorage.removeItem("clientSignupData");
-        setStep(6); // show confirmation screen
+        
+        // Save data to localStorage before Auth0 redirect
+        localStorage.setItem("clientSignupData", JSON.stringify(formData));
+        localStorage.setItem("signupType", "client");
+        
+        // Redirect to Auth0 signup
+        window.location.href = '/auth/login?screen_hint=signup&returnTo=/signup/complete';
     };
 
     // --- Render step based on step number ---

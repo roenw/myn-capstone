@@ -1,9 +1,75 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Navbar, Container, Nav, Row, Col, Card, Button } from "react-bootstrap";
+import { Navbar, Container, Nav, Row, Col, Card, Button, Spinner } from "react-bootstrap";
+import { useRouter } from "next/navigation";
+
+interface TherapistData {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
+
+interface Patient {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone?: string;
+}
 
 export default function TherapistView() {
+    const router = useRouter();
+    const [therapistData, setTherapistData] = useState<TherapistData | null>(null);
+    const [patients, setPatients] = useState<Patient[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Fetch therapist profile
+                const profileResponse = await fetch('/api/user/profile');
+                if (profileResponse.ok) {
+                    const profileData = await profileResponse.json();
+                    setTherapistData(profileData);
+                } else {
+                    router.push('/login');
+                    return;
+                }
+
+                // Fetch patients
+                const patientsResponse = await fetch('/api/therapist-view/patients');
+                if (patientsResponse.ok) {
+                    const patientsData = await patientsResponse.json();
+                    setPatients(patientsData);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                router.push('/login');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, [router]);
+
+    const handleLogout = () => {
+        window.location.href = '/auth/logout';
+    };
+
+    if (loading) {
+        return (
+            <div
+                className="d-flex align-items-center justify-content-center"
+                style={{ minHeight: "100vh", backgroundColor: "#020617" }}
+            >
+                <Spinner animation="border" variant="primary" />
+            </div>
+        );
+    }
+
     return (
         <>
             {/* Navbar */}
@@ -38,7 +104,15 @@ export default function TherapistView() {
                             ))}
                         </Nav>
 
-                        <Nav.Link className="ms-4" style={{ color: "#cbd5f5" }}>
+                        <Nav.Link 
+                            className="ms-4" 
+                            style={{ color: "#cbd5f5" }}
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </Nav.Link>
+
+                        <Nav.Link className="ms-2" style={{ color: "#cbd5f5" }}>
                             <i className="bi bi-person-circle fs-4" />
                         </Nav.Link>
                     </Navbar.Collapse>
@@ -56,7 +130,7 @@ export default function TherapistView() {
                         <Col md={7}>
                             <DashboardCard>
                                 <h2 className="text-light fw-semibold mb-2">
-                                    Welcome back
+                                    Welcome back, {therapistData?.firstName} {therapistData?.lastName}
                                 </h2>
                                 <p className="text-secondary mb-0">
                                     Here's a quick overview of your schedule and patients.
@@ -65,17 +139,15 @@ export default function TherapistView() {
                         </Col>
 
                         <Col md={5} className="d-flex flex-column gap-4">
-                            <StatCard title="Upcoming meetings">
-                                <StatRow label="George Yousefson" value="Mon - 5:30 PM" />
-                                <StatRow label="Alicia Shells" value="Wed - 4:00 PM" />
+                            <StatCard title="Total Patients">
+                                <div className="text-light text-center fs-3 fw-bold">
+                                    {patients.length}
+                                </div>
                             </StatCard>
 
-                            <StatCard title="New requests">
-                                <div className="d-flex justify-content-between align-items-center">
-                                    <span className="text-light">Lily Shwartz</span>
-                                    <Button size="sm" variant="outline-primary">
-                                        View
-                                    </Button>
+                            <StatCard title="Email">
+                                <div className="text-light">
+                                    {therapistData?.email}
                                 </div>
                             </StatCard>
                         </Col>
@@ -87,38 +159,50 @@ export default function TherapistView() {
                             Current patients
                         </h4>
 
-                        <div className="d-flex gap-4 overflow-auto pb-2">
-                            {[
-                                { name: "George Yousefson", img: "/exDude1.jpg", date: "11/24/25" },
-                                { name: "Alicia Shells", img: "/exDude2.jpg", date: "12/24/25" },
-                                { name: "Jennifer Bells", img: "/exDude3.jpg", date: "12/24/25" },
-                            ].map((p) => (
-                                <Card
-                                    key={p.name}
-                                    style={{
-                                        minWidth: 260,
-                                        backgroundColor: "#020617",
-                                        border: "1px solid #1e293b",
-                                    }}
-                                >
-                                    <Image
-                                        src={p.img}
-                                        alt="profile"
-                                        width={260}
-                                        height={220}
-                                        style={{ objectFit: "cover" }}
-                                    />
-                                    <Card.Body>
-                                        <Card.Title className="text-light fs-6">
-                                            {p.name}
-                                        </Card.Title>
-                                        <Card.Text className="text-secondary small">
-                                            Next session: {p.date}
-                                        </Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            ))}
-                        </div>
+                        {patients.length === 0 ? (
+                            <p className="text-secondary text-center py-4">
+                                No patients assigned yet.
+                            </p>
+                        ) : (
+                            <div className="d-flex gap-4 overflow-auto pb-2">
+                                {patients.map((patient) => (
+                                    <Card
+                                        key={patient._id}
+                                        style={{
+                                            minWidth: 260,
+                                            backgroundColor: "#020617",
+                                            border: "1px solid #1e293b",
+                                        }}
+                                    >
+                                        <div
+                                            className="d-flex align-items-center justify-content-center"
+                                            style={{
+                                                height: 180,
+                                                backgroundColor: "rgba(59,130,246,0.15)",
+                                                color: "#3b82f6",
+                                                fontSize: "3rem",
+                                                fontWeight: 600,
+                                            }}
+                                        >
+                                            {patient.firstName[0]}{patient.lastName[0]}
+                                        </div>
+                                        <Card.Body>
+                                            <Card.Title className="text-light fs-6">
+                                                {patient.firstName} {patient.lastName}
+                                            </Card.Title>
+                                            <Card.Text className="text-secondary small">
+                                                {patient.email}
+                                            </Card.Text>
+                                            {patient.phone && (
+                                                <Card.Text className="text-secondary small">
+                                                    {patient.phone}
+                                                </Card.Text>
+                                            )}
+                                        </Card.Body>
+                                    </Card>
+                                ))}
+                            </div>
+                        )}
                     </DashboardCard>
                 </Container>
             </main>
@@ -157,14 +241,5 @@ function StatCard({
             </p>
             <div className="d-flex flex-column gap-2">{children}</div>
         </DashboardCard>
-    );
-}
-
-function StatRow({ label, value }: { label: string; value: string }) {
-    return (
-        <div className="d-flex justify-content-between text-light">
-            <span>{label}</span>
-            <span className="text-secondary">{value}</span>
-        </div>
     );
 }

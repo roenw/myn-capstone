@@ -1,16 +1,29 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Container, Card, Form, Button } from "react-bootstrap";
+import { Container, Card, Button, Spinner } from "react-bootstrap";
 
 export default function LoginPage() {
     const router = useRouter();
 
-    const handleLogin = (e: React.FormEvent) => {
-        e.preventDefault();
+    useEffect(() => {
+        // Check if user is already logged in
+        fetch('/api/user/profile')
+            .then(res => {
+                if (res.ok) {
+                    // User is already logged in, redirect based on their role
+                    router.push('/auth/determine-route');
+                }
+            })
+            .catch(() => {
+                // Not logged in, do nothing
+            });
+    }, [router]);
 
-        // Role-based routing should happen AFTER auth (session / backend)
-        router.push("/client"); // placeholder
+    const handleLogin = () => {
+        // Redirect to Auth0 login
+        window.location.href = '/auth/login';
     };
 
     return (
@@ -38,61 +51,20 @@ export default function LoginPage() {
                             </p>
                         </div>
 
-                        {/* Login Form */}
-                        <Form onSubmit={handleLogin}>
-                            {/* Username */}
-                            <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
-                                    Username
-                                </Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    required
-                                    placeholder="Enter your username"
-                                    className="border-0"
-                                    style={{
-                                        backgroundColor: "#020617", // slate-950
-                                        color: "#e5e7eb",
-                                        borderRadius: "0.75rem",
-                                        padding: "0.6rem 0.75rem",
-                                    }}
-                                />
-                            </Form.Group>
-
-                            {/* Password */}
-                            <Form.Group className="mb-4">
-                                <Form.Label className="text-uppercase small text-secondary">
-                                    Password
-                                </Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    required
-                                    placeholder="Enter your password"
-                                    className="border-0"
-                                    style={{
-                                        backgroundColor: "#020617",
-                                        color: "#e5e7eb",
-                                        borderRadius: "0.75rem",
-                                        padding: "0.6rem 0.75rem",
-                                    }}
-                                />
-                            </Form.Group>
-
-                            {/* Submit */}
-                            <Button
-                                type="submit"
-                                className="w-100 fw-medium"
-                                style={{
-                                    backgroundColor: "#3b82f6", // blue-500
-                                    border: "none",
-                                    borderRadius: "9999px",
-                                    padding: "0.6rem 0",
-                                    boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)",
-                                }}
-                            >
-                                Log In
-                            </Button>
-                        </Form>
+                        {/* Login Button */}
+                        <Button
+                            onClick={handleLogin}
+                            className="w-100 fw-medium"
+                            style={{
+                                backgroundColor: "#3b82f6", // blue-500
+                                border: "none",
+                                borderRadius: "9999px",
+                                padding: "0.6rem 0",
+                                boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)",
+                            }}
+                        >
+                            Log In with Auth0
+                        </Button>
 
                         {/* Footer */}
                         <div className="text-center mt-4">

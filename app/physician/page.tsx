@@ -1,10 +1,57 @@
 "use client";
 
-import { Button, Card, Container, Navbar, Nav } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Card, Container, Navbar, Nav, Spinner } from "react-bootstrap";
 import { useRouter } from "next/navigation";
+
+interface PhysicianData {
+    firstName: string;
+    lastName: string;
+    credentials?: string;
+    email: string;
+}
 
 export default function PhysicianPage() {
     const router = useRouter();
+    const [physicianData, setPhysicianData] = useState<PhysicianData | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPhysicianData = async () => {
+            try {
+                const response = await fetch('/api/user/profile');
+                if (response.ok) {
+                    const data = await response.json();
+                    setPhysicianData(data);
+                } else {
+                    // Not authenticated, redirect to login
+                    router.push('/login');
+                }
+            } catch (error) {
+                console.error('Error fetching physician data:', error);
+                router.push('/login');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPhysicianData();
+    }, [router]);
+
+    const handleLogout = () => {
+        window.location.href = '/auth/logout';
+    };
+
+    if (loading) {
+        return (
+            <div
+                className="d-flex align-items-center justify-content-center"
+                style={{ minHeight: "100vh", backgroundColor: "#020617" }}
+            >
+                <Spinner animation="border" variant="primary" />
+            </div>
+        );
+    }
 
     return (
         <>
@@ -26,6 +73,12 @@ export default function PhysicianPage() {
 
                     <Navbar.Collapse className="justify-content-end">
                         <Nav>
+                            <Nav.Link
+                                onClick={handleLogout}
+                                style={{ color: "#cbd5f5" }}
+                            >
+                                Logout
+                            </Nav.Link>
                             <Nav.Link
                                 onClick={() => router.push("/physician/profile")}
                                 style={{ color: "#cbd5f5" }}
@@ -72,8 +125,14 @@ export default function PhysicianPage() {
 
                         {/* Heading */}
                         <h2 className="text-light fw-semibold mb-2">
-                            Welcome back, Dr. Skyler
+                            Welcome back, Dr. {physicianData?.lastName || 'Physician'}
                         </h2>
+
+                        {physicianData?.credentials && (
+                            <p className="text-secondary mb-1">
+                                {physicianData.credentials}
+                            </p>
+                        )}
 
                         {/* Subtext */}
                         <p className="text-secondary mb-4">
