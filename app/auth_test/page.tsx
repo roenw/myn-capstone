@@ -13,10 +13,24 @@ export default async function Home() {
     );
   }
 
+  const roles = (session.user as any)?.roles || [];
+
   return (
     <main>
       <h1>Welcome, {session.user.name}!</h1>
       <p>Your email is: {session.user.email}</p>
+      <div>
+        <h2>Your Roles:</h2>
+        {roles.length > 0 ? (
+          <ul>
+            {roles.map((role: string, index: number) => (
+              <li key={index}>{role}</li>
+            ))}
+          </ul>
+        ) : (
+          <p>No roles assigned</p>
+        )}
+      </div>
       <a href="/auth/logout">Log out</a>
     </main>
   );
