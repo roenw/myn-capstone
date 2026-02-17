@@ -115,6 +115,15 @@ export default function TherapistView() {
                             align="end"
                             className="ms-4"
                         >
+                            <NavDropdown.Item onClick={() => router.push("/therapistView")}>
+                                <i className="bi bi-house me-2" />
+                                Home
+                            </NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => router.push("/therapist_debug")}>
+                                <i className="bi bi-bug me-2" />
+                                Debug View
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item onClick={() => router.push("/therapistView/profile")}>
                                 <i className="bi bi-person-circle me-2" />
                                 Profile

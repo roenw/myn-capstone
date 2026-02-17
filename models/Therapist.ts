@@ -17,6 +17,13 @@ export interface ITherapist {
   specialties?: string[];
   yearsOfExperience?: number;
   
+  // Additional professional details
+  sessionType?: string;
+  pricing?: string;
+  availability?: string;
+  qualification?: string;
+  certificates?: string;
+  
   // Availability
   availableHours?: {
     day: string;
@@ -68,6 +75,13 @@ const TherapistSchema = new Schema<ITherapist>(
     bio: String,
     specialties: [String],
     yearsOfExperience: Number,
+    
+    // Additional professional details
+    sessionType: String,
+    pricing: String,
+    availability: String,
+    qualification: String,
+    certificates: String,
     
     // Schedule
     availableHours: [

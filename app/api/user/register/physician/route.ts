@@ -26,16 +26,24 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new physician
+    // Parse name if provided as single field
+    const nameParts = data.name ? data.name.split(' ') : [];
+    const firstName = data.firstName || (nameParts.length > 0 ? nameParts[0] : '');
+    const lastName = data.lastName || (nameParts.length > 1 ? nameParts.slice(1).join(' ') : '');
+    
     physician = await Physician.create({
       auth0Id,
       email,
-      firstName: data.firstName,
-      lastName: data.lastName,
+      firstName,
+      lastName,
       phone: data.phone,
       credentials: data.credentials,
       medicalLicenseNumber: data.medicalLicenseNumber,
       specialty: data.specialty,
       hospitalAffiliation: data.hospitalAffiliation,
+      license: data.license,
+      npi: data.npi,
+      organization: data.organization,
     });
 
     return NextResponse.json({ 

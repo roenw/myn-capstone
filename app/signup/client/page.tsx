@@ -23,6 +23,25 @@ export type ClientFormData = {
     yogaBefore?: string;
     practiceFrequency?: string;
     sessionType?: string;
+    // Additional health information
+    yogaExperience?: string;
+    providerType?: string;
+    movementsToAvoid?: string;
+    provider?: string;
+    conditions?: string[];
+    otherCondition?: string;
+    symptoms?: string;
+    avoid?: string;
+    insured?: string;
+    // Instructor preferences
+    genderPref?: string[];
+    experiencePref?: string;
+    languagePref?: string[];
+    otherLanguage?: string;
+    sessionFormat?: string[];
+    availabilityDays?: string;
+    availabilityTime?: string;
+    availabilityZone?: string;
     [key: string]: any; // allow dynamic keys for later steps
 };
 

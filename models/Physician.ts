@@ -16,6 +16,11 @@ export interface IPhysician {
   specialty?: string;
   hospitalAffiliation?: string;
   
+  // License and verification
+  license?: string;
+  npi?: string;
+  organization?: string;
+  
   createdAt: Date;
   updatedAt: Date;
 }
@@ -56,6 +61,11 @@ const PhysicianSchema = new Schema<IPhysician>(
     medicalLicenseNumber: String,
     specialty: String,
     hospitalAffiliation: String,
+    
+    // License and verification
+    license: String,
+    npi: String,
+    organization: String,
   },
   {
     timestamps: true,

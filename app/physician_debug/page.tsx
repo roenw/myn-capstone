@@ -1,34 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Button, Card, Container, Navbar, Nav, NavDropdown, Spinner, Table } from "react-bootstrap";
+import { Button, Card, Container, Navbar, Nav, NavDropdown, Spinner } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 
-export default function ClientPage() {
+export default function PhysicianDebugPage() {
     const router = useRouter();
-    const [clientData, setClientData] = useState<any>(null);
+    const [physicianData, setPhysicianData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchClientData = async () => {
+        const fetchPhysicianData = async () => {
             try {
                 const response = await fetch('/api/user/profile');
                 if (response.ok) {
                     const data = await response.json();
-                    setClientData(data);
+                    setPhysicianData(data);
                 } else {
                     // Not authenticated, redirect to login
                     window.location.href = '/auth/login';
                 }
             } catch (error) {
-                console.error('Error fetching client data:', error);
+                console.error('Error fetching physician data:', error);
                 window.location.href = '/auth/login';
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchClientData();
+        fetchPhysicianData();
     }, [router]);
 
     const handleLogout = () => {
@@ -68,15 +68,19 @@ export default function ClientPage() {
                         <NavDropdown
                             title={
                                 <span style={{ color: "#e5e7eb" }}>
-                                    {clientData?.firstName} {clientData?.lastName}
+                                    {physicianData?.firstName} {physicianData?.lastName}
                                 </span>
                             }
-                            id="client-dropdown"
+                            id="physician-dropdown"
                             align="end"
                         >
-                            <NavDropdown.Item onClick={() => router.push("/client/profile")}>
-                                <i className="bi bi-person-circle me-2" />
-                                Profile
+                            <NavDropdown.Item onClick={() => router.push("/physician")}>
+                                <i className="bi bi-dashboard me-2" />
+                                Dashboard
+                            </NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => router.push("/physician_debug")}>
+                                <i className="bi bi-bug me-2" />
+                                Debug View
                             </NavDropdown.Item>
                             <NavDropdown.Divider />
                             <NavDropdown.Item onClick={handleLogout}>
@@ -106,10 +110,10 @@ export default function ClientPage() {
                             <div className="d-flex align-items-center justify-content-between mb-4">
                                 <div>
                                     <h2 className="text-light fw-semibold mb-2">
-                                        Welcome, {clientData?.firstName} {clientData?.lastName}
+                                        Physician Debug View
                                     </h2>
                                     <p className="text-secondary mb-0">
-                                        Client Dashboard - Debug View
+                                        Dr. {physicianData?.firstName} {physicianData?.lastName} - Raw Database Data
                                     </p>
                                 </div>
                                 <div
@@ -124,7 +128,7 @@ export default function ClientPage() {
                                         fontWeight: 600,
                                     }}
                                 >
-                                    {clientData?.firstName?.[0]}{clientData?.lastName?.[0]}
+                                    {physicianData?.firstName?.[0]}{physicianData?.lastName?.[0]}
                                 </div>
                             </div>
 
@@ -138,72 +142,23 @@ export default function ClientPage() {
                                 }}
                             >
                                 <i className="bi bi-info-circle me-2" />
-                                This is a debug/demo view showing all your profile data from the database.
-                            </div>
-                        </Card.Body>
-                    </Card>
-
-                    <Card
-                        className="border-0"
-                        style={{
-                            backgroundColor: "rgba(15, 23, 42, 0.75)",
-                            border: "1px solid #1e293b",
-                            borderRadius: "0.75rem",
-                        }}
-                    >
-                        <Card.Body className="p-4">
-                            <h4 className="text-light fw-semibold mb-4">
-                                Complete Profile Data
-                            </h4>
-
-                            <div className="table-responsive">
-                                <Table
-                                    bordered
-                                    hover
-                                    variant="dark"
-                                    style={{
-                                        backgroundColor: "transparent",
-                                        color: "#e5e7eb",
-                                    }}
-                                >
-                                    <thead>
-                                        <tr>
-                                            <th style={{ width: "30%", backgroundColor: "#1e293b" }}>Field</th>
-                                            <th style={{ backgroundColor: "#1e293b" }}>Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {clientData && Object.entries(clientData).map(([key, value]) => (
-                                            <tr key={key}>
-                                                <td className="text-secondary fw-semibold">
-                                                    {key}
-                                                </td>
-                                                <td className="text-light font-monospace">
-                                                    {typeof value === 'object' && value !== null
-                                                        ? JSON.stringify(value, null, 2)
-                                                        : String(value ?? 'N/A')}
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </Table>
+                                This is a debug view showing all your profile data from the database.
                             </div>
 
                             <div className="mt-4">
-                                <h5 className="text-light mb-3">Raw JSON Data</h5>
                                 <pre
-                                    className="p-3"
+                                    className="p-4 mb-0"
                                     style={{
                                         backgroundColor: "#020617",
                                         border: "1px solid #1e293b",
                                         borderRadius: "0.5rem",
                                         color: "#94a3b8",
-                                        maxHeight: "400px",
+                                        maxHeight: "600px",
                                         overflow: "auto",
                                         fontSize: "0.875rem",
                                     }}
                                 >
-                                    {JSON.stringify(clientData, null, 2)}
+                                    {JSON.stringify(physicianData, null, 2)}
                                 </pre>
                             </div>
                         </Card.Body>

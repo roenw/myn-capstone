@@ -26,17 +26,27 @@ export async function POST(request: NextRequest) {
     }
 
     // Create new therapist
+    // Parse name if provided as single field
+    const nameParts = data.name ? data.name.split(' ') : [];
+    const firstName = data.firstName || (nameParts.length > 0 ? nameParts[0] : '');
+    const lastName = data.lastName || (nameParts.length > 1 ? nameParts.slice(1).join(' ') : '');
+    
     therapist = await Therapist.create({
       auth0Id,
       email,
-      firstName: data.firstName,
-      lastName: data.lastName,
+      firstName,
+      lastName,
       phone: data.phone,
       location: data.location,
       credentials: data.credentials,
       bio: data.bio,
-      specialties: data.specialties,
-      yearsOfExperience: data.yearsOfExperience,
+      specialties: data.speciality ? [data.speciality] : data.specialties,
+      yearsOfExperience: data.yearsExperience ? Number(data.yearsExperience) : data.yearsOfExperience,
+      sessionType: data.sessionType,
+      pricing: data.pricing,
+      availability: data.availability,
+      qualification: data.qualification,
+      certificates: data.certificates,
     });
 
     return NextResponse.json({ 

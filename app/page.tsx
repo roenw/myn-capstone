@@ -67,19 +67,31 @@ export default function HomePage() {
                             <>
                                 {user ? (
                                     // Show user dropdown when logged in
-                                    <NavDropdown
-                                        title={
-                                            <span style={{ color: "#e5e7eb" }}>
-                                                {user.firstName} {user.lastName}
-                                            </span>
-                                        }
-                                        id="user-dropdown"
-                                        align="end"
-                                    >
-                                        <NavDropdown.Item href="/auth/logout">
-                                            Log Out
-                                        </NavDropdown.Item>
-                                    </NavDropdown>
+                                    <div className="d-flex gap-2 align-items-center">
+                                        <Button
+                                            className="rounded-pill px-4"
+                                            style={{
+                                                backgroundColor: "#3b82f6",
+                                                border: "none",
+                                            }}
+                                            onClick={() => router.push("/auth/determine-route")}
+                                        >
+                                            Dashboard
+                                        </Button>
+                                        <NavDropdown
+                                            title={
+                                                <span style={{ color: "#e5e7eb" }}>
+                                                    {user.firstName} {user.lastName}
+                                                </span>
+                                            }
+                                            id="user-dropdown"
+                                            align="end"
+                                        >
+                                            <NavDropdown.Item href="/auth/logout">
+                                                Log Out
+                                            </NavDropdown.Item>
+                                        </NavDropdown>
+                                    </div>
                                 ) : (
                                     // Show login/signup buttons when not logged in
                                     <div className="d-flex gap-2">
@@ -134,26 +146,46 @@ export default function HomePage() {
                                 secure, collaborative wellness platform designed for real care.
                             </p>
 
-                            <div className="d-flex gap-3">
-                                <Button
-                                    className="rounded-pill px-5"
-                                    style={{
-                                        backgroundColor: "#3b82f6",
-                                        border: "none",
-                                        boxShadow: "0 0 20px rgba(59,130,246,0.35)",
-                                    }}
-                                    onClick={() => router.push("/signup")}
-                                >
-                                    Create Account →
-                                </Button>
-                                <Button
-                                    variant="outline-secondary"
-                                    className="rounded-pill px-4"
-                                    onClick={() => window.location.href = '/auth/login'}
-                                >
-                                    Log In
-                                </Button>
-                            </div>
+                            {!loading && (
+                                <div className="d-flex gap-3">
+                                    {user ? (
+                                        // Show dashboard button when logged in
+                                        <Button
+                                            className="rounded-pill px-5"
+                                            style={{
+                                                backgroundColor: "#3b82f6",
+                                                border: "none",
+                                                boxShadow: "0 0 20px rgba(59,130,246,0.35)",
+                                            }}
+                                            onClick={() => router.push("/auth/determine-route")}
+                                        >
+                                            Go to Dashboard →
+                                        </Button>
+                                    ) : (
+                                        // Show signup/login when not logged in
+                                        <>
+                                            <Button
+                                                className="rounded-pill px-5"
+                                                style={{
+                                                    backgroundColor: "#3b82f6",
+                                                    border: "none",
+                                                    boxShadow: "0 0 20px rgba(59,130,246,0.35)",
+                                                }}
+                                                onClick={() => router.push("/signup")}
+                                            >
+                                                Create Account →
+                                            </Button>
+                                            <Button
+                                                variant="outline-secondary"
+                                                className="rounded-pill px-4"
+                                                onClick={() => window.location.href = '/auth/login'}
+                                            >
+                                                Log In
+                                            </Button>
+                                        </>
+                                    )}
+                                </div>
+                            )}
                         </Col>
 
                         {/* Right Side Feature Card */}

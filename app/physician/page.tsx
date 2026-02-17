@@ -82,6 +82,15 @@ export default function PhysicianPage() {
                             id="physician-dropdown"
                             align="end"
                         >
+                            <NavDropdown.Item onClick={() => router.push("/physician")}>
+                                <i className="bi bi-house me-2" />
+                                Home
+                            </NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => router.push("/physician_debug")}>
+                                <i className="bi bi-bug me-2" />
+                                Debug View
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
                             <NavDropdown.Item onClick={() => router.push("/physician/profile")}>
                                 <i className="bi bi-person-circle me-2" />
                                 Profile

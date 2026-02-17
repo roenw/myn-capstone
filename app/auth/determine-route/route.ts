@@ -20,7 +20,7 @@ export async function GET() {
     // Check which user type they are
     const client = await Client.findOne({ auth0Id });
     if (client) {
-      return NextResponse.redirect(new URL('/client', process.env.APP_BASE_URL));
+      return NextResponse.redirect(new URL('/client_debug', process.env.APP_BASE_URL));
     }
 
     const therapist = await Therapist.findOne({ auth0Id });

@@ -40,6 +40,25 @@ export async function POST(request: NextRequest) {
       yogaBefore: data.yogaBefore,
       practiceFrequency: data.practiceFrequency,
       sessionType: data.sessionType,
+      // Additional health information
+      yogaExperience: data.yogaExperience,
+      providerType: data.providerType,
+      movementsToAvoid: data.movementsToAvoid,
+      provider: data.provider,
+      conditions: data.conditions,
+      otherCondition: data.otherCondition,
+      symptoms: data.symptoms,
+      avoid: data.avoid,
+      insured: data.insured,
+      // Instructor preferences
+      genderPref: data.genderPref,
+      experiencePref: data.experiencePref,
+      languagePref: data.languagePref,
+      otherLanguage: data.otherLanguage,
+      sessionFormat: data.sessionFormat,
+      availabilityDays: data.availabilityDays,
+      availabilityTime: data.availabilityTime,
+      availabilityZone: data.availabilityZone,
     });
 
     return NextResponse.json({ 
