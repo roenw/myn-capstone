@@ -15,9 +15,6 @@ export type InstructorFormData = {
     pricing?: string;
     qualification?: string;
     certificates?: string;
-    username?: string;
-    password?: string;
-    confirmPassword?: string;
     [key: string]: any;
 };
 

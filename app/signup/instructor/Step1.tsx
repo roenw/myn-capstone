@@ -140,35 +140,6 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                 </Row>
                             </Section>
 
-                            {/* SECTION 3 */}
-                            <Section title="Create your login">
-                                <Row className="g-3">
-                                    <Col md={4}>
-                                        <Input
-                                            label="Username"
-                                            value={formData.username}
-                                            onChange={(v) => updateValue("username", v)}
-                                        />
-                                    </Col>
-                                    <Col md={4}>
-                                        <Input
-                                            label="Password"
-                                            type="password"
-                                            value={formData.password}
-                                            onChange={(v) => updateValue("password", v)}
-                                        />
-                                    </Col>
-                                    <Col md={4}>
-                                        <Input
-                                            label="Confirm password"
-                                            type="password"
-                                            value={formData.confirmPassword}
-                                            onChange={(v) => updateValue("confirmPassword", v)}
-                                        />
-                                    </Col>
-                                </Row>
-                            </Section>
-
                             {/* Navigation */}
                             <div className="d-flex justify-content-end">
                                 <Button

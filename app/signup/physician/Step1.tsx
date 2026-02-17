@@ -81,31 +81,6 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                 />
                             </Section>
 
-                            {/* --- Login --- */}
-                            <Section title="Create login">
-                                <Input
-                                    label="Username"
-                                    value={formData.username || ""}
-                                    onChange={(e) => updateValue("username", e.target.value)}
-                                />
-
-                                <Input
-                                    label="Password"
-                                    type="password"
-                                    value={formData.password || ""}
-                                    onChange={(e) => updateValue("password", e.target.value)}
-                                />
-
-                                <Input
-                                    label="Confirm password"
-                                    type="password"
-                                    value={formData.confirmPassword || ""}
-                                    onChange={(e) =>
-                                        updateValue("confirmPassword", e.target.value)
-                                    }
-                                />
-                            </Section>
-
                             {/* CTA */}
                             <div className="d-flex justify-content-end mt-4">
                                 <Button

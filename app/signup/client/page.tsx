@@ -18,9 +18,6 @@ export type ClientFormData = {
     phone?: string;
     location?: string;
     referral?: string;
-    username?: string;
-    password?: string;
-    confirmPassword?: string;
     interests?: string[];
     otherInterest?: string;
     yogaBefore?: string;

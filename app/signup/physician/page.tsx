@@ -10,9 +10,6 @@ export type PhysicianFormData = {
     license?: string;
     npi?: string;
     organization?: string;
-    username?: string;
-    password?: string;
-    confirmPassword?: string;
     [key: string]: any;
 };
 

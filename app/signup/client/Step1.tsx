@@ -153,68 +153,6 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                 />
                             </Form.Group>
 
-                            <hr className="border-secondary opacity-25 my-4" />
-
-                            {/* ---------- Login Info ---------- */}
-
-                            <h6 className="text-light fw-semibold mb-3 text-center">
-                                Create Login Credentials
-                            </h6>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
-                                    Username
-                                </Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    required
-                                    placeholder="Choose a username"
-                                    value={formData.username || ""}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, username: e.target.value })
-                                    }
-                                    className="border-0"
-                                    style={inputStyle}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
-                                    Password
-                                </Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    required
-                                    placeholder="Enter password"
-                                    value={formData.password || ""}
-                                    onChange={(e) =>
-                                        setFormData({ ...formData, password: e.target.value })
-                                    }
-                                    className="border-0"
-                                    style={inputStyle}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-4">
-                                <Form.Label className="text-uppercase small text-secondary">
-                                    Confirm Password
-                                </Form.Label>
-                                <Form.Control
-                                    type="password"
-                                    required
-                                    placeholder="Re-enter password"
-                                    value={formData.confirmPassword || ""}
-                                    onChange={(e) =>
-                                        setFormData({
-                                            ...formData,
-                                            confirmPassword: e.target.value,
-                                        })
-                                    }
-                                    className="border-0"
-                                    style={inputStyle}
-                                />
-                            </Form.Group>
-
                             {/* ---------- Navigation ---------- */}
                             <div className="d-flex justify-content-end">
                                 <Button
