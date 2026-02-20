@@ -2,27 +2,43 @@
 
 import Image from "next/image";
 import { Container, Nav, Navbar, NavDropdown, Button, Badge, Card } from "react-bootstrap";
-import "../../therapistStyles.css";
+import "./../therapistStyles.css";
 import { useParams } from "next/navigation";
 
 export default function Patients() {
-    const { therapistID } = useParams();
     return (
         <>
             <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
                 <Container fluid className="mx-5">
-                    <Navbar.Brand href={`/therapistView/${therapistID}`}>My Yoga Network</Navbar.Brand>
+                    <Navbar.Brand href={`/therapistView`}>My Yoga Network</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarSupportedContent" />
                     <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
                         <Nav className="mb-lg-0 mt-1">
-                            <Nav.Link href={`/therapistView/${therapistID}/patients`}>Patients</Nav.Link>
-                            <Nav.Link href={`/therapistView/${therapistID}/requests`}>Requests</Nav.Link>
-                            <Nav.Link href={`/therapistView/${therapistID}/calendar`} className="me-5">Calendar</Nav.Link>
+                            <Nav.Link href={`/therapistView`}>Home</Nav.Link>
+                            <Nav.Link href={`/therapistView/patients`}>Patients</Nav.Link>
+                            <Nav.Link href={`/therapistView/requests`}>Requests</Nav.Link>
+                            <Nav.Link href={`/therapistView/calendar`} className="me-5">Calendar</Nav.Link>
                         </Nav>
 
-                        <Nav.Link className="ms-4" style={{ color: "#cbd5f5" }}>
-                            <i className="bi bi-person-circle fs-4" />
-                        </Nav.Link>
+                        <NavDropdown
+                            title={<i className="bi bi-person-circle fs-4" />}
+                            id="therapist-dropdown"
+                            align="end"
+                        >
+                            <NavDropdown.Item href="/therapistView">
+                                <i className="bi bi-house me-2" />
+                                Dashboard
+                            </NavDropdown.Item>
+                            <NavDropdown.Item href="/therapist_debug">
+                                <i className="bi bi-bug me-2" />
+                                Debug View
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="/auth/logout">
+                                <i className="bi bi-box-arrow-right me-2" />
+                                Log Out
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>

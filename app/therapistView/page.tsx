@@ -1,306 +1,331 @@
-"use client";
-
-import { useEffect, useState } from "react";
+'use client';
 import Image from "next/image";
-import { Navbar, Container, Nav, NavDropdown, Row, Col, Card, Button, Spinner } from "react-bootstrap";
-import { useRouter } from "next/navigation";
-
-interface TherapistData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    status?: 'pending' | 'approved' | 'rejected';
-}
-
-interface Patient {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone?: string;
-}
+import { useState, useEffect } from 'react';
+import { useParams } from "next/navigation";
+import { Navbar, Container, Nav, NavDropdown, Row, Col, Card, Button } from 'react-bootstrap';
+import "./therapistStyles.css";
 
 export default function TherapistView() {
-    const router = useRouter();
-    const [therapistData, setTherapistData] = useState<TherapistData | null>(null);
-    const [patients, setPatients] = useState<Patient[]>([]);
-    const [loading, setLoading] = useState(true);
+  const { therapistID } = useParams();
+  return (
+    <>
+      {/* Navbar */}
+      <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
+        <Container fluid className="mx-5">
+          <Navbar.Brand href={`/therapistView`}>My Yoga Network</Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarSupportedContent" />
+          <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
+            <Nav className="mb-lg-0 mt-1">
+              <Nav.Link href={`/therapistView`}>Home</Nav.Link>
+              <Nav.Link href={`/therapistView/patients`}>Patients</Nav.Link>
+              <Nav.Link href={`/therapistView/requests`}>Requests</Nav.Link>
+              <Nav.Link href={`/therapistView/calendar`} className="me-5">Calendar</Nav.Link>
+            </Nav>
+            <NavDropdown
+              title={<i className="bi bi-person-circle fs-3"></i>}
+              id="therapist-dropdown"
+              align="end"
+            >
+              <NavDropdown.Item href="/therapistView">
+                <i className="bi bi-house me-2" />
+                Dashboard
+              </NavDropdown.Item>
+              <NavDropdown.Item href="/therapist_debug">
+                <i className="bi bi-bug me-2" />
+                Debug View
+              </NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item href="/auth/logout">
+                <i className="bi bi-box-arrow-right me-2" />
+                Log Out
+              </NavDropdown.Item>
+            </NavDropdown>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Fetch therapist profile
-                const profileResponse = await fetch('/api/user/profile');
-                if (profileResponse.ok) {
-                    const profileData = await profileResponse.json();
-                    setTherapistData(profileData);
-                } else {
-                    window.location.href = '/auth/login';
-                    return;
-                }
+      {/* Main section, linear gradient is providing the background*/ }
+      <main
+        className="py-5 mx-auto"
+        style={{
+          minHeight: '100vh',
+          maxWidth: "100vw",
+          background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+        }}
+      >
+        {/* Top Section */}
+        <Container style={{ backgroundColor: 'transparent' }}>
+          <Row className="align-items-start align-items-stretch g-4">
+            <Col md={4} className="d-flex alighn-items-center">
+              <WelcomeCard therapistName="Alice" />
+            </Col>
 
-                // Fetch patients
-                const patientsResponse = await fetch('/api/therapist-view/patients');
-                if (patientsResponse.ok) {
-                    const patientsData = await patientsResponse.json();
-                    setPatients(patientsData);
-                }
+            <Col md={4} className="d-flex flex-column align-items-center gap-3">
+              <UpcomingMeetings />
+            </Col>
+
+            <Col md={4} className="d-flex flex-column gap-3">
+              <PatientRequests />
+            </Col>
+          </Row>
+        </Container>
+
+        {/* Patients Section */}
+        <Container className="px-1.5">
+          <CurrentPatients />
+        </Container>
+      </main>
+
+      <footer className="py-5 text-raleway mt-f" style={{ backgroundColor: '#ffffffff' }} >
+        <Container className="text-dark text-center">
+          <p className="display-5 mb-3">Yoga Network</p>
+          <small className="text-dark-50">&copy; contact info</small>
+        </Container>
+      </footer>
+    </>
+  );
+}
+
+interface WelcomeCard {
+  therapistName: string;
+}
+
+export function WelcomeCard({ therapistName }: WelcomeCard) {
+  return (
+    <div className="text-wrap text-raleway rounded-3 p-5 my-3" style={{
+      width: "100%",
+      minHeight: "300px",
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      backdropFilter: "blur(10px)",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+      display: "flex",
+      flexDirection: "column",
+      //alignItems: "center",
+      justifyContent: "center"
+    }}>
+      <h1 className="fw-semibold mb-0" style={{fontSize: 'clamp(1.5rem, 3vw, 3rem)'}}>
+        Welcome <br />
+        To Your 
+      </h1>
+      <h1 className="fw-semibold gradient-text mt-0 mb-0 text-wrap" style={{fontSize: 'clamp(1.5rem, 3vw, 3rem)'}}>Yoga Network</h1>
+      <h1 className="display-5 fw-semibold mt-0">
+        {therapistName}
+      </h1>
+    </div>
+  );
+}
+
+interface NextMeetings {
+  id: number;
+  patientName: string;
+  meetingTime: string;
+}
+
+export function UpcomingMeetings() {
+  const [meetings, setMeetings] = useState<NextMeetings[]>([
+    { id: 1, patientName: "George Yousefson", meetingTime: "4:00 pm" },
+    { id: 2, patientName: "Alicia Shells", meetingTime: "6:30 pm" },
+  ]);
+  return (
+    <div className="rounded-3 p-4 my-3 border-top h-100" style={{ 
+      width: "100%",
+      minHeight: "300px",
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      backdropFilter: "blur(10px)",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+      display: "flex",
+      flexDirection: "column",
+      //alignItems: "center",
+      }}>
+        <div className="fs-4 text-center" style={{
+          borderBottom: "1px solid rgba(0,0,0,.3)",
+          marginBottom: "15px",
+          padding: "5px"
+        }}>Upcoming Meetings</div>
+        {meetings.map((meeting) => (
+          <div
+          key={meeting.id}
+          className="d-flex justify-content-between mb-2 align-items-center gap-2 px-3 py-2 rounded-3"
+                  style={{
+                    backgroundColor: 'rgba(205, 209, 219, 0.13)',
+                    border: '1px solid rgba(29, 2, 92, 0.1)'
+                  }}
+          >
+          <span className="fw-semibold">{meeting.meetingTime}</span>
+          <span className="fw-normal">{meeting.patientName}</span>
+          </div>
+
+        ))}
+    </div>
+  );
+}
+
+interface PatientRequests {
+  id: number;
+  name: string;
+}
+export function PatientRequests() {
+  const [requests, setRequests] =useState<PatientRequests[]>([]);
+
+  useEffect(() => {
+    // Fetch requests from API
+    async function fetchRequests() {
+      try {
+                const res = await fetch("/api/therapist-view/patient-requests");
+                if (!res.ok) throw new Error("Failed to fetch requests");
+                const data = await res.json();
+                setRequests(data);
             } catch (error) {
-                console.error('Error fetching data:', error);
-                window.location.href = '/auth/login';
-            } finally {
-                setLoading(false);
+                console.error("Error loading requests:", error);
             }
-        };
-
-        fetchData();
-    }, [router]);
-
-    const handleLogout = () => {
-        window.location.href = '/auth/logout';
-    };
-
-    if (loading) {
-        return (
-            <div
-                className="d-flex align-items-center justify-content-center"
-                style={{
-                    minHeight: "100vh",
-                    background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
-                }}
-            >
-                <Spinner animation="border" variant="primary" />
-            </div>
-        );
     }
+    fetchRequests();
+  }, []);
 
-    return (
-        <>
-            {/* Navbar */}
-            <Navbar
-                expand="lg"
-                className="py-3"
-                style={{
-                    backgroundColor: "rgba(255,255,255,0.85)",
-                    backdropFilter: "blur(10px)",
-                    borderBottom: "1px solid #dee2e6",
-                }}
-            >
-                <Container fluid className="px-5">
-                    <Navbar.Brand
-                        href="/therapistView"
-                        style={{
-                            color: "#212529",
-                            fontWeight: 600,
-                            fontFamily: "'Poppins', sans-serif",
-                        }}
-                    >
-                        Yoga Network
-                    </Navbar.Brand>
-
-                    <Navbar.Toggle />
-
-                    <Navbar.Collapse className="justify-content-end">
-                        <Nav className="gap-4">
-                            {["Patients", "Requests", "Calendar"].map((item) => (
-                                <Nav.Link
-                                    key={item}
-                                    href={`/therapistView/${item.toLowerCase()}`}
-                                    style={{ color: "#6c757d" }}
-                                >
-                                    {item}
-                                </Nav.Link>
-                            ))}
-                        </Nav>
-
-                        <NavDropdown
-                            title={
-                                <span style={{ color: "#212529" }}>
-                                    {therapistData?.firstName} {therapistData?.lastName}
-                                </span>
-                            }
-                            id="therapist-dropdown"
-                            align="end"
-                            className="ms-4"
-                        >
-                            <NavDropdown.Item onClick={() => router.push("/therapistView")}>
-                                <i className="bi bi-house me-2" />
-                                Home
-                            </NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => router.push("/therapist_debug")}>
-                                <i className="bi bi-bug me-2" />
-                                Debug View
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={() => router.push("/therapistView/profile")}>
-                                <i className="bi bi-person-circle me-2" />
-                                Profile
-                            </NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={handleLogout}>
-                                <i className="bi bi-box-arrow-right me-2" />
-                                Log Out
-                            </NavDropdown.Item>
-                        </NavDropdown>
-                    </Navbar.Collapse>
-                </Container>
-            </Navbar>
-
-            {/* Main */}
-            <main
-                className="py-5"
-                style={{
-                    minHeight: "100vh",
-                    background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
-                    fontFamily: "'Poppins', sans-serif",
-                }}
-            >
-                <Container style={{ maxWidth: "1200px" }}>
-                    {/* Account Status Warning */}
-                    {therapistData?.status === 'pending' && (
-                        <Card
-                            className="mb-4 border-0 shadow-sm"
-                            style={{
-                                backgroundColor: "rgba(251, 191, 36, 0.1)",
-                                border: "1px solid rgba(251, 191, 36, 0.3)",
-                                borderRadius: "0.75rem",
-                            }}
-                        >
-                            <Card.Body className="p-4">
-                                <div className="d-flex align-items-start gap-3">
-                                    <i className="bi bi-hourglass-split text-warning fs-3" />
-                                    <div>
-                                        <h5 className="text-warning fw-semibold mb-2">
-                                            Account Under Review
-                                        </h5>
-                                        <p className="text-muted mb-0">
-                                            Your therapist account is currently being reviewed by our admin team. 
-                                            You'll receive an email once your account has been approved and you can 
-                                            start working with clients.
-                                        </p>
-                                    </div>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                    )}
-
-                    {/* Top Grid */}
-                    <Row className="g-4 mb-5">
-                        <Col md={7}>
-                            <DashboardCard>
-                                <h2 className="fw-semibold mb-2" style={{ color: "#212529" }}>
-                                    Welcome back, {therapistData?.firstName} {therapistData?.lastName}
-                                </h2>
-                                <p className="text-muted mb-0">
-                                    Here's a quick overview of your schedule and patients.
-                                </p>
-                            </DashboardCard>
-                        </Col>
-
-                        <Col md={5} className="d-flex flex-column gap-4">
-                            <StatCard title="Total Patients">
-                                <div className="text-center fs-3 fw-bold" style={{ color: "#212529" }}>
-                                    {patients.length}
-                                </div>
-                            </StatCard>
-
-                            <StatCard title="Email">
-                                <div style={{ color: "#212529" }}>
-                                    {therapistData?.email}
-                                </div>
-                            </StatCard>
-                        </Col>
-                    </Row>
-
-                    {/* Patients */}
-                    <DashboardCard>
-                        <h4 className="fw-semibold mb-4" style={{ color: "#212529" }}>
-                            Current patients
-                        </h4>
-
-                        {patients.length === 0 ? (
-                            <p className="text-muted text-center py-4">
-                                No patients assigned yet.
-                            </p>
-                        ) : (
-                            <div className="d-flex gap-4 overflow-auto pb-2">
-                                {patients.map((patient) => (
-                                    <Card
-                                        key={patient._id}
-                                        className="shadow-sm"
-                                        style={{
-                                            minWidth: 260,
-                                            backgroundColor: "rgba(255,255,255,0.9)",
-                                            border: "1px solid #dee2e6",
-                                        }}
-                                    >
-                                        <div
-                                            className="d-flex align-items-center justify-content-center"
-                                            style={{
-                                                height: 180,
-                                                backgroundColor: "rgba(59,130,246,0.15)",
-                                                color: "#3b82f6",
-                                                fontSize: "3rem",
-                                                fontWeight: 600,
-                                            }}
-                                        >
-                                            {patient.firstName[0]}{patient.lastName[0]}
-                                        </div>
-                                        <Card.Body>
-                                            <Card.Title className="fs-6" style={{ color: "#212529" }}>
-                                                {patient.firstName} {patient.lastName}
-                                            </Card.Title>
-                                            <Card.Text className="text-muted small">
-                                                {patient.email}
-                                            </Card.Text>
-                                            {patient.phone && (
-                                                <Card.Text className="text-muted small">
-                                                    {patient.phone}
-                                                </Card.Text>
-                                            )}
-                                        </Card.Body>
-                                    </Card>
-                                ))}
-                            </div>
-                        )}
-                    </DashboardCard>
-                </Container>
-            </main>
-        </>
-    );
-}
-
-/* ---------- Reusable UI blocks ---------- */
-
-function DashboardCard({ children }: { children: React.ReactNode }) {
-    return (
-        <div
-            className="p-4 shadow-sm"
-            style={{
-                backgroundColor: "rgba(255,255,255,0.85)",
-                backdropFilter: "blur(10px)",
-                borderRadius: "1rem",
-                border: "1px solid #dee2e6",
+  return (
+    <div className="rounded-3 p-4 my-3 border-top h-100 d-flex flex-column" style={{ 
+      width: "100%",
+      minHeight: "300px",
+      backgroundColor: "rgba(255, 255, 255, 1)",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+      backdropFilter: "blur(10px)",
+      }}>
+        <div className="fs-4 text-center" style={{
+          borderBottom: "1px solid rgba(0,0,0,.3)",
+          marginBottom: "15px",
+          padding: "5px"
+        }}>New Patient Messages</div>
+        {requests.map((request) => (
+          <div
+            key={request.id}
+            className="fw-normal px-2 mb-2 d-flex justify-content-between" style={{
+              backgroundColor: "rgb(226, 226, 226, .1)",
+              borderBottom: "1px solid rgb(29, 2, 92, 0)",
             }}
-        >
-            {children}
-        </div>
-    );
+          >
+            <span className="fw-semibold mt-2" style={{color:"#000000"}}>{request.name}</span>
+            <Button variant="outline-primary"data-bs-toggle="modal" data-bs-target="#requestModal" style={{cursor: "pointer"}}>View Message</Button>
+          </div>
+        ))}
+      </div>
+  )
 }
 
-function StatCard({
-    title,
-    children,
-}: {
-    title: string;
-    children: React.ReactNode;
-}) {
+interface Patients {
+  id: number;
+  name: string;
+  img: string;
+  nextMeetingDate: string;
+  CurrentYogaPlan: string;
+}
+export function CurrentPatients() {
+  const [patients, setPatients] = useState<Patients[]>([
+    { id: 1, name: 'George Yousefson', img: '/exDude1.jpg', nextMeetingDate: '11/24/25', CurrentYogaPlan: 'Plan A' },
+    { id: 2, name: 'Alicia Shells', img: '/exDude2.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan B' },
+    { id: 3, name: 'Jennifer Bells', img: '/exDude3.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan C' },
+  ]);
     return (
-        <DashboardCard>
-            <p className="text-uppercase small text-muted mb-3">
-                {title}
-            </p>
-            <div className="d-flex flex-column gap-2">{children}</div>
-        </DashboardCard>
-    );
+    <Container
+      className="rounded-3 my-2 p-4"
+      style={{
+        backgroundColor: 'rgb(255, 255, 255)',
+        boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+        
+      }}
+    >
+      <div 
+        className="display-5 pb-1" 
+        style={{
+          fontWeight: "375",
+        }}
+      >
+        Your Current Patients
+      </div>
+      <div>
+        <p className="text-muted pb-3" style={{
+          borderBottom: "1px solid rgba(0,0,0,.3)",}}>
+            Manage your patients and view their profiles</p>
+      </div>
+
+      <div className="pretty-scroll d-flex gap-4 py-3">
+        {patients.map((patient) => (
+          <Card
+            key={patient.id}
+            className="p-3 border-0 shadow"
+            style={{ 
+              width: '18rem', 
+              flexShrink: 0,
+              transition: 'all 0.3s ease',
+              cursor: 'pointer',
+              overflow: 'hidden'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-8px) scale(1.02)';
+              e.currentTarget.style.boxShadow = '0 12px 30px rgba(29, 2, 92, 0.2)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
+            }}
+          >
+            <Card.Body className="p-4">
+              <Card.Title 
+                className="fw-semibold mb-3"
+                style={{ 
+                  fontSize: '1.25rem'
+                }}
+              >
+                {patient.name}
+              </Card.Title>
+
+              <div className="d-flex flex-column gap-2">
+                <div 
+                  className="d-flex align-items-center gap-2 px-3 py-2 rounded-3"
+                  style={{
+                    backgroundColor: 'rgba(159, 181, 253, 0.13)',
+                    border: '1px solid rgba(29, 2, 92, 0.1)'
+                  }}
+                >
+                  <i 
+                    className="bi bi-clipboard-heart-fill" 
+                    style={{ color: 'rgb(0, 0, 0)' }}
+                  ></i>
+                  <span className="small fw-medium">{patient.CurrentYogaPlan}</span>
+                </div>
+
+                <div 
+                  className="d-flex align-items-center gap-2 px-3 py-2 rounded-3"
+                  style={{
+                    backgroundColor: 'rgba(159, 181, 253, 0.13)',
+                    border: '1px solid rgba(29, 2, 92, 0.1)'
+                  }}
+                >
+                  <i 
+                    className="bi bi-calendar3" 
+                    style={{ color: 'rgb(0, 0, 0)' }}
+                  ></i>
+                  <span className="small fw-medium">{patient.nextMeetingDate}</span>
+                </div>
+              </div>
+
+              <div className="mt-3 pt-3 border-top">
+                <a 
+                  href="#"
+                  className="text-decoration-none d-flex align-items-center justify-content-center gap-2 fw-semibold"
+                  style={{ 
+                    color: 'rgb(3, 6, 15)',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  View Profile
+                  <i className="bi bi-arrow-right"></i>
+                </a>
+              </div>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
+    </Container>
+  );
+
 }
