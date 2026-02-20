@@ -1,103 +1,175 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+import { useRouter } from "next/navigation";
+import { Container, Navbar, Nav, Button, Row, Col, Card } from "react-bootstrap";
+import {
+    FaInstagram,
+    FaFacebook,
+    FaXTwitter,
+    FaLinkedin,
+    FaYoutube,
+} from "react-icons/fa6";
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+export default function HomePage() {
+    const router = useRouter();
+
+    return (
+        <>
+            {/* ---------- NAVBAR ---------- */}
+            <Navbar
+                expand="lg"
+                className="py-3"
+                style={{
+                    backgroundColor: "rgba(255,255,255,0.85)",
+                    backdropFilter: "blur(10px)",
+                    borderBottom: "1px solid #dee2e6",
+                }}
+            >
+                <Container>
+                    <Navbar.Brand
+                        className="fw-semibold"
+                        style={{
+                            color: "#212529",
+                            fontFamily: "'Poppins', sans-serif",
+                        }}
+                    >
+                        Yoga Network
+                    </Navbar.Brand>
+
+                    <Navbar.Toggle />
+                    <Navbar.Collapse className="justify-content-end">
+                        <Nav className="me-4">
+                            <Nav.Link className="text-muted">About</Nav.Link>
+                            <Nav.Link className="text-muted">Services</Nav.Link>
+                            <Nav.Link className="text-muted">Contact</Nav.Link>
+                        </Nav>
+
+                        <div className="d-flex gap-2">
+                            <Button
+                                variant="outline-secondary"
+                                className="rounded-pill px-4"
+                                onClick={() => router.push("/login")}
+                            >
+                                Log In
+                            </Button>
+                            <Button
+                                className="rounded-pill px-4"
+                                style={{
+                                    boxShadow:
+                                        "0 4px 14px rgba(59,130,246,0.2)",
+                                }}
+                                onClick={() => router.push("/signup")}
+                            >
+                                Get Started
+                            </Button>
+                        </div>
+                    </Navbar.Collapse>
+                </Container>
+            </Navbar>
+
+            {/* ---------- HERO ---------- */}
+            <section
+                className="d-flex align-items-center"
+                style={{
+                    minHeight: "85vh",
+                    background:
+                        "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+                    fontFamily: "'Poppins', sans-serif",
+                }}
+            >
+                <Container>
+                    <Row className="align-items-center">
+                        <Col md={6}>
+                            <h1 className="fw-bold mb-3">
+                                A calmer way to heal,
+                                <br />
+                                <span style={{ color: "#3b82f6" }}>
+                                    guided by professionals
+                                </span>
+                            </h1>
+
+                            <p className="text-muted mb-4" style={{ maxWidth: 520 }}>
+                                Yoga Network connects clients, instructors, and physicians in one
+                                secure, collaborative wellness platform designed for real care.
+                            </p>
+
+                            <div className="d-flex gap-3">
+                                <Button
+                                    className="rounded-pill px-5"
+                                    style={{
+                                        boxShadow:
+                                            "0 4px 14px rgba(59,130,246,0.2)",
+                                    }}
+                                    onClick={() => router.push("/signup")}
+                                >
+                                    Create Account →
+                                </Button>
+                                <Button
+                                    variant="outline-secondary"
+                                    className="rounded-pill px-4"
+                                    onClick={() => router.push("/login")}
+                                >
+                                    Log In
+                                </Button>
+                            </div>
+                        </Col>
+
+                        {/* Right Side Feature Card */}
+                        <Col md={6} className="mt-5 mt-md-0">
+                            <Card
+                                className="border-0 shadow-sm"
+                                style={{
+                                    backgroundColor: "rgba(255,255,255,0.85)",
+                                    backdropFilter: "blur(12px)",
+                                    borderRadius: "1rem",
+                                    border: "none",
+                                    boxShadow:
+                                        "0 8px 20px rgba(0,0,0,0.08)",
+                                }}
+                            >
+                                <Card.Body className="p-4">
+                                    <h5 className="mb-3">
+                                        Why Yoga Network?
+                                    </h5>
+                                    <ul className="text-muted small ps-3 mb-0">
+                                        <li className="mb-2">
+                                            Secure collaboration between physicians & instructors
+                                        </li>
+                                        <li className="mb-2">
+                                            Personalized therapy-focused yoga plans
+                                        </li>
+                                        <li className="mb-2">
+                                            Designed for long-term wellness, not trends
+                                        </li>
+                                    </ul>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+            </section>
+
+            {/* ---------- FOOTER ---------- */}
+            <footer
+                className="py-4"
+                style={{
+                    backgroundColor: "rgba(255,255,255,0.9)",
+                    borderTop: "1px solid #dee2e6",
+                }}
+            >
+                <Container className="d-flex flex-column align-items-center gap-3">
+                    <div className="d-flex gap-4">
+                        <FaInstagram color="#6c757d" />
+                        <FaFacebook color="#6c757d" />
+                        <FaXTwitter color="#6c757d" />
+                        <FaLinkedin color="#6c757d" />
+                        <FaYoutube color="#6c757d" />
+                    </div>
+                    <small className="text-muted">
+                        © Yoga Network — All rights reserved
+                    </small>
+                </Container>
+            </footer>
+        </>
+    );
 }
