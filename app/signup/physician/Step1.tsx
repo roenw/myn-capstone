@@ -16,36 +16,43 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
     return (
         <div
             className="d-flex align-items-center justify-content-center min-vh-100"
-            style={{ backgroundColor: "#020617" }} // slate-950
+            style={{
+                background:
+                    "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+            }}
         >
             <Container style={{ maxWidth: 620 }}>
                 <Card
-                    className="border-0 shadow-lg"
+                    className="border-0 shadow-sm"
                     style={{
-                        backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                        backdropFilter: "blur(10px)",
                         borderRadius: "1rem",
-                        border: "1px solid #1e293b",
+                        border: "none",
+                        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
                     }}
                 >
                     <Card.Body className="p-4">
+
                         {/* Header */}
                         <div className="text-center mb-4">
-                            <h4 className="fw-semibold text-light mb-1">
+                            <h4 className="fw-semibold mb-1">
                                 Physician Verification
                             </h4>
-                            <p className="text-secondary small mb-0">
+                            <p className="text-muted small mb-0">
                                 Step 1 of 1 · Secure credential review
                             </p>
                         </div>
 
                         <Form noValidate>
+
                             {/* --- Identity --- */}
                             <Section title="Professional Identity">
                                 <Input
                                     label="Full name"
                                     required
                                     value={formData.name || ""}
-                                    onChange={(e) => updateValue("name", e.target.value)}
+                                    onChange={(e: any) => updateValue("name", e.target.value)}
                                 />
 
                                 <Input
@@ -54,7 +61,7 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     placeholder="example@hospital.org"
                                     required
                                     value={formData.email || ""}
-                                    onChange={(e) => updateValue("email", e.target.value)}
+                                    onChange={(e: any) => updateValue("email", e.target.value)}
                                 />
                             </Section>
 
@@ -63,21 +70,21 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                 <Input
                                     label="Medical license number or professional ID"
                                     value={formData.license || ""}
-                                    onChange={(e) => updateValue("license", e.target.value)}
+                                    onChange={(e: any) => updateValue("license", e.target.value)}
                                 />
 
                                 <Input
                                     label="NPI (US)"
                                     placeholder="10-digit NPI"
                                     value={formData.npi || ""}
-                                    onChange={(e) => updateValue("npi", e.target.value)}
+                                    onChange={(e: any) => updateValue("npi", e.target.value)}
                                 />
 
                                 <Input
                                     label="Organization or clinic affiliation"
                                     placeholder="e.g. Mayo Clinic"
                                     value={formData.organization || ""}
-                                    onChange={(e) => updateValue("organization", e.target.value)}
+                                    onChange={(e: any) => updateValue("organization", e.target.value)}
                                 />
                             </Section>
 
@@ -86,21 +93,21 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                 <Input
                                     label="Username"
                                     value={formData.username || ""}
-                                    onChange={(e) => updateValue("username", e.target.value)}
+                                    onChange={(e: any) => updateValue("username", e.target.value)}
                                 />
 
                                 <Input
                                     label="Password"
                                     type="password"
                                     value={formData.password || ""}
-                                    onChange={(e) => updateValue("password", e.target.value)}
+                                    onChange={(e: any) => updateValue("password", e.target.value)}
                                 />
 
                                 <Input
                                     label="Confirm password"
                                     type="password"
                                     value={formData.confirmPassword || ""}
-                                    onChange={(e) =>
+                                    onChange={(e: any) =>
                                         updateValue("confirmPassword", e.target.value)
                                     }
                                 />
@@ -112,17 +119,17 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     type="button"
                                     onClick={nextStep}
                                     style={{
-                                        backgroundColor: "#3b82f6",
-                                        border: "none",
                                         borderRadius: "9999px",
                                         padding: "0.6rem 2.5rem",
-                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                        boxShadow:
+                                            "0 4px 14px rgba(59,130,246,0.2)",
                                         fontWeight: 500,
                                     }}
                                 >
                                     Submit for review →
                                 </Button>
                             </div>
+
                         </Form>
                     </Card.Body>
                 </Card>
@@ -142,7 +149,7 @@ function Section({
 }) {
     return (
         <div className="mb-4">
-            <p className="text-uppercase small text-secondary mb-3">{title}</p>
+            <p className="text-uppercase small text-muted mb-3">{title}</p>
             {children}
         </div>
     );
@@ -155,19 +162,16 @@ function Input({
 }: any) {
     return (
         <Form.Group className="mb-3">
-            <Form.Label className="small text-secondary">
+            <Form.Label className="small text-muted">
                 {label} {required && <span className="text-danger">*</span>}
             </Form.Label>
             <Form.Control
                 {...props}
                 size="sm"
-                className="border-0"
                 style={{
-                    backgroundColor: "#020617",
-                    color: "#e5e7eb",
                     borderRadius: "0.75rem",
                     padding: "0.45rem 0.75rem",
-                    border: "1px solid #1e293b",
+                    border: "1px solid #dee2e6",
                 }}
             />
         </Form.Group>

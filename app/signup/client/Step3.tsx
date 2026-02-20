@@ -26,33 +26,39 @@ export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
     return (
         <div
             className="d-flex align-items-center justify-content-center min-vh-100"
-            style={{ backgroundColor: "#020617" }}
+            style={{
+                background:
+                    "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+            }}
         >
             <Container style={{ maxWidth: 960 }}>
                 {/* Main Card */}
                 <Card
-                    className="border-0 shadow-lg"
+                    className="border-0 shadow-sm"
                     style={{
-                        backgroundColor: "rgba(15,23,42,0.75)",
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                        backdropFilter: "blur(10px)",
                         borderRadius: "1rem",
-                        border: "1px solid #1e293b",
+                        border: "none",
+                        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
                     }}
                 >
                     <Card.Body className="p-4">
+
                         {/* Header */}
                         <div className="text-center mb-4">
-                            <h4 className="fw-semibold text-light mb-1">
+                            <h4 className="fw-semibold mb-1">
                                 Let’s talk about your health
                             </h4>
-                            <p className="text-secondary small mb-2">
+                            <p className="text-muted small mb-2">
                                 Step 3 of 6
                             </p>
                             <p
-                                className="small text-warning"
+                                className="small text-muted"
                                 style={{ maxWidth: 640, margin: "0 auto" }}
                             >
                                 This information helps us match you with an instructor who can
-                                support you safely. It’s not medical advice.
+                                support you safely.
                             </p>
                         </div>
 
@@ -60,7 +66,7 @@ export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
 
                             {/* SECTION 1 */}
                             <Section title="Healthcare support">
-                                <p className="text-secondary small mb-3">
+                                <p className="text-muted small mb-3">
                                     Are you currently under the care of a healthcare provider?
                                 </p>
                                 <PillRow
@@ -71,7 +77,7 @@ export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
 
                             {/* SECTION 2 */}
                             <Section title="Diagnosed conditions">
-                                <p className="text-secondary small mb-3">
+                                <p className="text-muted small mb-3">
                                     Select any conditions you’ve been diagnosed with.
                                 </p>
                                 <div className="d-flex flex-wrap gap-2">
@@ -110,14 +116,14 @@ export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
                                             otherCondition: e.target.value,
                                         })
                                     }
-                                    className="border-0 mt-3"
+                                    className="mt-3"
                                     style={{ ...inputStyle, maxWidth: 280 }}
                                 />
                             </Section>
 
                             {/* SECTION 3 */}
                             <Section title="Current symptoms">
-                                <p className="text-secondary small mb-3">
+                                <p className="text-muted small mb-3">
                                     Do you have any current symptoms or physical limitations?
                                 </p>
                                 <PillRow
@@ -128,7 +134,7 @@ export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
 
                             {/* SECTION 4 */}
                             <Section title="Movement restrictions">
-                                <p className="text-secondary small mb-3">
+                                <p className="text-muted small mb-3">
                                     Have you been advised to avoid certain movements or positions?
                                 </p>
                                 <PillRow
@@ -139,7 +145,7 @@ export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
 
                             {/* SECTION 5 */}
                             <Section title="Insurance">
-                                <p className="text-secondary small mb-3">
+                                <p className="text-muted small mb-3">
                                     Are you currently insured?
                                 </p>
                                 <PillRow
@@ -153,11 +159,10 @@ export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
                                 <Button
                                     onClick={nextStep}
                                     style={{
-                                        backgroundColor: "#3b82f6",
-                                        border: "none",
                                         borderRadius: "9999px",
                                         padding: "0.6rem 2rem",
-                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                        boxShadow:
+                                            "0 4px 14px rgba(59,130,246,0.2)",
                                     }}
                                 >
                                     Continue →
@@ -184,13 +189,13 @@ function Section({
     return (
         <div
             style={{
-                backgroundColor: "rgba(2,6,23,0.8)",
-                border: "1px solid #1e293b",
+                backgroundColor: "rgba(255,255,255,0.9)",
+                border: "1px solid #dee2e6",
                 borderRadius: "0.75rem",
                 padding: "1rem",
             }}
         >
-            <h6 className="text-light fw-semibold mb-2">
+            <h6 className="fw-semibold mb-2">
                 {title}
             </h6>
             {children}
@@ -233,11 +238,11 @@ function Pill({
         <Button
             onClick={onClick}
             style={{
-                backgroundColor: active ? "#3b82f6" : "#020617",
-                color: active ? "white" : "#cbd5f5",
+                backgroundColor: active ? "#3b82f6" : "white",
+                color: active ? "white" : "#495057",
                 border: active
                     ? "1px solid #3b82f6"
-                    : "1px solid #1e293b",
+                    : "1px solid #dee2e6",
                 borderRadius: "9999px",
                 padding: "0.4rem 1rem",
                 fontWeight: 500,
@@ -249,8 +254,7 @@ function Pill({
 }
 
 const inputStyle = {
-    backgroundColor: "#020617",
-    color: "#e5e7eb",
     borderRadius: "0.6rem",
     padding: "0.4rem 0.6rem",
+    border: "1px solid #dee2e6",
 };

@@ -16,27 +16,33 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
     return (
         <div
             className="d-flex align-items-center justify-content-center min-vh-100"
-            style={{ backgroundColor: "#020617" }} // slate-950
+            style={{
+                background:
+                    "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+            }}
         >
             <Container style={{ maxWidth: 1100 }}>
                 <Card
-                    className="border-0 shadow-lg"
+                    className="border-0 shadow-sm"
                     style={{
-                        backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                        backdropFilter: "blur(10px)",
                         borderRadius: "1rem",
-                        border: "1px solid #1e293b",
+                        border: "none",
+                        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
                     }}
                 >
                     <Card.Body className="p-4">
+
                         {/* Header */}
                         <div className="text-center mb-4">
-                            <h4 className="fw-semibold text-light mb-1">
+                            <h4 className="fw-semibold mb-1">
                                 Instructor information
                             </h4>
-                            <p className="text-secondary small mb-0">
+                            <p className="text-muted small mb-0">
                                 Step 1 of X
                             </p>
-                            <p className="text-secondary small mt-1">
+                            <p className="text-muted small mt-1">
                                 This helps clients and care teams understand your background and expertise.
                             </p>
                         </div>
@@ -126,13 +132,12 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     </Col>
                                     <Col md={12}>
                                         <Form.Group>
-                                            <Form.Label className="text-secondary small">
+                                            <Form.Label className="text-muted small">
                                                 Upload supporting documents
                                             </Form.Label>
                                             <Form.Control
                                                 type="file"
                                                 multiple
-                                                className="border-0"
                                                 style={inputStyle}
                                             />
                                         </Form.Group>
@@ -174,11 +179,10 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                 <Button
                                     onClick={nextStep}
                                     style={{
-                                        backgroundColor: "#3b82f6",
-                                        border: "none",
                                         borderRadius: "9999px",
                                         padding: "0.6rem 2.5rem",
-                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                        boxShadow:
+                                            "0 4px 14px rgba(59,130,246,0.2)",
                                     }}
                                 >
                                     Continue →
@@ -205,13 +209,13 @@ function Section({
     return (
         <div
             style={{
-                backgroundColor: "rgba(2,6,23,0.85)",
-                border: "1px solid #1e293b",
+                backgroundColor: "rgba(255,255,255,0.9)",
+                border: "1px solid #dee2e6",
                 borderRadius: "0.75rem",
                 padding: "1rem",
             }}
         >
-            <h6 className="text-light fw-semibold mb-3">{title}</h6>
+            <h6 className="fw-semibold mb-3">{title}</h6>
             {children}
         </div>
     );
@@ -230,12 +234,11 @@ function Input({
 }) {
     return (
         <Form.Group>
-            <Form.Label className="text-secondary small">{label}</Form.Label>
+            <Form.Label className="text-muted small">{label}</Form.Label>
             <Form.Control
                 type={type}
                 value={value || ""}
                 onChange={(e) => onChange(e.target.value)}
-                className="border-0"
                 style={inputStyle}
             />
         </Form.Group>
@@ -243,8 +246,7 @@ function Input({
 }
 
 const inputStyle = {
-    backgroundColor: "#020617",
-    color: "#e5e7eb",
     borderRadius: "0.6rem",
     padding: "0.45rem 0.6rem",
+    border: "1px solid #dee2e6",
 };

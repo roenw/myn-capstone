@@ -35,28 +35,34 @@ export default function Step2({ nextStep, formData, setFormData }: Step2Props) {
     return (
         <div
             className="d-flex align-items-center justify-content-center min-vh-100"
-            style={{ backgroundColor: "#020617" }} // slate-950
+            style={{
+                background:
+                    "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+            }}
         >
             <Container style={{ maxWidth: 900 }}>
                 <Card
-                    className="border-0 shadow-lg"
+                    className="border-0 shadow-sm"
                     style={{
-                        backgroundColor: "rgba(15, 23, 42, 0.7)", // slate-900/70
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                        backdropFilter: "blur(10px)",
                         borderRadius: "1rem",
-                        border: "1px solid #1e293b",
+                        border: "none",
+                        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
                     }}
                 >
                     <Card.Body className="p-4">
+
                         {/* Header */}
                         <div className="text-center mb-4">
-                            <h4 className="fw-semibold text-light mb-1">
+                            <h4 className="fw-semibold mb-1">
                                 Wellness & Lifestyle
                             </h4>
-                            <p className="text-secondary small mb-1">
+                            <p className="text-muted small mb-1">
                                 Step 2 of 6
                             </p>
                             <p
-                                className="text-secondary small"
+                                className="text-muted small"
                                 style={{ maxWidth: 560, margin: "0 auto" }}
                             >
                                 This helps us understand your goals and preferences so we can
@@ -68,7 +74,7 @@ export default function Step2({ nextStep, formData, setFormData }: Step2Props) {
 
                             {/* SECTION 1 */}
                             <Section title="Your goals">
-                                <p className="text-secondary small mb-3">
+                                <p className="text-muted small mb-3">
                                     What’s motivating you to explore yoga therapy?
                                 </p>
 
@@ -105,14 +111,14 @@ export default function Step2({ nextStep, formData, setFormData }: Step2Props) {
                                             otherInterest: e.target.value,
                                         })
                                     }
-                                    className="border-0 mt-3"
+                                    className="mt-3"
                                     style={{ ...inputStyle, maxWidth: 260 }}
                                 />
                             </Section>
 
                             {/* SECTION 2 */}
                             <Section title="Yoga experience">
-                                <p className="text-secondary small mb-3">
+                                <p className="text-muted small mb-3">
                                     Have you practiced yoga before?
                                 </p>
 
@@ -133,7 +139,7 @@ export default function Step2({ nextStep, formData, setFormData }: Step2Props) {
 
                             {/* SECTION 3 */}
                             <Section title="Practice frequency">
-                                <p className="text-secondary small mb-3">
+                                <p className="text-muted small mb-3">
                                     How often would you ideally like to practice?
                                 </p>
 
@@ -159,7 +165,7 @@ export default function Step2({ nextStep, formData, setFormData }: Step2Props) {
 
                             {/* SECTION 4 */}
                             <Section title="Session preference">
-                                <p className="text-secondary small mb-3">
+                                <p className="text-muted small mb-3">
                                     What type of sessions feel right for you?
                                 </p>
 
@@ -189,11 +195,10 @@ export default function Step2({ nextStep, formData, setFormData }: Step2Props) {
                                     type="button"
                                     onClick={nextStep}
                                     style={{
-                                        backgroundColor: "#3b82f6",
-                                        border: "none",
                                         borderRadius: "9999px",
                                         padding: "0.6rem 2rem",
-                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                        boxShadow:
+                                            "0 4px 14px rgba(59,130,246,0.2)",
                                     }}
                                 >
                                     Next →
@@ -220,13 +225,13 @@ function Section({
     return (
         <div
             style={{
-                backgroundColor: "rgba(2,6,23,0.85)",
-                border: "1px solid #1e293b",
+                backgroundColor: "rgba(255,255,255,0.9)",
+                border: "1px solid #dee2e6",
                 borderRadius: "0.75rem",
                 padding: "1rem",
             }}
         >
-            <h6 className="text-light fw-semibold mb-2">
+            <h6 className="fw-semibold mb-2">
                 {title}
             </h6>
             {children}
@@ -247,11 +252,11 @@ function Pill({
         <Button
             onClick={onClick}
             style={{
-                backgroundColor: active ? "#3b82f6" : "#020617",
-                color: active ? "white" : "#cbd5f5",
+                backgroundColor: active ? "#3b82f6" : "white",
+                color: active ? "white" : "#495057",
                 border: active
                     ? "1px solid #3b82f6"
-                    : "1px solid #1e293b",
+                    : "1px solid #dee2e6",
                 borderRadius: "9999px",
                 padding: "0.45rem 1rem",
                 fontWeight: 500,
@@ -263,8 +268,7 @@ function Pill({
 }
 
 const inputStyle = {
-    backgroundColor: "#020617",
-    color: "#e5e7eb",
     borderRadius: "0.6rem",
     padding: "0.4rem 0.6rem",
+    border: "1px solid #dee2e6",
 };

@@ -9,26 +9,32 @@ export default function Step6() {
     return (
         <div
             className="d-flex align-items-center justify-content-center min-vh-100"
-            style={{ backgroundColor: "#020617" }} // slate-950
+            style={{
+                background:
+                    "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+            }}
         >
             <Container style={{ maxWidth: 640 }}>
                 <Card
-                    className="border-0 shadow-lg text-center"
+                    className="border-0 shadow-sm text-center"
                     style={{
-                        backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                        backdropFilter: "blur(10px)",
                         borderRadius: "1rem",
-                        border: "1px solid #1e293b",
+                        border: "none",
+                        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
                     }}
                 >
                     <Card.Body className="p-5">
-                        {/* Icon / Visual anchor */}
+
+                        {/* Icon */}
                         <div
                             className="mx-auto mb-4 d-flex align-items-center justify-content-center"
                             style={{
                                 width: 64,
                                 height: 64,
                                 borderRadius: "50%",
-                                backgroundColor: "rgba(59,130,246,0.15)",
+                                backgroundColor: "rgba(59,130,246,0.12)",
                                 color: "#3b82f6",
                                 fontSize: "1.8rem",
                                 fontWeight: 600,
@@ -38,13 +44,13 @@ export default function Step6() {
                         </div>
 
                         {/* Heading */}
-                        <h3 className="fw-semibold text-light mb-2">
+                        <h3 className="fw-semibold mb-2">
                             You’re all set
                         </h3>
 
                         {/* Subtext */}
                         <p
-                            className="text-secondary mb-4"
+                            className="text-muted mb-4"
                             style={{ maxWidth: 480, margin: "0 auto" }}
                         >
                             We’ve received your information successfully. A confirmation
@@ -55,16 +61,16 @@ export default function Step6() {
                         <Button
                             onClick={() => router.push("/")}
                             style={{
-                                backgroundColor: "#3b82f6",
-                                border: "none",
                                 borderRadius: "9999px",
                                 padding: "0.6rem 2.5rem",
-                                boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                boxShadow:
+                                    "0 4px 14px rgba(59,130,246,0.2)",
                                 fontWeight: 500,
                             }}
                         >
                             Go to dashboard →
                         </Button>
+
                     </Card.Body>
                 </Card>
             </Container>

@@ -20,15 +20,16 @@ export default function HomePage() {
                 expand="lg"
                 className="py-3"
                 style={{
-                    backgroundColor: "#020617", // slate-950
-                    borderBottom: "1px solid #1e293b",
+                    backgroundColor: "rgba(255,255,255,0.85)",
+                    backdropFilter: "blur(10px)",
+                    borderBottom: "1px solid #dee2e6",
                 }}
             >
                 <Container>
                     <Navbar.Brand
                         className="fw-semibold"
                         style={{
-                            color: "#e5e7eb",
+                            color: "#212529",
                             fontFamily: "'Poppins', sans-serif",
                         }}
                     >
@@ -38,9 +39,9 @@ export default function HomePage() {
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                         <Nav className="me-4">
-                            <Nav.Link className="text-secondary">About</Nav.Link>
-                            <Nav.Link className="text-secondary">Services</Nav.Link>
-                            <Nav.Link className="text-secondary">Contact</Nav.Link>
+                            <Nav.Link className="text-muted">About</Nav.Link>
+                            <Nav.Link className="text-muted">Services</Nav.Link>
+                            <Nav.Link className="text-muted">Contact</Nav.Link>
                         </Nav>
 
                         <div className="d-flex gap-2">
@@ -54,8 +55,8 @@ export default function HomePage() {
                             <Button
                                 className="rounded-pill px-4"
                                 style={{
-                                    backgroundColor: "#3b82f6",
-                                    border: "none",
+                                    boxShadow:
+                                        "0 4px 14px rgba(59,130,246,0.2)",
                                 }}
                                 onClick={() => router.push("/signup")}
                             >
@@ -72,14 +73,14 @@ export default function HomePage() {
                 style={{
                     minHeight: "85vh",
                     background:
-                        "radial-gradient(circle at top, #020617 40%, #020617 100%)",
+                        "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
                     fontFamily: "'Poppins', sans-serif",
                 }}
             >
                 <Container>
                     <Row className="align-items-center">
                         <Col md={6}>
-                            <h1 className="fw-bold mb-3 text-light">
+                            <h1 className="fw-bold mb-3">
                                 A calmer way to heal,
                                 <br />
                                 <span style={{ color: "#3b82f6" }}>
@@ -87,7 +88,7 @@ export default function HomePage() {
                                 </span>
                             </h1>
 
-                            <p className="text-secondary mb-4" style={{ maxWidth: 520 }}>
+                            <p className="text-muted mb-4" style={{ maxWidth: 520 }}>
                                 Yoga Network connects clients, instructors, and physicians in one
                                 secure, collaborative wellness platform designed for real care.
                             </p>
@@ -96,9 +97,8 @@ export default function HomePage() {
                                 <Button
                                     className="rounded-pill px-5"
                                     style={{
-                                        backgroundColor: "#3b82f6",
-                                        border: "none",
-                                        boxShadow: "0 0 20px rgba(59,130,246,0.35)",
+                                        boxShadow:
+                                            "0 4px 14px rgba(59,130,246,0.2)",
                                     }}
                                     onClick={() => router.push("/signup")}
                                 >
@@ -117,19 +117,21 @@ export default function HomePage() {
                         {/* Right Side Feature Card */}
                         <Col md={6} className="mt-5 mt-md-0">
                             <Card
-                                className="border-0 shadow-lg"
+                                className="border-0 shadow-sm"
                                 style={{
-                                    backgroundColor: "rgba(15, 23, 42, 0.7)",
+                                    backgroundColor: "rgba(255,255,255,0.85)",
                                     backdropFilter: "blur(12px)",
                                     borderRadius: "1rem",
-                                    border: "1px solid #1e293b",
+                                    border: "none",
+                                    boxShadow:
+                                        "0 8px 20px rgba(0,0,0,0.08)",
                                 }}
                             >
                                 <Card.Body className="p-4">
-                                    <h5 className="text-light mb-3">
+                                    <h5 className="mb-3">
                                         Why Yoga Network?
                                     </h5>
-                                    <ul className="text-secondary small ps-3 mb-0">
+                                    <ul className="text-muted small ps-3 mb-0">
                                         <li className="mb-2">
                                             Secure collaboration between physicians & instructors
                                         </li>
@@ -151,19 +153,19 @@ export default function HomePage() {
             <footer
                 className="py-4"
                 style={{
-                    backgroundColor: "#020617",
-                    borderTop: "1px solid #1e293b",
+                    backgroundColor: "rgba(255,255,255,0.9)",
+                    borderTop: "1px solid #dee2e6",
                 }}
             >
                 <Container className="d-flex flex-column align-items-center gap-3">
                     <div className="d-flex gap-4">
-                        <FaInstagram color="#94a3b8" />
-                        <FaFacebook color="#94a3b8" />
-                        <FaXTwitter color="#94a3b8" />
-                        <FaLinkedin color="#94a3b8" />
-                        <FaYoutube color="#94a3b8" />
+                        <FaInstagram color="#6c757d" />
+                        <FaFacebook color="#6c757d" />
+                        <FaXTwitter color="#6c757d" />
+                        <FaLinkedin color="#6c757d" />
+                        <FaYoutube color="#6c757d" />
                     </div>
-                    <small className="text-secondary">
+                    <small className="text-muted">
                         © Yoga Network — All rights reserved
                     </small>
                 </Container>

@@ -8,86 +8,91 @@ export default function LoginPage() {
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-
-        // Role-based routing should happen AFTER auth (session / backend)
         router.push("/client"); // placeholder
     };
 
     return (
         <div
-            className="d-flex align-items-center justify-content-center min-vh-100"
-            style={{ backgroundColor: "#020617" }} // slate-950
+            className="d-flex align-items-center justify-content-center"
+            style={{
+                minHeight: "100vh",
+                background:
+                    "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+            }}
         >
-            <Container style={{ maxWidth: "420px" }}>
+            <Container style={{ maxWidth: "480px" }}>
                 <Card
-                    className="border-0 shadow-lg"
+                    className="border-0 shadow-sm"
                     style={{
-                        backgroundColor: "rgba(15, 23, 42, 0.7)", // slate-900/70
-                        borderRadius: "1rem",
-                        border: "1px solid #1e293b", // slate-800
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                        backdropFilter: "blur(10px)",
+                        borderRadius: "1.25rem",
+                        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                        cursor: "default",
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = "translateY(-5px)";
+                        e.currentTarget.style.boxShadow =
+                            "0 8px 20px rgba(0,0,0,0.15)";
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = "translateY(0)";
+                        e.currentTarget.style.boxShadow = "";
                     }}
                 >
-                    <Card.Body className="p-4">
+                    <Card.Body className="p-5">
                         {/* Header */}
                         <div className="text-center mb-4">
-                            <h2 className="fw-semibold text-light mb-1">
+                            <h2 className="fw-semibold mb-2">
                                 Welcome Back
                             </h2>
-                            <p className="text-secondary small mb-0">
-                                Sign in to your account
+                            <p className="text-muted mb-0">
+                                Sign in to your Yoga Network account
                             </p>
                         </div>
 
-                        {/* Login Form */}
+                        {/* Form */}
                         <Form onSubmit={handleLogin}>
-                            {/* Username */}
-                            <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
+                            <Form.Group className="mb-4">
+                                <Form.Label className="fw-semibold small">
                                     Username
                                 </Form.Label>
                                 <Form.Control
                                     type="text"
                                     required
                                     placeholder="Enter your username"
-                                    className="border-0"
                                     style={{
-                                        backgroundColor: "#020617", // slate-950
-                                        color: "#e5e7eb",
                                         borderRadius: "0.75rem",
-                                        padding: "0.6rem 0.75rem",
+                                        padding: "0.7rem",
+                                        border: "1px solid #dee2e6",
                                     }}
                                 />
                             </Form.Group>
 
-                            {/* Password */}
                             <Form.Group className="mb-4">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="fw-semibold small">
                                     Password
                                 </Form.Label>
                                 <Form.Control
                                     type="password"
                                     required
                                     placeholder="Enter your password"
-                                    className="border-0"
                                     style={{
-                                        backgroundColor: "#020617",
-                                        color: "#e5e7eb",
                                         borderRadius: "0.75rem",
-                                        padding: "0.6rem 0.75rem",
+                                        padding: "0.7rem",
+                                        border: "1px solid #dee2e6",
                                     }}
                                 />
                             </Form.Group>
 
-                            {/* Submit */}
                             <Button
                                 type="submit"
                                 className="w-100 fw-medium"
                                 style={{
-                                    backgroundColor: "#3b82f6", // blue-500
-                                    border: "none",
                                     borderRadius: "9999px",
-                                    padding: "0.6rem 0",
-                                    boxShadow: "0 0 20px rgba(59, 130, 246, 0.3)",
+                                    padding: "0.7rem 0",
+                                    boxShadow:
+                                        "0 4px 14px rgba(0, 0, 0, 0.08)",
                                 }}
                             >
                                 Log In
@@ -96,12 +101,14 @@ export default function LoginPage() {
 
                         {/* Footer */}
                         <div className="text-center mt-4">
-                            <small className="text-secondary">
+                            <small className="text-muted">
                                 Don't have an account?{" "}
                                 <a
                                     href="/signup"
-                                    className="text-decoration-none"
-                                    style={{ color: "#60a5fa" }}
+                                    style={{
+                                        textDecoration: "none",
+                                        fontWeight: 500,
+                                    }}
                                 >
                                     Sign up
                                 </a>
@@ -109,6 +116,12 @@ export default function LoginPage() {
                         </div>
                     </Card.Body>
                 </Card>
+
+                <div className="text-center mt-4">
+                    <p className="text-muted small mb-0">
+                        Yoga Network
+                    </p>
+                </div>
             </Container>
         </div>
     );

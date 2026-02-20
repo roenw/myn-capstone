@@ -13,33 +13,39 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
     return (
         <div
             className="d-flex align-items-center justify-content-center min-vh-100"
-            style={{ backgroundColor: "#020617" }} // slate-950
+            style={{
+                background:
+                    "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+            }}
         >
             <Container style={{ maxWidth: 560 }}>
                 <Card
-                    className="border-0 shadow-lg"
+                    className="border-0 shadow-sm"
                     style={{
-                        backgroundColor: "rgba(15, 23, 42, 0.7)", // slate-900/70
+                        backgroundColor: "rgba(255, 255, 255, 0.85)",
+                        backdropFilter: "blur(10px)",
                         borderRadius: "1rem",
-                        border: "1px solid #1e293b", // slate-800
+                        border: "none",
+                        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
                     }}
                 >
                     <Card.Body className="p-4">
                         {/* Header */}
                         <div className="text-center mb-4">
-                            <h4 className="fw-semibold text-light mb-1">
+                            <h4 className="fw-semibold mb-1">
                                 Client General Information
                             </h4>
-                            <p className="text-secondary small mb-0">
+                            <p className="text-muted small mb-0">
                                 Step 1 of 6
                             </p>
                         </div>
 
                         <Form noValidate>
+
                             {/* ---------- General Info ---------- */}
 
                             <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     First Name *
                                 </Form.Label>
                                 <Form.Control
@@ -50,13 +56,12 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     onChange={(e) =>
                                         setFormData({ ...formData, firstName: e.target.value })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     Last Name *
                                 </Form.Label>
                                 <Form.Control
@@ -67,13 +72,12 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     onChange={(e) =>
                                         setFormData({ ...formData, lastName: e.target.value })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     Preferred Name / Pronouns
                                 </Form.Label>
                                 <Form.Control
@@ -83,13 +87,12 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     onChange={(e) =>
                                         setFormData({ ...formData, preferredName: e.target.value })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     Date of Birth *
                                 </Form.Label>
                                 <Form.Control
@@ -99,13 +102,12 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     onChange={(e) =>
                                         setFormData({ ...formData, dob: e.target.value })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     Contact Email *
                                 </Form.Label>
                                 <Form.Control
@@ -116,13 +118,12 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     onChange={(e) =>
                                         setFormData({ ...formData, email: e.target.value })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     Phone
                                 </Form.Label>
                                 <Form.Control
@@ -132,13 +133,12 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     onChange={(e) =>
                                         setFormData({ ...formData, phone: e.target.value })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-4">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     Location
                                 </Form.Label>
                                 <Form.Control
@@ -148,21 +148,20 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     onChange={(e) =>
                                         setFormData({ ...formData, location: e.target.value })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
 
-                            <hr className="border-secondary opacity-25 my-4" />
+                            <hr className="my-4" style={{ opacity: 0.2 }} />
 
                             {/* ---------- Login Info ---------- */}
 
-                            <h6 className="text-light fw-semibold mb-3 text-center">
+                            <h6 className="fw-semibold mb-3 text-center">
                                 Create Login Credentials
                             </h6>
 
                             <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     Username
                                 </Form.Label>
                                 <Form.Control
@@ -173,13 +172,12 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     onChange={(e) =>
                                         setFormData({ ...formData, username: e.target.value })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-3">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     Password
                                 </Form.Label>
                                 <Form.Control
@@ -190,13 +188,12 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     onChange={(e) =>
                                         setFormData({ ...formData, password: e.target.value })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
 
                             <Form.Group className="mb-4">
-                                <Form.Label className="text-uppercase small text-secondary">
+                                <Form.Label className="text-uppercase small text-muted">
                                     Confirm Password
                                 </Form.Label>
                                 <Form.Control
@@ -210,7 +207,6 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                             confirmPassword: e.target.value,
                                         })
                                     }
-                                    className="border-0"
                                     style={inputStyle}
                                 />
                             </Form.Group>
@@ -221,11 +217,10 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                                     type="button"
                                     onClick={nextStep}
                                     style={{
-                                        backgroundColor: "#3b82f6",
-                                        border: "none",
                                         borderRadius: "9999px",
                                         padding: "0.6rem 2rem",
-                                        boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                        boxShadow:
+                                            "0 4px 14px rgba(59,130,246,0.2)",
                                     }}
                                 >
                                     Next →
@@ -240,8 +235,7 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
 }
 
 const inputStyle = {
-    backgroundColor: "#020617",
-    color: "#e5e7eb",
     borderRadius: "0.75rem",
     padding: "0.6rem 0.75rem",
+    border: "1px solid #dee2e6",
 };

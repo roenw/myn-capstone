@@ -118,35 +118,39 @@ export default function RequestsPage() {
                     </div>
 
                     {/* Requests grid */}
-                    <Row className="g-4">
+                    {/* Requests list */}
+                    <div className="d-flex flex-column gap-3">
                         {requests.map((request) => (
-                            <Col md={6} lg={4} key={request.id}>
-                                <Card
-                                    className="h-100"
-                                    style={cardStyle}
-                                >
-                                    <Card.Body className="p-4 d-flex flex-column">
-                                        <div className="d-flex justify-content-between mb-3">
-                                            <div>
-                                                <Card.Title className="text-light fs-6 mb-1">
-                                                    {request.name}
-                                                </Card.Title>
-                                                <small className="text-secondary">
-                                                    {request.requestDate}
-                                                </small>
+                            <Card
+                                key={request.id}
+                                style={{
+                                    backgroundColor: "rgba(15,23,42,0.75)",
+                                    border: "1px solid #1e293b",
+                                    borderRadius: "1rem",
+                                }}
+                            >
+                                <Card.Body className="px-4 py-3">
+                                    <Row className="align-items-center g-3">
+                                        {/* Name + date */}
+                                        <Col md={3}>
+                                            <div className="text-light fw-semibold">
+                                                {request.name}
                                             </div>
+                                            <div className="text-secondary small">
+                                                {request.requestDate}
+                                            </div>
+                                        </Col>
 
-                                            <Badge bg="primary">New</Badge>
-                                        </div>
-
-                                        <div className="text-secondary small mb-3">
+                                        {/* Contact */}
+                                        <Col md={3} className="small text-secondary">
                                             <div>{request.email}</div>
                                             <div>{request.phone}</div>
-                                        </div>
+                                        </Col>
 
-                                        <div className="small text-secondary mb-3">
+                                        {/* Preferences */}
+                                        <Col md={3} className="small text-secondary">
                                             <div>
-                                                <strong>Experience:</strong> {request.experience}
+                                                <strong>Exp:</strong> {request.experience}
                                             </div>
                                             <div>
                                                 <strong>Time:</strong> {request.preferredTime}
@@ -155,45 +159,37 @@ export default function RequestsPage() {
                                                 <strong>Days:</strong>{" "}
                                                 {request.preferredDays.join(", ")}
                                             </div>
-                                        </div>
+                                        </Col>
 
-                                        <div
-                                            className="p-3 mb-4 rounded"
-                                            style={{
-                                                backgroundColor: "#020617",
-                                                border: "1px solid #1e293b",
-                                                flexGrow: 1,
-                                            }}
-                                        >
-                                            <p className="small text-secondary mb-0">
-                                                {request.message}
-                                            </p>
-                                        </div>
+                                        {/* Status */}
+                                        <Col md={1} className="text-center">
+                                            <Badge bg="primary">New</Badge>
+                                        </Col>
 
-                                        <div className="d-flex gap-2">
+                                        {/* Actions */}
+                                        <Col md={2} className="d-flex gap-2">
                                             <Button
-                                                variant="outline-secondary"
                                                 size="sm"
-                                                className="flex-grow-1"
+                                                variant="outline-secondary"
+                                                className="w-100"
                                                 onClick={() => handleDecline(request.id)}
                                             >
                                                 Decline
                                             </Button>
-
                                             <Button
                                                 size="sm"
-                                                className="flex-grow-1"
+                                                className="w-100"
                                                 style={primaryBtn}
                                                 onClick={() => setSelectedRequest(request)}
                                             >
                                                 View
                                             </Button>
-                                        </div>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
+                                        </Col>
+                                    </Row>
+                                </Card.Body>
+                            </Card>
                         ))}
-                    </Row>
+                    </div>
                 </Container>
             </main>
 

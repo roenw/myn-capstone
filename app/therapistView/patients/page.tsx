@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Container, Nav, Navbar, Card } from "react-bootstrap";
+import { Container, Nav, Navbar, Card, Badge, Button } from "react-bootstrap";
 
 export default function Patients() {
     return (
@@ -10,10 +10,7 @@ export default function Patients() {
             <Navbar
                 expand="lg"
                 className="border-bottom"
-                style={{
-                    backgroundColor: "#020617",
-                    borderColor: "#1e293b",
-                }}
+                style={{ backgroundColor: "#020617", borderColor: "#1e293b" }}
             >
                 <Container fluid className="px-5">
                     <Navbar.Brand
@@ -27,22 +24,13 @@ export default function Patients() {
 
                     <Navbar.Collapse className="justify-content-end">
                         <Nav className="gap-4">
-                            <Nav.Link
-                                href="/therapistView/patients"
-                                style={{ color: "#3b82f6" }}
-                            >
+                            <Nav.Link href="/therapistView/patients" style={{ color: "#3b82f6" }}>
                                 Patients
                             </Nav.Link>
-                            <Nav.Link
-                                href="/therapistView/requests"
-                                style={navLink}
-                            >
+                            <Nav.Link href="/therapistView/requests" style={navLink}>
                                 Requests
                             </Nav.Link>
-                            <Nav.Link
-                                href="/therapistView/calendar"
-                                style={navLink}
-                            >
+                            <Nav.Link href="/therapistView/calendar" style={navLink}>
                                 Calendar
                             </Nav.Link>
                         </Nav>
@@ -56,70 +44,76 @@ export default function Patients() {
 
             {/* Main */}
             <main
-                className="py-5"
                 style={{
                     minHeight: "100vh",
                     backgroundColor: "#020617",
+                    padding: "3rem 0",
                 }}
             >
-                <Container style={{ maxWidth: "1200px" }}>
+                <Container style={{ maxWidth: 1200 }}>
                     {/* Header */}
-                    <div className="mb-4">
-                        <h1 className="text-light fw-semibold mb-1">
-                            Your patients
-                        </h1>
+                    <div className="mb-5">
+                        <h1 className="text-light fw-semibold mb-1">Your patients</h1>
                         <p className="text-secondary">
-                            Active clients currently under your care
+                            Manage and review clients currently under your care
                         </p>
                     </div>
 
-                    {/* Patients row */}
-                    <div className="d-flex gap-4 overflow-auto pb-3">
-                        {[
-                            {
-                                name: "George Yousefson",
-                                img: "/exDude1.jpg",
-                                date: "11/24/25",
-                            },
-                            {
-                                name: "Alicia Shells",
-                                img: "/exDude2.jpg",
-                                date: "12/24/25",
-                            },
-                            {
-                                name: "Jennifer Bells",
-                                img: "/exDude3.jpg",
-                                date: "12/24/25",
-                            },
-                        ].map((p) => (
+                    {/* Grid */}
+                    <div
+                        style={{
+                            display: "grid",
+                            gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                            gap: "1.5rem",
+                        }}
+                    >
+                        {patients.map((p) => (
                             <Card
                                 key={p.name}
+                                className="h-100"
                                 style={{
-                                    minWidth: 260,
                                     backgroundColor: "rgba(15,23,42,0.75)",
                                     border: "1px solid #1e293b",
+                                    borderRadius: "1rem",
                                 }}
                             >
                                 <Image
                                     src={p.img}
                                     alt="profile"
-                                    width={260}
-                                    height={220}
-                                    style={{ objectFit: "cover" }}
+                                    width={400}
+                                    height={260}
+                                    style={{
+                                        objectFit: "cover",
+                                        borderTopLeftRadius: "1rem",
+                                        borderTopRightRadius: "1rem",
+                                    }}
                                 />
 
-                                <Card.Body>
-                                    <Card.Title className="text-light fs-6 mb-1">
-                                        {p.name}
-                                    </Card.Title>
+                                <Card.Body className="d-flex flex-column">
+                                    <div className="d-flex justify-content-between align-items-start mb-2">
+                                        <Card.Title className="text-light fs-6 mb-0">
+                                            {p.name}
+                                        </Card.Title>
+                                        <Badge bg="primary" pill>
+                                            Active
+                                        </Badge>
+                                    </div>
 
-                                    <Card.Text className="text-secondary small mb-1">
+                                    <p className="text-secondary small mb-1">
                                         Current yoga plan
-                                    </Card.Text>
+                                    </p>
 
-                                    <Card.Text className="text-secondary small">
+                                    <p className="text-secondary small mb-4">
                                         Next session: {p.date}
-                                    </Card.Text>
+                                    </p>
+
+                                    <Button
+                                        size="sm"
+                                        variant="outline-primary"
+                                        className="mt-auto rounded-pill"
+                                    >
+                                        View details
+                                    </Button>
                                 </Card.Body>
                             </Card>
                         ))}
@@ -129,6 +123,26 @@ export default function Patients() {
         </>
     );
 }
+
+/* ---------- data ---------- */
+
+const patients = [
+    {
+        name: "George Yousefson",
+        img: "/exDude1.jpg",
+        date: "11/24/25",
+    },
+    {
+        name: "Alicia Shells",
+        img: "/exDude2.jpg",
+        date: "12/24/25",
+    },
+    {
+        name: "Jennifer Bells",
+        img: "/exDude3.jpg",
+        date: "12/24/25",
+    },
+];
 
 /* ---------- styles ---------- */
 
