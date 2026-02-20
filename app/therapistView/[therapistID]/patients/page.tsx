@@ -1,38 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { Container, Nav, Navbar, Card, Badge, Button } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown, Button, Badge, Card } from "react-bootstrap";
+import "../../therapistStyles.css";
+import { useParams } from "next/navigation";
 
 export default function Patients() {
+    const { therapistID } = useParams();
     return (
         <>
-            {/* Navbar */}
-            <Navbar
-                expand="lg"
-                className="border-bottom"
-                style={{ backgroundColor: "#020617", borderColor: "#1e293b" }}
-            >
-                <Container fluid className="px-5">
-                    <Navbar.Brand
-                        href="/therapistView"
-                        style={{ color: "#e5e7eb", fontWeight: 600 }}
-                    >
-                        Yoga Network
-                    </Navbar.Brand>
-
-                    <Navbar.Toggle />
-
-                    <Navbar.Collapse className="justify-content-end">
-                        <Nav className="gap-4">
-                            <Nav.Link href="/therapistView/patients" style={{ color: "#3b82f6" }}>
-                                Patients
-                            </Nav.Link>
-                            <Nav.Link href="/therapistView/requests" style={navLink}>
-                                Requests
-                            </Nav.Link>
-                            <Nav.Link href="/therapistView/calendar" style={navLink}>
-                                Calendar
-                            </Nav.Link>
+            <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
+                <Container fluid className="mx-5">
+                    <Navbar.Brand href={`/therapistView/${therapistID}`}>My Yoga Network</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="navbarSupportedContent" />
+                    <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
+                        <Nav className="mb-lg-0 mt-1">
+                            <Nav.Link href={`/therapistView/${therapistID}/patients`}>Patients</Nav.Link>
+                            <Nav.Link href={`/therapistView/${therapistID}/requests`}>Requests</Nav.Link>
+                            <Nav.Link href={`/therapistView/${therapistID}/calendar`} className="me-5">Calendar</Nav.Link>
                         </Nav>
 
                         <Nav.Link className="ms-4" style={{ color: "#cbd5f5" }}>
@@ -46,8 +31,8 @@ export default function Patients() {
             <main
                 style={{
                     minHeight: "100vh",
-                    backgroundColor: "#020617",
-                    padding: "3rem 0",
+
+                    background: "linear-gradient(to bottom, #94f1f1ff, #5fc3fdff)",
                 }}
             >
                 <Container style={{ maxWidth: 1200 }}>

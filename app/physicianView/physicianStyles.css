@@ -40,7 +40,16 @@
 }
 
 .gradient-text {
-  background: linear-gradient(to right, #115bcb, #2575fc);
+  background: linear-gradient(to right, #6a11cb, #2575fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.patient-row {
+  background-color: white;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.patient-row:hover {
+  background-color: #f5f9ff;
 }
