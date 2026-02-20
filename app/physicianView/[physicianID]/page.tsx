@@ -5,13 +5,13 @@ import { useParams, useRouter } from 'next/navigation';
 import "../../physicianView/physicianStyles.css";
 
 export default function PhysicianView() {
-    //const { physicianID } = useParams<{physicianID: string}>();
+    const { physicianID } = useParams();
     //const {physicianID} = "1"; // Placeholder until backend is connected
     return (
         <>
             <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
                 <Container fluid className="mx-5">
-                    <Navbar.Brand href="/physicianView">My Yoga Network</Navbar.Brand>
+                    <Navbar.Brand href={`/physicianView/${physicianID}`}>My Yoga Network</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarSupportedContent" />
                     <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
                         <Nav className="mb-lg-0 mt-1">

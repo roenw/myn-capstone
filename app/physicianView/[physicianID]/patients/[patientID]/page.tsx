@@ -6,7 +6,7 @@ import { useParams, useRouter } from 'next/navigation';
 import "../../../../physicianView/physicianStyles.css";
 
 interface Patients {
-    id: number;
+    id: string;
     name: string;
     dob: string;
     img: string;
@@ -18,18 +18,18 @@ interface Patients {
 
 export default function physiciansPatientView() {
     const [patients, setPatients] = useState<Patients[]>([
-        { id: 1, name: 'John Doe', dob: '01/01/1980', symptoms: 'Back pain', conditions: 'Arthritis', img: '/exDude1.jpg', nextMeetingDate: '11/24/25', CurrentYogaPlan: 'Plan A' },
-        { id: 2, name: 'Jane Smith', dob: '02/02/1990', symptoms: 'Neck pain', conditions: 'Migraine', img: '/exDude2.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan B' },
-        { id: 3, name: 'Alice Johnson', dob: '03/03/1975', symptoms: 'Hip pain', conditions: 'Osteoporosis', img: '/exDude3.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan C' },
+        { id: "1", name: 'John Doe', dob: '01/01/1980', symptoms: 'Back pain', conditions: 'Arthritis', img: '/exDude1.jpg', nextMeetingDate: '11/24/25', CurrentYogaPlan: 'Plan A' },
+        { id: "2", name: 'Jane Smith', dob: '02/02/1990', symptoms: 'Neck pain', conditions: 'Migraine', img: '/exDude2.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan B' },
+        { id: "3", name: 'Alice Johnson', dob: '03/03/1975', symptoms: 'Hip pain', conditions: 'Osteoporosis', img: '/exDude3.jpg', nextMeetingDate: '12/24/25', CurrentYogaPlan: 'Plan C' },
     ]);
     const router = useRouter();
-    const { physicianID, patientID } = useParams<{ physicianID: string, patientID: string }>();
-    const patient = patients.find(p => p.id === parseInt(patientID));
+    const { physicianID, patientID } = useParams();
+    const patient = patients.find(p => p.id === patientID);
     return (
         <>
             <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
                 <Container fluid className="mx-5">
-                    <Navbar.Brand href="/physicianView">My Yoga Network</Navbar.Brand>
+                    <Navbar.Brand href={`/physicianView/${physicianID}`}>My Yoga Network</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarSupportedContent" />
                     <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
                         <Nav className="mb-lg-0 mt-1">
@@ -46,7 +46,7 @@ export default function physiciansPatientView() {
             <main className="" style={{
                 minHeight: '100vh',
                 maxWidth: "100vw",
-                background: 'linear-gradient(135deg, #daedf3 0%, #90A4AE 100%)',
+                background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
             }}>
                 <Container className="py-4">
                     <h1 className="">Patient Details</h1>

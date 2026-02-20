@@ -1,29 +1,22 @@
 "use client";
 import Image from "next/image";
-import {
-    Container,
-    Nav,
-    Navbar,
-    NavDropdown,
-    Button,
-    Card,
-} from "react-bootstrap";
-import "../therapistStyles.css";
+import { Container, Nav, Navbar, NavDropdown, Button, Card } from "react-bootstrap";
+import "../../therapistStyles.css";
+import { useParams } from "next/navigation";
 
 export default function Patients() {
+    const { therapistID } = useParams();
     return (
         <>
             <Navbar expand="lg" className="py-4 text-raleway" bg="light" data-bs-theme="light">
                 <Container fluid className="mx-5">
-                    <Navbar.Brand href="/therapistView">Yoga Network</Navbar.Brand>
+                    <Navbar.Brand href={`/therapistView/${therapistID}`}>My Yoga Network</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarSupportedContent" />
                     <Navbar.Collapse id="navbarSupportedContent" className="justify-content-end">
                         <Nav className="mb-lg-0 mt-1">
-                            <Nav.Link href="/therapistView/patients" active>Patients</Nav.Link>
-                            <Nav.Link href="/therapistView/requests">Requests</Nav.Link>
-                            <Nav.Link href="/therapistView/calendar" className="me-5">
-                                Calendar
-                            </Nav.Link>
+                            <Nav.Link href={`/therapistView/${therapistID}/patients`}>Patients</Nav.Link>
+                            <Nav.Link href={`/therapistView/${therapistID}/requests`}>Requests</Nav.Link>
+                            <Nav.Link href={`/therapistView/${therapistID}/calendar`} className="me-5">Calendar</Nav.Link>
                         </Nav>
                         <Nav.Link href="#" className="">
                             <i className="bi bi-person-circle fs-3"></i>
@@ -35,7 +28,7 @@ export default function Patients() {
                 className="pt-5 mx-auto"
                 style={{
                     minHeight: "100vh",
-                    
+
                     background: "linear-gradient(to bottom, #94f1f1ff, #5fc3fdff)",
                 }}
             >
