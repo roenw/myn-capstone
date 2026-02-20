@@ -39,7 +39,10 @@ export default function TherapistDebugPage() {
         return (
             <div
                 className="d-flex align-items-center justify-content-center"
-                style={{ minHeight: "100vh", backgroundColor: "#020617" }}
+                style={{
+                    minHeight: "100vh",
+                    background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+                }}
             >
                 <Spinner animation="border" variant="primary" />
             </div>
@@ -51,15 +54,20 @@ export default function TherapistDebugPage() {
             {/* Navbar */}
             <Navbar
                 expand="lg"
-                className="border-bottom"
+                className="py-3"
                 style={{
-                    backgroundColor: "#020617",
-                    borderColor: "#1e293b",
+                    backgroundColor: "rgba(255,255,255,0.85)",
+                    backdropFilter: "blur(10px)",
+                    borderBottom: "1px solid #dee2e6",
                 }}
             >
                 <Container fluid className="px-5">
                     <Navbar.Brand
-                        style={{ color: "#e5e7eb", fontWeight: 600 }}
+                        style={{
+                            color: "#212529",
+                            fontWeight: 600,
+                            fontFamily: "'Poppins', sans-serif",
+                        }}
                     >
                         Yoga Network
                     </Navbar.Brand>
@@ -67,14 +75,15 @@ export default function TherapistDebugPage() {
                     <Navbar.Collapse className="justify-content-end">
                         <NavDropdown
                             title={
-                                <span style={{ color: "#e5e7eb" }}>
+                                <span style={{ color: "#212529" }}>
                                     {therapistData?.firstName} {therapistData?.lastName}
                                 </span>
                             }
                             id="therapist-dropdown"
                             align="end"
                         >
-                            <NavDropdown.Item onClick={() => router.push("/therapistView")}>                                <i className="bi bi-dashboard me-2" />
+                            <NavDropdown.Item onClick={() => router.push("/therapistView")}>
+                                <i className="bi bi-dashboard me-2" />
                                 Dashboard
                             </NavDropdown.Item>
                             <NavDropdown.Item onClick={() => router.push("/therapist_debug")}>
@@ -94,24 +103,29 @@ export default function TherapistDebugPage() {
             {/* Main */}
             <main
                 className="py-5"
-                style={{ minHeight: "100vh", backgroundColor: "#020617" }}
+                style={{
+                    minHeight: "100vh",
+                    background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+                    fontFamily: "'Poppins', sans-serif",
+                }}
             >
                 <Container style={{ maxWidth: "1200px" }}>
                     <Card
-                        className="border-0 mb-4"
+                        className="border-0 mb-4 shadow-sm"
                         style={{
-                            backgroundColor: "rgba(15, 23, 42, 0.75)",
-                            border: "1px solid #1e293b",
+                            backgroundColor: "rgba(255,255,255,0.85)",
+                            backdropFilter: "blur(10px)",
                             borderRadius: "0.75rem",
+                            boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
                         }}
                     >
                         <Card.Body className="p-4">
                             <div className="d-flex align-items-center justify-content-between mb-4">
                                 <div>
-                                    <h2 className="text-light fw-semibold mb-2">
+                                    <h2 className="fw-semibold mb-2" style={{ color: "#212529" }}>
                                         Therapist Debug View
                                     </h2>
-                                    <p className="text-secondary mb-0">
+                                    <p className="text-muted mb-0">
                                         {therapistData?.firstName} {therapistData?.lastName} - Raw Database Data
                                     </p>
                                 </div>
@@ -137,7 +151,7 @@ export default function TherapistDebugPage() {
                                     backgroundColor: "rgba(59,130,246,0.1)",
                                     border: "1px solid rgba(59,130,246,0.3)",
                                     borderRadius: "0.5rem",
-                                    color: "#93c5fd",
+                                    color: "#1e40af",
                                 }}
                             >
                                 <i className="bi bi-info-circle me-2" />
@@ -148,10 +162,10 @@ export default function TherapistDebugPage() {
                                 <pre
                                     className="p-4 mb-0"
                                     style={{
-                                        backgroundColor: "#020617",
-                                        border: "1px solid #1e293b",
+                                        backgroundColor: "#f8f9fa",
+                                        border: "1px solid #dee2e6",
                                         borderRadius: "0.5rem",
-                                        color: "#94a3b8",
+                                        color: "#495057",
                                         maxHeight: "600px",
                                         overflow: "auto",
                                         fontSize: "0.875rem",

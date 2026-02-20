@@ -63,25 +63,29 @@ export default function CompleteSignup() {
     return (
         <div
             className="d-flex align-items-center justify-content-center min-vh-100"
-            style={{ backgroundColor: "#020617" }}
+            style={{
+                background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+                fontFamily: "'Poppins', sans-serif",
+            }}
         >
             <Container style={{ maxWidth: 640 }}>
                 <Card
-                    className="border-0 shadow-lg text-center"
+                    className="border-0 shadow-sm text-center"
                     style={{
-                        backgroundColor: "rgba(15,23,42,0.75)",
+                        backgroundColor: "rgba(255,255,255,0.85)",
+                        backdropFilter: "blur(10px)",
                         borderRadius: "1rem",
-                        border: "1px solid #1e293b",
+                        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
                     }}
                 >
                     <Card.Body className="p-5">
                         {status === 'loading' && (
                             <>
                                 <Spinner animation="border" variant="primary" className="mb-4" />
-                                <h3 className="fw-semibold text-light mb-2">
+                                <h3 className="fw-semibold mb-2" style={{ color: "#212529" }}>
                                     Creating your account...
                                 </h3>
-                                <p className="text-secondary">
+                                <p className="text-muted">
                                     Please wait while we set up your profile.
                                 </p>
                             </>
@@ -103,10 +107,10 @@ export default function CompleteSignup() {
                                 >
                                     ✓
                                 </div>
-                                <h3 className="fw-semibold text-light mb-2">
+                                <h3 className="fw-semibold mb-2" style={{ color: "#212529" }}>
                                     Account created successfully!
                                 </h3>
-                                <p className="text-secondary">
+                                <p className="text-muted">
                                     Redirecting you to your dashboard...
                                 </p>
                             </>
@@ -128,15 +132,20 @@ export default function CompleteSignup() {
                                 >
                                     ✕
                                 </div>
-                                <h3 className="fw-semibold text-light mb-2">
+                                <h3 className="fw-semibold mb-2" style={{ color: "#212529" }}>
                                     Error creating account
                                 </h3>
-                                <p className="text-secondary">
+                                <p className="text-muted">
                                     {errorMessage}
                                 </p>
                                 <button
                                     onClick={() => router.push('/signup')}
                                     className="btn btn-primary mt-3"
+                                    style={{
+                                        backgroundColor: "#3b82f6",
+                                        border: "none",
+                                        boxShadow: "0 4px 14px rgba(59,130,246,0.2)",
+                                    }}
                                 >
                                     Back to Signup
                                 </button>

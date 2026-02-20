@@ -64,7 +64,10 @@ export default function TherapistView() {
         return (
             <div
                 className="d-flex align-items-center justify-content-center"
-                style={{ minHeight: "100vh", backgroundColor: "#020617" }}
+                style={{
+                    minHeight: "100vh",
+                    background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+                }}
             >
                 <Spinner animation="border" variant="primary" />
             </div>
@@ -76,16 +79,21 @@ export default function TherapistView() {
             {/* Navbar */}
             <Navbar
                 expand="lg"
-                className="border-bottom"
+                className="py-3"
                 style={{
-                    backgroundColor: "#020617", // slate-950
-                    borderColor: "#1e293b",
+                    backgroundColor: "rgba(255,255,255,0.85)",
+                    backdropFilter: "blur(10px)",
+                    borderBottom: "1px solid #dee2e6",
                 }}
             >
                 <Container fluid className="px-5">
                     <Navbar.Brand
                         href="/therapistView"
-                        style={{ color: "#e5e7eb", fontWeight: 600 }}
+                        style={{
+                            color: "#212529",
+                            fontWeight: 600,
+                            fontFamily: "'Poppins', sans-serif",
+                        }}
                     >
                         Yoga Network
                     </Navbar.Brand>
@@ -98,7 +106,7 @@ export default function TherapistView() {
                                 <Nav.Link
                                     key={item}
                                     href={`/therapistView/${item.toLowerCase()}`}
-                                    style={{ color: "#cbd5f5" }}
+                                    style={{ color: "#6c757d" }}
                                 >
                                     {item}
                                 </Nav.Link>
@@ -107,7 +115,7 @@ export default function TherapistView() {
 
                         <NavDropdown
                             title={
-                                <span style={{ color: "#e5e7eb" }}>
+                                <span style={{ color: "#212529" }}>
                                     {therapistData?.firstName} {therapistData?.lastName}
                                 </span>
                             }
@@ -141,13 +149,17 @@ export default function TherapistView() {
             {/* Main */}
             <main
                 className="py-5"
-                style={{ minHeight: "100vh", backgroundColor: "#020617" }}
+                style={{
+                    minHeight: "100vh",
+                    background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+                    fontFamily: "'Poppins', sans-serif",
+                }}
             >
                 <Container style={{ maxWidth: "1200px" }}>
                     {/* Account Status Warning */}
                     {therapistData?.status === 'pending' && (
                         <Card
-                            className="mb-4 border-0"
+                            className="mb-4 border-0 shadow-sm"
                             style={{
                                 backgroundColor: "rgba(251, 191, 36, 0.1)",
                                 border: "1px solid rgba(251, 191, 36, 0.3)",
@@ -161,7 +173,7 @@ export default function TherapistView() {
                                         <h5 className="text-warning fw-semibold mb-2">
                                             Account Under Review
                                         </h5>
-                                        <p className="text-light mb-0">
+                                        <p className="text-muted mb-0">
                                             Your therapist account is currently being reviewed by our admin team. 
                                             You'll receive an email once your account has been approved and you can 
                                             start working with clients.
@@ -176,10 +188,10 @@ export default function TherapistView() {
                     <Row className="g-4 mb-5">
                         <Col md={7}>
                             <DashboardCard>
-                                <h2 className="text-light fw-semibold mb-2">
+                                <h2 className="fw-semibold mb-2" style={{ color: "#212529" }}>
                                     Welcome back, {therapistData?.firstName} {therapistData?.lastName}
                                 </h2>
-                                <p className="text-secondary mb-0">
+                                <p className="text-muted mb-0">
                                     Here's a quick overview of your schedule and patients.
                                 </p>
                             </DashboardCard>
@@ -187,13 +199,13 @@ export default function TherapistView() {
 
                         <Col md={5} className="d-flex flex-column gap-4">
                             <StatCard title="Total Patients">
-                                <div className="text-light text-center fs-3 fw-bold">
+                                <div className="text-center fs-3 fw-bold" style={{ color: "#212529" }}>
                                     {patients.length}
                                 </div>
                             </StatCard>
 
                             <StatCard title="Email">
-                                <div className="text-light">
+                                <div style={{ color: "#212529" }}>
                                     {therapistData?.email}
                                 </div>
                             </StatCard>
@@ -202,12 +214,12 @@ export default function TherapistView() {
 
                     {/* Patients */}
                     <DashboardCard>
-                        <h4 className="text-light fw-semibold mb-4">
+                        <h4 className="fw-semibold mb-4" style={{ color: "#212529" }}>
                             Current patients
                         </h4>
 
                         {patients.length === 0 ? (
-                            <p className="text-secondary text-center py-4">
+                            <p className="text-muted text-center py-4">
                                 No patients assigned yet.
                             </p>
                         ) : (
@@ -215,10 +227,11 @@ export default function TherapistView() {
                                 {patients.map((patient) => (
                                     <Card
                                         key={patient._id}
+                                        className="shadow-sm"
                                         style={{
                                             minWidth: 260,
-                                            backgroundColor: "#020617",
-                                            border: "1px solid #1e293b",
+                                            backgroundColor: "rgba(255,255,255,0.9)",
+                                            border: "1px solid #dee2e6",
                                         }}
                                     >
                                         <div
@@ -234,14 +247,14 @@ export default function TherapistView() {
                                             {patient.firstName[0]}{patient.lastName[0]}
                                         </div>
                                         <Card.Body>
-                                            <Card.Title className="text-light fs-6">
+                                            <Card.Title className="fs-6" style={{ color: "#212529" }}>
                                                 {patient.firstName} {patient.lastName}
                                             </Card.Title>
-                                            <Card.Text className="text-secondary small">
+                                            <Card.Text className="text-muted small">
                                                 {patient.email}
                                             </Card.Text>
                                             {patient.phone && (
-                                                <Card.Text className="text-secondary small">
+                                                <Card.Text className="text-muted small">
                                                     {patient.phone}
                                                 </Card.Text>
                                             )}
@@ -262,11 +275,12 @@ export default function TherapistView() {
 function DashboardCard({ children }: { children: React.ReactNode }) {
     return (
         <div
-            className="p-4"
+            className="p-4 shadow-sm"
             style={{
-                backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
+                backgroundColor: "rgba(255,255,255,0.85)",
+                backdropFilter: "blur(10px)",
                 borderRadius: "1rem",
-                border: "1px solid #1e293b",
+                border: "1px solid #dee2e6",
             }}
         >
             {children}
@@ -283,7 +297,7 @@ function StatCard({
 }) {
     return (
         <DashboardCard>
-            <p className="text-uppercase small text-secondary mb-3">
+            <p className="text-uppercase small text-muted mb-3">
                 {title}
             </p>
             <div className="d-flex flex-column gap-2">{children}</div>

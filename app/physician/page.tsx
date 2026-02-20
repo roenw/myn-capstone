@@ -47,7 +47,10 @@ export default function PhysicianPage() {
         return (
             <div
                 className="d-flex align-items-center justify-content-center"
-                style={{ minHeight: "100vh", backgroundColor: "#020617" }}
+                style={{
+                    minHeight: "100vh",
+                    background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+                }}
             >
                 <Spinner animation="border" variant="primary" />
             </div>
@@ -59,15 +62,20 @@ export default function PhysicianPage() {
             {/* Navbar */}
             <Navbar
                 expand="lg"
-                className="border-bottom"
+                className="py-3"
                 style={{
-                    backgroundColor: "#020617", // slate-950
-                    borderColor: "#1e293b",
+                    backgroundColor: "rgba(255,255,255,0.85)",
+                    backdropFilter: "blur(10px)",
+                    borderBottom: "1px solid #dee2e6",
                 }}
             >
                 <Container fluid className="px-5">
                     <Navbar.Brand
-                        style={{ color: "#e5e7eb", fontWeight: 600 }}
+                        style={{
+                            color: "#212529",
+                            fontWeight: 600,
+                            fontFamily: "'Poppins', sans-serif",
+                        }}
                     >
                         Yoga Network
                     </Navbar.Brand>
@@ -75,7 +83,7 @@ export default function PhysicianPage() {
                     <Navbar.Collapse className="justify-content-end">
                         <NavDropdown
                             title={
-                                <span style={{ color: "#e5e7eb" }}>
+                                <span style={{ color: "#212529" }}>
                                     {physicianData?.firstName} {physicianData?.lastName}
                                 </span>
                             }
@@ -110,13 +118,14 @@ export default function PhysicianPage() {
                 className="d-flex align-items-center justify-content-center"
                 style={{
                     minHeight: "100vh",
-                    backgroundColor: "#020617",
+                    background: "linear-gradient(135deg, rgba(219, 237, 244) 0%, rgba(226, 238, 254) 100%)",
+                    fontFamily: "'Poppins', sans-serif",
                 }}
             >                <Container style={{ maxWidth: 720 }}>
                     {/* Account Status Warning */}
                     {physicianData?.status === 'pending' && (
                         <Card
-                            className="mb-4 border-0"
+                            className="mb-4 border-0 shadow-sm"
                             style={{
                                 backgroundColor: "rgba(251, 191, 36, 0.1)",
                                 border: "1px solid rgba(251, 191, 36, 0.3)",
@@ -130,7 +139,7 @@ export default function PhysicianPage() {
                                         <h5 className="text-warning fw-semibold mb-2">
                                             Account Under Review
                                         </h5>
-                                        <p className="text-light mb-0">
+                                        <p className="text-muted mb-0">
                                             Your physician account is currently being reviewed by our admin team. 
                                             You'll be notified once your credentials have been verified and you can 
                                             start referring patients.
@@ -142,11 +151,12 @@ export default function PhysicianPage() {
                     )}
 
                     <Card
-                        className="p-5 text-center"
+                        className="p-5 text-center border-0 shadow-sm"
                         style={{
-                            backgroundColor: "rgba(15,23,42,0.75)", // slate-900/70
-                            border: "1px solid #1e293b",
+                            backgroundColor: "rgba(255,255,255,0.85)",
+                            backdropFilter: "blur(10px)",
                             borderRadius: "1rem",
+                            boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
                         }}
                     >
                         {/* Icon */}
@@ -166,18 +176,18 @@ export default function PhysicianPage() {
                         </div>
 
                         {/* Heading */}
-                        <h2 className="text-light fw-semibold mb-2">
+                        <h2 className="fw-semibold mb-2" style={{ color: "#212529" }}>
                             Welcome back, Dr. {physicianData?.lastName || 'Physician'}
                         </h2>
 
                         {physicianData?.credentials && (
-                            <p className="text-secondary mb-1">
+                            <p className="text-muted mb-1">
                                 {physicianData.credentials}
                             </p>
                         )}
 
                         {/* Subtext */}
-                        <p className="text-secondary mb-4">
+                        <p className="text-muted mb-4">
                             Review patient activity and collaborate with instructors
                             to support ongoing care.
                         </p>
@@ -193,7 +203,7 @@ export default function PhysicianPage() {
                                 padding: "0.7rem 2.75rem",
                                 fontSize: "1rem",
                                 fontWeight: 500,
-                                boxShadow: "0 0 20px rgba(59,130,246,0.3)",
+                                boxShadow: "0 4px 14px rgba(59,130,246,0.2)",
                             }}
                         >
                             View patients
