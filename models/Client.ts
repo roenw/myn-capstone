@@ -28,7 +28,7 @@ export interface IClient {
   avoid?: string;
   insured?: string;
   
-  // Instructor preferences
+  // Therapist preferences
   genderPref?: string[];
   experiencePref?: string;
   languagePref?: string[];
@@ -93,7 +93,7 @@ const ClientSchema = new Schema<IClient>(
     avoid: String,
     insured: String,
     
-    // Instructor preferences
+    // Therapist preferences
     genderPref: [String],
     experiencePref: String,
     languagePref: [String],

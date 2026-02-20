@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
       symptoms: data.symptoms,
       avoid: data.avoid,
       insured: data.insured,
-      // Instructor preferences
+      // Therapist preferences
       genderPref: data.genderPref,
       experiencePref: data.experiencePref,
       languagePref: data.languagePref,

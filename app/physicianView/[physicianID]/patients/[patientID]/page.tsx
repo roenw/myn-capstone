@@ -95,10 +95,10 @@ export default function physiciansPatientView() {
 
 export function SessionList() {
     const [sessions, setSessions] = useState([
-        { id: 1, date: '11/16/2025', instructor: 'Elaine Smith', notes: 'Patient reported improvement in back pain after yoga sessions. Increased flexibility observed.', viewed: false },
-        { id: 2, date: '11/11/2025', instructor: 'Jackie Robbins', notes: 'Patient mentioned mild neck discomfort after trying new poses. Advised to modify routine.', viewed: false },
-        { id: 3, date: '11/09/2025', instructor: 'Jackie Robbins', notes: 'Patient reported improvement in flexibility and reduced back pain.', viewed: true },
-        { id: 4, date: '11/05/2025', instructor: 'Jackie Robbins', notes: 'Patient showed significant improvement in posture and reduced pain levels.', viewed: true },
+        { id: 1, date: '11/16/2025', therapist: 'Elaine Smith', notes: 'Patient reported improvement in back pain after yoga sessions. Increased flexibility observed.', viewed: false },
+        { id: 2, date: '11/11/2025', therapist: 'Jackie Robbins', notes: 'Patient mentioned mild neck discomfort after trying new poses. Advised to modify routine.', viewed: false },
+        { id: 3, date: '11/09/2025', therapist: 'Jackie Robbins', notes: 'Patient reported improvement in flexibility and reduced back pain.', viewed: true },
+        { id: 4, date: '11/05/2025', therapist: 'Jackie Robbins', notes: 'Patient showed significant improvement in posture and reduced pain levels.', viewed: true },
     ]);
 
     const [show, setShow] = useState(false);
@@ -118,7 +118,7 @@ export function SessionList() {
             <div className="px-1 my-2 mt-3 py-1 rounded-2" style={{ background: "rgba(0,0,0,0.02)", border: "1px solid rgba(0,0,0,0.1)"}}>
                 <Row className="px-3">
                     <Col md={8} className="">Session Date</Col>
-                    <Col className="">Instructor</Col>
+                    <Col className="">Therapist</Col>
                 </Row>
             </div>
             <div className="px-3">
@@ -146,7 +146,7 @@ export function SessionList() {
                                 </Col>
                                 <Col className="d-flex gap-3">
                                     <div className="rounded-5 text-nowrap">
-                                        {session.instructor}
+                                        {session.therapist}
                                     </div>
                                 </Col>
                             </Row>
@@ -170,7 +170,7 @@ export function SessionList() {
                                 </Col>
                                 <Col className="d-flex text-nowrap">
                                     <div className="">
-                                        {session.instructor}
+                                        {session.therapist}
                                     </div>
                                 </Col>
                             </Row>

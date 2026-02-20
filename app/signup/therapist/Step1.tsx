@@ -1,12 +1,12 @@
 ﻿"use client";
 
 import { Card, Form, Button, Container, Row, Col } from "react-bootstrap";
-import { InstructorFormData } from "./page";
+import { TherapistFormData } from "./page";
 
 interface Step1Props {
     nextStep: () => void;
-    formData: InstructorFormData;
-    setFormData: React.Dispatch<React.SetStateAction<InstructorFormData>>;
+    formData: TherapistFormData;
+    setFormData: React.Dispatch<React.SetStateAction<TherapistFormData>>;
 }
 
 export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
@@ -37,7 +37,7 @@ export default function Step1({ nextStep, formData, setFormData }: Step1Props) {
                         {/* Header */}
                         <div className="text-center mb-4">
                             <h4 className="fw-semibold mb-1">
-                                Instructor information
+                                Therapist information
                             </h4>
                             <p className="text-muted small mb-0">
                                 Step 1 of X

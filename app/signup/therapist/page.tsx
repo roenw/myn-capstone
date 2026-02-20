@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
 
-export type InstructorFormData = {
+export type TherapistFormData = {
     name?: string;
     speciality?: string;
     email?: string;
@@ -18,31 +18,31 @@ export type InstructorFormData = {
     [key: string]: any;
 };
 
-export default function InstructorSignupFlow() {
+export default function TherapistSignupFlow() {
     const [step, setStep] = useState<number>(1);
-    const [formData, setFormData] = useState<InstructorFormData>({});
+    const [formData, setFormData] = useState<TherapistFormData>({});
 
     // --- Load saved data ---
     useEffect(() => {
-        const saved = localStorage.getItem("instructorSignupData");
+        const saved = localStorage.getItem("therapistSignupData");
         if (saved) {
             try {
                 setFormData(JSON.parse(saved));
             } catch {
-                console.error("Invalid JSON in instructorSignupData");
+                console.error("Invalid JSON in therapistSignupData");
             }
         }
     }, []);
 
     // --- Move to next step ---
     const handleNext = (): void => {
-        localStorage.setItem("instructorSignupData", JSON.stringify(formData));
+        localStorage.setItem("therapistSignupData", JSON.stringify(formData));
         setStep((prev) => Math.min(prev + 1, 2));
     };
 
     // --- Final submit ---
     const handleSubmit = (): void => {
-        console.log("Final instructor data:", formData);
+        console.log("Final therapist data:", formData);
         
         // Save data to localStorage before Auth0 redirect
         localStorage.setItem("therapistSignupData", JSON.stringify(formData));

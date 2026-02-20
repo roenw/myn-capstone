@@ -53,7 +53,7 @@ export default function Step6() {
                             className="text-muted mb-4"
                             style={{ maxWidth: 480, margin: "0 auto" }}
                         >
-                            Your instructor information has been received successfully.
+                            Your therapist information has been received successfully.
                             Our team will review your details and follow up with next steps
                             shortly.
                         </p>

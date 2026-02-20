@@ -45,9 +45,9 @@ export default function SignupPage() {
                             />
 
                             <RoleCard
-                                title="Instructor"
+                                title="Therapist"
                                 description="Provide yoga therapy sessions and support clients."
-                                onClick={() => router.push("/signup/instructor")}
+                                onClick={() => router.push("/signup/therapist")}
                             />
 
                             <RoleCard

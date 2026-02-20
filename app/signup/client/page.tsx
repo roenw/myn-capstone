@@ -33,7 +33,7 @@ export type ClientFormData = {
     symptoms?: string;
     avoid?: string;
     insured?: string;
-    // Instructor preferences
+    // Therapist preferences
     genderPref?: string[];
     experiencePref?: string;
     languagePref?: string[];

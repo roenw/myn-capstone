@@ -144,7 +144,7 @@ export default function HomePage() {
                             </h1>
 
                             <p className="text-muted mb-4" style={{ maxWidth: 520 }}>
-                                Yoga Network connects clients, instructors, and physicians in one
+                                Yoga Network connects clients, therapists, and physicians in one
                                 secure, collaborative wellness platform designed for real care.
                             </p>
 
@@ -209,7 +209,7 @@ export default function HomePage() {
                                     </h5>
                                     <ul className="text-muted small ps-3 mb-0">
                                         <li className="mb-2">
-                                            Secure collaboration between physicians & instructors
+                                            Secure collaboration between physicians & therapists
                                         </li>
                                         <li className="mb-2">
                                             Personalized therapy-focused yoga plans

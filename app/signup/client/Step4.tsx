@@ -46,7 +46,7 @@ export default function Step4({ nextStep, formData, setFormData }: Step4Props) {
                                 className="small text-muted"
                                 style={{ maxWidth: 640, margin: "0 auto" }}
                             >
-                                These details help your instructor better understand your
+                                These details help your therapist better understand your
                                 background and keep sessions safe and effective.
                             </p>
                         </div>

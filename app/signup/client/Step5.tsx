@@ -47,7 +47,7 @@ export default function Step5({ nextStep, formData, setFormData }: Step5Props) {
                         {/* Header */}
                         <div className="text-center mb-4">
                             <h4 className="fw-semibold mb-1">
-                                Instructor preferences
+                                Therapist preferences
                             </h4>
                             <p className="text-muted small mb-2">
                                 Step 5 of 6
@@ -56,7 +56,7 @@ export default function Step5({ nextStep, formData, setFormData }: Step5Props) {
                                 className="small text-muted"
                                 style={{ maxWidth: 640, margin: "0 auto" }}
                             >
-                                These preferences help us match you with an instructor who fits
+                                These preferences help us match you with a therapist who fits
                                 your comfort, availability, and communication style.
                             </p>
                         </div>
@@ -64,7 +64,7 @@ export default function Step5({ nextStep, formData, setFormData }: Step5Props) {
                         <Form noValidate className="d-grid gap-4">
 
                             {/* SECTION 1 */}
-                            <Section title="Instructor gender preference">
+                            <Section title="Therapist gender preference">
                                 <div className="d-flex flex-wrap gap-2">
                                     {["Female", "Male", "Non-binary", "No preference"].map((label) => (
                                         <Pill
@@ -81,7 +81,7 @@ export default function Step5({ nextStep, formData, setFormData }: Step5Props) {
                             {/* SECTION 2 */}
                             <Section title="Clinical or healthcare experience">
                                 <p className="text-muted small mb-3">
-                                    Would you prefer an instructor with healthcare or clinical yoga experience?
+                                    Would you prefer a therapist with healthcare or clinical yoga experience?
                                 </p>
                                 <PillRow
                                     value={formData.experiencePref}

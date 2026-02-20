@@ -57,7 +57,7 @@ export default function Step3({ nextStep, formData, setFormData }: Step3Props) {
                                 className="small text-muted"
                                 style={{ maxWidth: 640, margin: "0 auto" }}
                             >
-                                This information helps us match you with an instructor who can
+                                This information helps us match you with a therapist who can
                                 support you safely.
                             </p>
                         </div>
