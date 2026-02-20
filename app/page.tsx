@@ -1,7 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Container, Navbar, Nav, Button, Row, Col, Card } from "react-bootstrap";
+import { Container, Navbar, Nav, NavDropdown, Button, Row, Col, Card } from "react-bootstrap";
 import {
     FaInstagram,
     FaFacebook,
@@ -12,6 +13,25 @@ import {
 
 export default function HomePage() {
     const router = useRouter();
+    const [user, setUser] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Check if user is logged in
+        fetch('/api/user/profile')
+            .then(res => {
+                if (res.ok) return res.json();
+                throw new Error('Not authenticated');
+            })
+            .then(data => {
+                setUser(data);
+                setLoading(false);
+            })
+            .catch(() => {
+                setUser(null);
+                setLoading(false);
+            });
+    }, []);
 
     return (
         <>
@@ -44,25 +64,60 @@ export default function HomePage() {
                             <Nav.Link className="text-muted">Contact</Nav.Link>
                         </Nav>
 
-                        <div className="d-flex gap-2">
-                            <Button
-                                variant="outline-secondary"
-                                className="rounded-pill px-4"
-                                onClick={() => router.push("/login")}
-                            >
-                                Log In
-                            </Button>
-                            <Button
-                                className="rounded-pill px-4"
-                                style={{
-                                    boxShadow:
-                                        "0 4px 14px rgba(59,130,246,0.2)",
-                                }}
-                                onClick={() => router.push("/signup")}
-                            >
-                                Get Started
-                            </Button>
-                        </div>
+                        {!loading && (
+                            <>
+                                {user ? (
+                                    // Show user dropdown when logged in
+                                    <div className="d-flex gap-2 align-items-center">
+                                        <Button
+                                            className="rounded-pill px-4"
+                                            style={{
+                                                backgroundColor: "#3b82f6",
+                                                border: "none",
+                                            }}
+                                            onClick={() => router.push("/auth/determine-route")}
+                                        >
+                                            Dashboard
+                                        </Button>
+                                        <NavDropdown
+                                            title={
+                                                <span style={{ color: "#e5e7eb" }}>
+                                                    {user.firstName} {user.lastName}
+                                                </span>
+                                            }
+                                            id="user-dropdown"
+                                            align="end"
+                                        >
+                                            <NavDropdown.Item href="/auth/logout">
+                                                Log Out
+                                            </NavDropdown.Item>
+                                        </NavDropdown>
+                                    </div>
+                                ) : (
+                                    // Show login/signup buttons when not logged in
+                                    <div className="d-flex gap-2">
+                                        <Button
+                                            variant="outline-secondary"
+                                            className="rounded-pill px-4"
+                                            onClick={() => window.location.href = '/auth/login'}
+                                        >
+                                            Log In
+                                        </Button>
+                                        <Button
+                                            className="rounded-pill px-4"
+                                            style={{
+                                                backgroundColor: "#3b82f6",
+                                                border: "none",
+                                                boxShadow: "0 4px 14px rgba(59,130,246,0.2)",
+                                            }}
+                                            onClick={() => router.push("/signup")}
+                                        >
+                                            Get Started
+                                        </Button>
+                                    </div>
+                                )}
+                            </>
+                        )}
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
@@ -93,25 +148,46 @@ export default function HomePage() {
                                 secure, collaborative wellness platform designed for real care.
                             </p>
 
-                            <div className="d-flex gap-3">
-                                <Button
-                                    className="rounded-pill px-5"
-                                    style={{
-                                        boxShadow:
-                                            "0 4px 14px rgba(59,130,246,0.2)",
-                                    }}
-                                    onClick={() => router.push("/signup")}
-                                >
-                                    Create Account →
-                                </Button>
-                                <Button
-                                    variant="outline-secondary"
-                                    className="rounded-pill px-4"
-                                    onClick={() => router.push("/login")}
-                                >
-                                    Log In
-                                </Button>
-                            </div>
+                            {!loading && (
+                                <div className="d-flex gap-3">
+                                    {user ? (
+                                        // Show dashboard button when logged in
+                                        <Button
+                                            className="rounded-pill px-5"
+                                            style={{
+                                                backgroundColor: "#3b82f6",
+                                                border: "none",
+                                                boxShadow: "0 0 20px rgba(59,130,246,0.35)",
+                                            }}
+                                            onClick={() => router.push("/auth/determine-route")}
+                                        >
+                                            Go to Dashboard →
+                                        </Button>
+                                    ) : (
+                                        // Show signup/login when not logged in
+                                        <>
+                                            <Button
+                                                className="rounded-pill px-5"
+                                                style={{
+                                                    backgroundColor: "#3b82f6",
+                                                    border: "none",
+                                                    boxShadow: "0 0 20px rgba(59,130,246,0.35)",
+                                                }}
+                                                onClick={() => router.push("/signup")}
+                                            >
+                                                Create Account →
+                                            </Button>
+                                            <Button
+                                                variant="outline-secondary"
+                                                className="rounded-pill px-4"
+                                                onClick={() => window.location.href = '/auth/login'}
+                                            >
+                                                Log In
+                                            </Button>
+                                        </>
+                                    )}
+                                </div>
+                            )}
                         </Col>
 
                         {/* Right Side Feature Card */}

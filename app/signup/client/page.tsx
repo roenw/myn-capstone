@@ -18,14 +18,30 @@ export type ClientFormData = {
     phone?: string;
     location?: string;
     referral?: string;
-    username?: string;
-    password?: string;
-    confirmPassword?: string;
     interests?: string[];
     otherInterest?: string;
     yogaBefore?: string;
     practiceFrequency?: string;
     sessionType?: string;
+    // Additional health information
+    yogaExperience?: string;
+    providerType?: string;
+    movementsToAvoid?: string;
+    provider?: string;
+    conditions?: string[];
+    otherCondition?: string;
+    symptoms?: string;
+    avoid?: string;
+    insured?: string;
+    // Instructor preferences
+    genderPref?: string[];
+    experiencePref?: string;
+    languagePref?: string[];
+    otherLanguage?: string;
+    sessionFormat?: string[];
+    availabilityDays?: string;
+    availabilityTime?: string;
+    availabilityZone?: string;
     [key: string]: any; // allow dynamic keys for later steps
 };
 
@@ -55,11 +71,15 @@ export default function ClientSignupFlow() {
     };
 
     // --- Submit final data ---
-    const handleSubmit = (): void => {
+    const handleSubmit = async (): Promise<void> => {
         console.log("Final submitted data:", formData);
-        // TODO: connect API submission here
-        localStorage.removeItem("clientSignupData");
-        setStep(6); // show confirmation screen
+        
+        // Save data to localStorage before Auth0 redirect
+        localStorage.setItem("clientSignupData", JSON.stringify(formData));
+        localStorage.setItem("signupType", "client");
+        
+        // Redirect to Auth0 signup
+        window.location.href = '/auth/login?screen_hint=signup&returnTo=/signup/complete';
     };
 
     // --- Render step based on step number ---

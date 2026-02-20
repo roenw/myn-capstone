@@ -1,10 +1,58 @@
 "use client";
 
-import { Button, Card, Container, Navbar, Nav } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button, Card, Container, Navbar, Nav, NavDropdown, Spinner } from "react-bootstrap";
 import { useRouter } from "next/navigation";
+
+interface PhysicianData {
+    firstName: string;
+    lastName: string;
+    credentials?: string;
+    email: string;
+    status?: 'pending' | 'approved' | 'rejected';
+}
 
 export default function PhysicianPage() {
     const router = useRouter();
+    const [physicianData, setPhysicianData] = useState<PhysicianData | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchPhysicianData = async () => {
+            try {
+                const response = await fetch('/api/user/profile');
+                if (response.ok) {
+                    const data = await response.json();
+                    setPhysicianData(data);
+                } else {
+                    // Not authenticated, redirect to login
+                    window.location.href = '/auth/login';
+                }
+            } catch (error) {
+                console.error('Error fetching physician data:', error);
+                window.location.href = '/auth/login';
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchPhysicianData();
+    }, [router]);
+
+    const handleLogout = () => {
+        window.location.href = '/auth/logout';
+    };
+
+    if (loading) {
+        return (
+            <div
+                className="d-flex align-items-center justify-content-center"
+                style={{ minHeight: "100vh", backgroundColor: "#020617" }}
+            >
+                <Spinner animation="border" variant="primary" />
+            </div>
+        );
+    }
 
     return (
         <>
@@ -25,14 +73,34 @@ export default function PhysicianPage() {
                     </Navbar.Brand>
 
                     <Navbar.Collapse className="justify-content-end">
-                        <Nav>
-                            <Nav.Link
-                                onClick={() => router.push("/physician/profile")}
-                                style={{ color: "#cbd5f5" }}
-                            >
-                                <i className="bi bi-person-circle fs-4" />
-                            </Nav.Link>
-                        </Nav>
+                        <NavDropdown
+                            title={
+                                <span style={{ color: "#e5e7eb" }}>
+                                    {physicianData?.firstName} {physicianData?.lastName}
+                                </span>
+                            }
+                            id="physician-dropdown"
+                            align="end"
+                        >
+                            <NavDropdown.Item onClick={() => router.push("/physician")}>
+                                <i className="bi bi-house me-2" />
+                                Home
+                            </NavDropdown.Item>
+                            <NavDropdown.Item onClick={() => router.push("/physician_debug")}>
+                                <i className="bi bi-bug me-2" />
+                                Debug View
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={() => router.push("/physician/profile")}>
+                                <i className="bi bi-person-circle me-2" />
+                                Profile
+                            </NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item onClick={handleLogout}>
+                                <i className="bi bi-box-arrow-right me-2" />
+                                Log Out
+                            </NavDropdown.Item>
+                        </NavDropdown>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
@@ -44,8 +112,35 @@ export default function PhysicianPage() {
                     minHeight: "100vh",
                     backgroundColor: "#020617",
                 }}
-            >
-                <Container style={{ maxWidth: 720 }}>
+            >                <Container style={{ maxWidth: 720 }}>
+                    {/* Account Status Warning */}
+                    {physicianData?.status === 'pending' && (
+                        <Card
+                            className="mb-4 border-0"
+                            style={{
+                                backgroundColor: "rgba(251, 191, 36, 0.1)",
+                                border: "1px solid rgba(251, 191, 36, 0.3)",
+                                borderRadius: "0.75rem",
+                            }}
+                        >
+                            <Card.Body className="p-4">
+                                <div className="d-flex align-items-start gap-3">
+                                    <i className="bi bi-hourglass-split text-warning fs-3" />
+                                    <div>
+                                        <h5 className="text-warning fw-semibold mb-2">
+                                            Account Under Review
+                                        </h5>
+                                        <p className="text-light mb-0">
+                                            Your physician account is currently being reviewed by our admin team. 
+                                            You'll be notified once your credentials have been verified and you can 
+                                            start referring patients.
+                                        </p>
+                                    </div>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    )}
+
                     <Card
                         className="p-5 text-center"
                         style={{
@@ -72,8 +167,14 @@ export default function PhysicianPage() {
 
                         {/* Heading */}
                         <h2 className="text-light fw-semibold mb-2">
-                            Welcome back, Dr. Skyler
+                            Welcome back, Dr. {physicianData?.lastName || 'Physician'}
                         </h2>
+
+                        {physicianData?.credentials && (
+                            <p className="text-secondary mb-1">
+                                {physicianData.credentials}
+                            </p>
+                        )}
 
                         {/* Subtext */}
                         <p className="text-secondary mb-4">

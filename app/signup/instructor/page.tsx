@@ -15,9 +15,6 @@ export type InstructorFormData = {
     pricing?: string;
     qualification?: string;
     certificates?: string;
-    username?: string;
-    password?: string;
-    confirmPassword?: string;
     [key: string]: any;
 };
 
@@ -46,8 +43,13 @@ export default function InstructorSignupFlow() {
     // --- Final submit ---
     const handleSubmit = (): void => {
         console.log("Final instructor data:", formData);
-        localStorage.removeItem("instructorSignupData");
-        setStep(2);
+        
+        // Save data to localStorage before Auth0 redirect
+        localStorage.setItem("therapistSignupData", JSON.stringify(formData));
+        localStorage.setItem("signupType", "therapist");
+        
+        // Redirect to Auth0 signup
+        window.location.href = '/auth/login?screen_hint=signup&returnTo=/signup/complete';
     };
 
     // --- Step routing ---

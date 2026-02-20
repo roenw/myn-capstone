@@ -1,77 +1,56 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { auth0 } from '@/lib/auth0';
+import connectDB from '@/lib/mongodb';
+import Client from '@/models/Client';
+import Therapist from '@/models/Therapist';
 
 export async function GET() {
-    const patients = [
-        {
-            id: 1,
-            name: "George Youfesen",
-            email: "Youfesen@gmail.com",
-            phone: "480-9424-3223",
-            currentYogaPlan: `
-            Yoga Type: Hatha Yoga
+    try {
+        const session = await auth0.getSession();
+        
+        if (!session || !session.user) {
+            return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+        }
 
-            Monday: Focus on gentle stretches and breathing exercises to improve flexibility and reduce stress.
-            Tuesday: Core strength and balance poses, including plank variations and tree pose.
-            Wednesday: Relaxation and restorative yoga, focusing on deep stretches and mindfulness.
-            Thursday: Strength and endurance with standing poses and sun salutations.
-            Friday: Hip openers and spinal twists to release tension and improve mobility.
-            Saturday: Flow session combining balance, flexibility, and light cardio through sequences.
-            Sunday: Restorative and meditation-focused session for recovery and mental clarity.`,
-            nextMeeting: "11/23/2025",
-            patientImageURL: "",
-            therapistId: 2
-        },
-        {
-            id: 2,
-            name: "Lila Fernandez",
-            email: "l.fernandez@gmail.com",
-            phone: "602-555-7812",
-            currentYogaPlan: `
-            Yoga Type: Vinyasa Yoga
+        const auth0Id = session.user.sub;
+        
+        await connectDB();
 
-            Monday: Sun salutations and gentle flow to wake up the body and improve circulation.
-            Tuesday: Core and arm strength poses, including plank variations and boat pose.
-            Wednesday: Hip openers and forward folds for flexibility and relaxation.
-            Thursday: Balance and standing poses to improve posture and stability.
-            Friday: Backbends and chest openers to release tension and boost energy.
-            Saturday: Flow session linking breath with movement for endurance.
-            Sunday: Restorative and meditation-focused session for mental clarity and recovery.`,
-            nextMeeting: "11/24/2025",
-            patientImageURL: "",
-            therapistId: 2
-        },
-        {
-            id: 3,
-            name: "Marcus Lee",
-            email: "marcus.lee@yahoo.com",
-            phone: "480-678-9934",
-            currentYogaPlan: `
-            Yoga Type: Yin Yoga
+        // Find the therapist
+        const therapist = await Therapist.findOne({ auth0Id });
+        
+        if (!therapist) {
+            return NextResponse.json({ error: 'Therapist not found' }, { status: 404 });
+        }
 
-            Monday: Deep stretches focusing on hips and lower back to release tension.
-            Tuesday: Shoulder and spine stretches for improved mobility.
-            Wednesday: Mindful meditation and long-held poses to increase flexibility.
-            Thursday: Leg and hamstring stretches with breathing techniques.
-            Friday: Gentle twists and restorative poses for spinal health.
-            Saturday: Flow of slow sequences combining balance and flexibility.
-            Sunday: Full-body restorative session with meditation for stress relief.`,
-            nextMeeting: "11/25/2025",
-            patientImageURL: "",
-            therapistId: 3
-        },
-    ];
-    return NextResponse.json(patients);
+        // Find all clients assigned to this therapist
+        const patients = await Client.find({ therapistId: therapist._id }).lean();
+        
+        return NextResponse.json(patients);
+    } catch (error) {
+        console.error('Error fetching patients:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    }
 }
 
-export async function POST(request: Request) {
-    const body = await request.json();
-    const { name, email, phone, currentYogaPlan,
-        nextMeeting, patientImageURL, therapistId
-    } = body;
-    const newPatient = { id: Date.now(),
-        name, email, phone, currentYogaPlan,
-        nextMeeting, patientImageURL, therapistId,
-        createdAt: new Date()
-    };
-    return NextResponse.json({ success: true, data: newPatient}, { status: 201})
+export async function POST(request: NextRequest) {
+    try {
+        const session = await auth0.getSession();
+        
+        if (!session || !session.user) {
+            return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+        }
+
+        const body = await request.json();
+        
+        await connectDB();
+        
+        // Create or update a client
+        const newPatient = await Client.create(body);
+        
+        return NextResponse.json({ success: true, data: newPatient }, { status: 201 });
+    } catch (error) {
+        console.error('Error creating patient:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    }
 }

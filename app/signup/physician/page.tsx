@@ -10,9 +10,6 @@ export type PhysicianFormData = {
     license?: string;
     npi?: string;
     organization?: string;
-    username?: string;
-    password?: string;
-    confirmPassword?: string;
     [key: string]: any;
 };
 
@@ -41,8 +38,13 @@ export default function PhysicianSignupFlow() {
     // --- Final submit ---
     const handleSubmit = (): void => {
         console.log("Final physician data:", formData);
-        localStorage.removeItem("physicianSignupData");
-        setStep(2);
+        
+        // Save data to localStorage before Auth0 redirect
+        localStorage.setItem("physicianSignupData", JSON.stringify(formData));
+        localStorage.setItem("signupType", "physician");
+        
+        // Redirect to Auth0 signup
+        window.location.href = '/auth/login?screen_hint=signup&returnTo=/signup/complete';
     };
 
     // --- Step routing ---
