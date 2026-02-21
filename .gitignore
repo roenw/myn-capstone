@@ -52,3 +52,7 @@ node_modules/
 dist/
 build/
 .env
+
+
+
+tmpclaude*
